@@ -1,5 +1,2 @@
-const headerText = document.querySelector('.header');
+window.$ = require('jquery');
 
-headerText.addEventListener('click', () => {
-    headerText.classList.add('active');
-});

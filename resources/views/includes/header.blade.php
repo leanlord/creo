@@ -1,6 +1,6 @@
 <div class="top">
     <div class="container top__container">
-        <a href="#" class="top__logo">
+        <a href="{{ url('/') }}" class="top__logo">
             <img src="{{ asset('img/top/logo.svg') }}" alt="Иконка: CREO">
         </a>
         <span class="top__info">

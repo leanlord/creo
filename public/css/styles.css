@@ -447,3 +447,102 @@ ul {
   border-radius: 7px;
   background: #396AB6;
 }
+
+.account {
+  display: flex;
+  padding-top: 40px;
+  padding-left: 40px;
+}
+.account__link {
+  display: flex;
+  align-items: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 8px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  text-decoration: none;
+  color: #000;
+}
+.account__link span {
+  margin-right: auto;
+}
+.account__icon {
+  margin-right: 10px;
+}
+.account__splitter {
+  width: 230px;
+}
+
+.splitter-large {
+  width: 1px;
+  height: 754px;
+}
+
+.profile {
+  width: 483px;
+  padding-top: 13px;
+  padding-left: 45px;
+}
+.profile__title {
+  margin-bottom: 38px;
+}
+.profile__image {
+  display: block;
+  text-align: center;
+  margin-bottom: 40px;
+}
+.profile__form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+}
+.profile__form label {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  color: #1A1A1A;
+}
+.profile__form input {
+  border: 1px solid #949494;
+  border-radius: 4px;
+  height: 35px;
+}
+.profile__first {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+.profile__name {
+  width: 200px;
+  height: 58px;
+  display: flex;
+  flex-direction: column;
+}
+.profile__form span {
+  margin-bottom: 6px;
+}
+.profile__input {
+  display: flex;
+  flex-direction: column;
+}
+.profile__input:not(:last-child) {
+  margin-bottom: 11px;
+}
+.profile__button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+  background: #396AB6;
+  color: #fff;
+  cursor: pointer;
+}

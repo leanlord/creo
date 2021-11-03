@@ -1,9 +1,21 @@
-.header {
-    font-size: 40px;
-    color: blue;
-    cursor: pointer;
-}
 
-.active {
-    color: red;
-}
+
+// Normalize
+@import 'normalize';
+
+// Переменные
+@import 'variables';
+
+// Настройки
+@import 'settings';
+
+// Блоки
+@import 'blocks/header';
+@import 'blocks/hero';
+@import 'blocks/flats';
+@import 'blocks/form';
+@import 'blocks/district';
+@import 'blocks/footer';
+
+// Медиа-запросы
+@import 'media';

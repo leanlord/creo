@@ -1,2 +1,1 @@
 window.$ = require('jquery');
-

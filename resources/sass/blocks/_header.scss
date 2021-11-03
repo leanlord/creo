@@ -1,0 +1,92 @@
+.top {
+    &__container {
+        display: flex;
+        align-items: center;
+    }
+    padding-top: 54px;
+    padding-bottom: 68px;
+    box-shadow: 0 4px 12px -7px rgba(28, 52, 88, 0.2);
+    border-radius: 0 0 15px 15px;
+    &__logo {
+        margin-right: 75px;
+    }
+
+    &__info {
+        width: 223px;
+        margin-right: 128px;
+        font-style: normal;
+        font-weight: 300;
+        font-size: 12px;
+        line-height: 18px;
+        color: $black;
+    }
+
+    &__contact {
+        margin-right: auto;
+    }
+
+    &__account {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+    }
+
+    &__link {
+        margin-right: 10px;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 20px;
+        color: $black;
+    }
+}
+
+.contact {
+    &__call {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 22px;
+        line-height: 18px;
+        text-decoration: none;
+        color: $black;
+    }
+
+    &__phone {
+        margin-bottom: 6px;
+    }
+
+    &__span {
+        padding-left: 28px;
+    }
+}
+
+.call {
+    margin-right: 10px;
+}
+
+
+
+.nav {
+    &__list {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__link {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 14px;
+        line-height: 17px;
+        text-transform: uppercase;
+        text-decoration: none;
+        color: $white;
+    }
+}
+
+.navbar {
+    padding: 21px 47px;
+    margin-top: -28px;
+    border-radius: 7px;
+    background: #396AB6;
+}

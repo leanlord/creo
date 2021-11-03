@@ -6,9 +6,7 @@
 
 <body>
 <header class="header">
-    <div class="container">
-        @include('includes.header')
-    </div>
+    @include('includes.header')
 </header>
 
 <main class="main">
@@ -18,5 +16,6 @@
 <footer class="footer">
     @include('includes.footer')
 </footer>
+@include('includes.scripts')
 </body>
 </html>

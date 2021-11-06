@@ -6,7 +6,11 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    public function index() {
-        return view('pages.home', ['HZ' => '2020']);
+    public function login(Request $request) {
+
+    }
+
+    public function logout() {
+
     }
 }

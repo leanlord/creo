@@ -1,22 +1,26 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+use App\Http\Controllers\HomepageController;
+use App\Http\Controllers\MainPageController;
+use App\Http\Controllers\RegisterController;
+use Illuminate\Support\Facades\Route;
 
-Route::get('/', [AuthController::class, 'index']);
+Route::get('/', [MainPageController::class, 'index']);
 
-Route::get('/account', function () {
-    return view('pages.account');
+// Для AJAX
+Route::get('/flats', [MainPageController::class, 'allFlats']);
+
+Route::middleware('auth')->group( function () {
+    Route::get('/account', [HomepageController::class, 'index']);
+    Route::post('/account', [HomepageController::class, 'update']);
 });
 
 
+// ->name('login') для middleware('auth')
+Route::match(['get', 'post'], '/login', [AuthController::class, 'login'])
+    ->name('login');
+
+Route::get('/logout', [AuthController::class, 'logout']);
+
+Route::match(['get', 'post'], '/register', [RegisterController::class, 'register']);

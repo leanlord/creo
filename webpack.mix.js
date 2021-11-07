@@ -16,4 +16,5 @@ mix.js('resources/js/app.js', 'public/js')
     .browserSync({
             proxy: 'localhost',
             notify: false
-        });
+        })
+    .copy('resources/img', 'public/img');

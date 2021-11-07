@@ -2,7 +2,6 @@
 
 @section('content')
     <div class="container">
-        {{$HZ}}
         <div class="hero">
             <h1 class="hero__title">Выбрать квартиру</h1>
             <p class="hero__desc">Найди своё среди 500 тыс. вариантов недвижимости</p>

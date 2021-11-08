@@ -12,7 +12,7 @@ class Filter
         'area',
     ];
 
-    public static $intAttributes = [
+    protected static $intAttributes = [
         'min_price',
         'max_price',
         'min_square',
@@ -31,7 +31,6 @@ class Filter
     public static function getUniqueColumnValues(string $columnName): array
     {
         $columnValues = Flats::all($columnName);
-        $result = [];
         foreach ($columnValues as $value) {
             $result[] = $value->getAttribute($columnName);
         }

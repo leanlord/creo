@@ -20,7 +20,7 @@ class MainPageController extends Controller
 
     public function showFlatsSection(Request $request)
     {
-        //return view('includes.flats', ['data' => static::getAllFlats($request)]);
+        return view('includes.flats', ['data' => static::getAllFlats($request)]);
     }
 
     /**

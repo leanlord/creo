@@ -1,0 +1,231 @@
+.flats {
+    &__container {
+        display: flex;
+    }
+
+    &__wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        max-width: 941px;
+        margin-bottom: 50px;
+    }
+
+    &__flat:not(:nth-child(3n)) {
+        margin-right: 13px;
+    }
+
+    &__flat:last-child {
+        margin-right: auto;
+    }
+
+    &__flat {
+        margin-bottom: 13px;
+    }
+
+    &__main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 100%;
+    }
+
+    &__menu {
+        margin-right: 39px;
+    }
+
+    &__title {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 44px;
+        line-height: 60px;
+        text-align: center;
+        letter-spacing: 0.02em;
+        color: $darkblue;
+    }
+
+    &__flat {
+        position: relative;
+        width: 305px;
+        box-shadow: 0 7px 16px rgba(0, 0, 0, 0.01);
+        border: 1px solid #D1E0F9;
+        border-radius: 5px;
+    }
+
+    &__status {
+        position: absolute;
+        z-index: 1;
+        top: 25px;
+        left: 25px;
+        display: flex;
+        align-items: center;
+        padding: 10px 14px;
+        border-radius: 3px;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 12px;
+        background: #7BCB14;
+        color: #fff;
+    }
+
+    &__info {
+        display: flex;
+        flex-direction: column;
+        padding: 25px 25px 40px 25px;
+    }
+
+    &__image {
+        width: 304px;
+        height: 269px;
+        border-radius: 5px 5px 0 0;
+    }
+
+    &__name {
+        font-style: normal;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 28px;
+        margin-bottom: 20px;
+    }
+
+    &__address {
+        display: flex;
+        margin-bottom: 16px;
+    }
+
+    &__city {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 12px;
+        color: $lightblue;
+    }
+
+    &__link {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 12px;
+        text-decoration-line: underline;
+        color: #FF3324;
+        cursor: pointer;
+    }
+
+    &__cost {
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 28px;
+        color: $cost;
+    }
+
+    &__type {
+        display: flex;
+        margin-bottom: 35px;
+    }
+
+    &__desc {
+        max-width: 198px;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 12px;
+        color: $gray;
+    }
+
+    &__details {
+        padding: 13px 84px;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 14px;
+        line-height: 18px;
+        text-decoration: none;
+        text-align: center;
+        background: #FF3324;
+        border-radius: 3px;
+        color: #fff;
+    }
+
+    &__price {
+        display: flex;
+        margin-bottom: 15px;
+    }
+
+    &__button {
+        display: flex;
+        align-items: center;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 20px;
+        line-height: 18px;
+        color: $black;
+        text-decoration: none;
+    }
+
+    &__more {
+        margin-right: 10px;
+        margin-bottom: 12px;
+    }
+
+    &__dashed {
+        border: 2px dashed #467CCE;
+    }
+}
+
+.menu {
+    width: 340px;
+
+    &__heading {
+        display: flex;
+        padding: 18px 24px;
+        margin-bottom: 6px;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 18px;
+        line-height: 32px;
+        letter-spacing: 0.02em;
+        background: #FF3324;
+        border: 1px solid rgba(28, 65, 121, 0.1);
+        border-radius: 8px;
+        color: $white;
+    }
+
+    &__image {
+        margin-right: 14px;
+    }
+
+    &__links {
+        padding: 22px 30px 31px;
+        border: 1px solid rgba(28, 65, 121, 0.1);
+        border-radius: 8px;
+    }
+
+    &__item:not(:last-child) {
+        margin-bottom: 30px;
+    }
+
+    &__link {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 24px;
+        text-decoration-line: underline;
+        color: $black;
+    }
+}
+
+.check {
+    margin-right: 7px;
+}
+
+.map {
+    margin-right: 7px;
+}
+
+.flatIcon {
+    margin-right: 9px;
+}
+
+.price {
+    margin-right: 5px;
+}
+

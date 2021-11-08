@@ -1,0 +1,113 @@
+.account {
+    display: flex;
+    padding-top: 40px;
+    padding-left: 40px;
+
+    &__link {
+        display: flex;
+        align-items: center;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-right: 8px;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 17px;
+        text-decoration: none;
+        color: $black;
+    }
+
+    &__link span {
+        margin-right: auto;
+    }
+
+    &__icon {
+        margin-right: 10px;
+    }
+
+    &__splitter {
+        width: 230px;
+    }
+}
+
+.splitter-large {
+    width: 1px;
+    height: 754px;
+}
+
+.profile {
+    width: 483px;
+    padding-top: 13px;
+    padding-left: 45px;
+
+    &__title {
+        margin-bottom: 38px;
+    }
+
+    &__image {
+        display: block;
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 30px;
+    }
+
+    &__form label {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 17px;
+        color: #1A1A1A;
+    }
+
+    &__form input {
+        border: 1px solid #949494;
+        border-radius: 4px;
+        height: 35px;
+    }
+
+    &__first {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+    }
+
+    &__name {
+        width: 200px;
+        height: 58px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__form span {
+        margin-bottom: 6px;
+    }
+
+    &__input {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__input:not(:last-child) {
+        margin-bottom: 11px;
+    }
+
+    &__button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 24px;
+        text-align: center;
+        background: #396AB6;
+        color: $white;
+        cursor: pointer;
+    }
+}

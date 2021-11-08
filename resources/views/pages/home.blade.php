@@ -1,6 +1,7 @@
 @extends('layouts.default')
 
 @section('content')
+
     <div class="hero">
         <div class="container">
             <h1 class="hero__title">Выбрать квартиру</h1>

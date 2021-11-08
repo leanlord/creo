@@ -20,7 +20,7 @@ class Flats extends Migration
             $table->float('square');
             $table->string('company');
             $table->string('area');
-            $table->string('is_rented');
+            $table->boolean('is_rented');
             $table->integer('price');
             $table->string('type');
             $table->timestamps();

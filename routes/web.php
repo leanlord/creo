@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [MainPageController::class, 'index']);
 
 // Для AJAX
-Route::get('/flats', [MainPageController::class, 'allFlats']);
+Route::get('/flats', [MainPageController::class, 'showFlatsSection']);
 
-Route::middleware('auth')->group( function () {
+Route::middleware('auth')->group(function () {
     Route::get('/account', [HomepageController::class, 'index']);
     Route::post('/account', [HomepageController::class, 'update']);
 });

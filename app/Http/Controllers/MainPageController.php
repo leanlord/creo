@@ -2,24 +2,43 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Flats;
+use App\Plugins\Filter;
+use Illuminate\Http\Request;
 
 class MainPageController extends Controller
 {
+
+    /*
+    * Получить get параметр:
+    * $request->get('page')
+    *
+    * Получить минимальное\максимальное значение из базы данных:
+    * Flats::min('price');
+    * Flats::max('price');
+    *
+    * Условие для выборки из базы
+    * $allData = Flats::where('type', 'like', $type)->get()
+    *
+    * Получить необходимые данные из всех квартир:
+    * foreach ($allData as $flat) {
+    *   var_dump($flat->getAttributes());
+    * }
+    */
+
     /**
      * Показывает главную страницу
      * @param Request $request
-     * @return \Illuminate\Contracts\View\View
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index(Request $request) {
+    public function index(Request $request)
+    {
+        return view('pages.home', ['data' => static::getAllFlats($request)]);
+    }
 
-        $data['allFlats'] = self::allFlats($request);
-        $data['cities'] = Flats::all('city'); // все города
-
-        // и так далее
-
-        return view('home', ['data' => $data]);
+    public function showFlatsSection(Request $request)
+    {
+        //return view('includes.flats', ['data' => static::getAllFlats($request)]);
     }
 
     /**
@@ -30,23 +49,44 @@ class MainPageController extends Controller
      * @param Request $request
      * @return array
      */
-    public function allFlats(Request $request): array
+    public static function getAllFlats(Request $request): array
     {
-        $min_price = 0; // Извлечь из базы данных наименьшее значение цены
-        $max_price = 100000000; // Извлечь из базы данных наибольшее значение цены
-        $type = "%";
+        // Получение и обработка всех значений из запроса
+        $allAttributes = Filter::getAllAttributes($request);
 
-        // Проверка GET параметров (потом потестить и посмотреть функцией dd()
-        if (!empty($request->get('min_price'))) {
-            $min_price = $request->get('min_price');
-        }
+//        $city = $request->get('city') ?? '%';
+//        $company = $request->get('company') ?? '%';
+//        $area = $request->get('area') ?? '%';
+//        $minPrice = $request->get('min_price') ?? Flats::min('price');
+//        $maxPrice = $request->get('max_price') ?? Flats::max('price');
+//        $minSquare = $request->get('min_price') ?? Flats::min('square');
+//        $maxSquare = $request->get('min_price') ?? Flats::max('square');
 
-        if (!empty($request->get('type'))) {
-            $type = $request->get('min_price');
-        }
-        // и так далее...
-        return Flats::where('type', 'like', $type)
-            ->between($min_price, $max_price) // короче все квартиры с ценами выше минимальной и ниже максимальной
+        // Запрос в базу - фильтрация
+        $filteredFlats = Flats::where('company', 'like', $allAttributes['company'])
+            ->where('area', 'like', $allAttributes['area'])
+            ->where('city', 'like', $allAttributes['city'])
+            ->whereBetween('price', [$allAttributes['min_price'], $allAttributes['max_price']])
+            ->whereBetween('square', [$allAttributes['min_square'], $allAttributes['max_square']])
             ->get();
+
+        // Заполнение массива данных
+        $data["allCities"] = Filter::getUniqueColumnValues('city');
+        $data["allCompanies"] = Filter::getUniqueColumnValues('company');
+        $data["allAreas"] = Filter::getUniqueColumnValues('area');
+        // "Отрезаем" лишние строковые атрибуты, которые не нужны на фронтенде
+        $data["allValues"] = array_slice($allAttributes, Filter::getCountOfStringAttributes());
+
+//        $data['maxPrice'] = $maxPrice;
+//        $data['minPrice'] = $minPrice;
+//        $data['maxSquare'] = $maxSquare;
+//        $data['minSquare'] = $minSquare;
+
+        // Заполняем массив всех квартир
+        foreach ($filteredFlats as $flat) {
+            $data['allFlats'][] = $flat->getAttributes();
+        }
+
+        return $data;
     }
 }

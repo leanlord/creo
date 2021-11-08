@@ -16,6 +16,10 @@ class Flats extends Migration
         Schema::create('flats', function (Blueprint $table) {
             $table->id();
             $table->string('address');
+            $table->string('city');
+            $table->float('square');
+            $table->string('company');
+            $table->string('area');
             $table->string('is_rented');
             $table->integer('price');
             $table->string('type');
@@ -30,6 +34,6 @@ class Flats extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('flats');
     }
 }

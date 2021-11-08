@@ -23,7 +23,7 @@ class RegisterController extends Controller
             ]);
 
             if (User::where('email', $validateFields['email'])->exists()) {
-                return view('/register',
+                return view('pages.register',
                     // и выводить ссылку на /login
                     ['thisUserAlreadyExists' => 'Такой пользователь уже зарегистрирован! Не желаете войти?']);
             }
@@ -39,9 +39,9 @@ class RegisterController extends Controller
                 return redirect('/account');
             }
             // иначе произошла ошибка
-            return view('/register', ['registerError' => 'Не удалось зарегистрироваться']);
+            return view('pages.register', ['registerError' => 'Не удалось зарегистрироваться']);
         } else { // если пользователь только зашел на страницу
-            return view('register');
+            return view('pages.register');
         }
     }
 }

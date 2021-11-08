@@ -19,11 +19,11 @@ class AuthController extends Controller
                 return redirect('/account');
             }
         } else {
-            return view('/login');
+            return view('pages.login');
         }
 
         // Если произошла какая то ошибка
-        return view('/login', ['loginError' => 'Введен неверный логин или пароль.']);
+        return view('pages.login', ['loginError' => 'Введен неверный логин или пароль.']);
     }
 
     public function logout()

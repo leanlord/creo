@@ -1,9 +1,8 @@
 @extends('layouts.default')
-
 @section('content')
     <div class="container">
         <div class="hero">
-            <h1 class="hero__title">Выбрать квартиру</h1>
+            <h1 class="hero__title"></h1>
             <p class="hero__desc">Найди своё среди 500 тыс. вариантов недвижимости</p>
             <form action="#" class="form hero__form">
                 <label class="form__city">Выберите город *

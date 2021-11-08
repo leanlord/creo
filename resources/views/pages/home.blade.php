@@ -109,9 +109,7 @@
             <div class="flats__main">
                 <h2 class="flats__title">Все новостройки Краснодара</h2>
                 <div class="flats__wrapper">
-                    @for ($i = 0; $i < 9; $i++)
-                        @include('includes.flat')
-                    @endfor
+                    @include('includes.flats')
                 </div>
                 <a href="#" class="flats__button">
                     <img src="{{ asset('img/flats/more.svg') }}" alt="Иконка: показать больше" class="flats__more">

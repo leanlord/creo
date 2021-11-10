@@ -55,7 +55,13 @@ class MainPageController extends Controller
             ->whereBetween('square', [$allAttributes['min_square'], $allAttributes['max_square']])
             ->paginate(9);
 
-        // Заполнение массива данных
+        /*
+         * Заполнение происходит таким образом:
+         * выбираются только те значения столбцов,
+         * которые используются в связанной таблице.
+         * Если есть город, к которому не принадлежит
+         * ни одна квартира, то такой город выведен не будет
+         */
         $data["allCities"] = Filter::getUniqueColumnValues('city');
         $data["allCompanies"] = Filter::getUniqueColumnValues('company');
         $data["allAreas"] = Filter::getUniqueColumnValues('area');
@@ -64,7 +70,6 @@ class MainPageController extends Controller
 
         // Заполняем массив всех квартир
         foreach ($filteredFlats as $flat) {
-
             $flatData = $flat->getAttributes();
 
             /*
@@ -78,7 +83,6 @@ class MainPageController extends Controller
             $data["allFlats"][] = $flatData;
         }
 
-        dd($data);
         return $data;
     }
 }

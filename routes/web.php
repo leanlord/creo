@@ -16,7 +16,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/account', [HomepageController::class, 'update']);
 });
 
-
 // ->name('login') для middleware('auth')
 Route::match(['get', 'post'], '/login', [AuthController::class, 'login'])
     ->name('login');

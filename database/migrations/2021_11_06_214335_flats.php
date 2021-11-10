@@ -17,9 +17,9 @@ class Flats extends Migration
             $table->id();
             $table->string('address');
             $table->integer('city_id');
-            $table->float('square');
+            $table->integer('square');
             $table->integer('company_id');
-            $table->string('area_id');
+            $table->integer('area_id');
             $table->boolean('is_rented');
             $table->integer('price');
             $table->timestamps();

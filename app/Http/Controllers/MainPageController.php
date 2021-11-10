@@ -34,17 +34,15 @@ class MainPageController extends Controller
      * Returns all data about flats
      *
      * @param Request $request
-     * @return array
+     * @return array|\Illuminate\Routing\Redirector
      */
-    public static function getAllFlats(Request $request): array
+    public static function getAllFlats(Request $request)
     {
         /*
          * Получение и обработка всех параметров
          * GET запроса для запроса в БД
          */
         $allFilteringAttributes = Filter::getAllAttributes($request);
-
-        //dd($allFilteringAttributes);
 
         // Выборка всех квартир с заданными условиями фильтрации
         $allFlats = DB::table('flats')
@@ -68,7 +66,11 @@ class MainPageController extends Controller
                 $allFilteringAttributes['min_square'],
                 $allFilteringAttributes['max_square']
             ])
-            ->get();
+            ->paginate(9);
+
+        if ($allFlats->isEmpty()) {
+            return redirect('/');
+        }
 
         $data = [];
         foreach ($allFlats as $flat) {
@@ -77,7 +79,7 @@ class MainPageController extends Controller
 
             /*
              * Заполнение происходит таким образом:
-             * выбираются только те значения столбцов,
+             * заносятся только те значения столбцов,
              * которые используются в связанной таблице.
              * Если есть город, к которому не принадлежит
              * ни одна квартира, то такой город выведен не будет

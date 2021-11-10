@@ -62,16 +62,17 @@ class Filter
 
         /*
          * Формируется массив значений из заданной таблицы
+         * TODO переделать под left join
          */
-        foreach ($allIDs as $id) {
-            if ($columnName == 'city') {
-                $result[] = City::find($id)[0]->city;
-            } elseif ($columnName == 'company') {
-                $result[] = Company::find($id)[0]->name;
-            } elseif ($columnName == 'area') {
-                $result[] = Area::find($id)[0]->name;
-            }
-        }
+//        foreach ($allIDs as $id) {
+//            if ($columnName == 'city') {
+//                $result[] = City::find($id)[0]->city;
+//            } elseif ($columnName == 'company') {
+//                $result[] = Company::find($id)[0]->name;
+//            } elseif ($columnName == 'area') {
+//                $result[] = Area::find($id)[0]->name;
+//            }
+//        }
 
         return array_unique($result);
     }
@@ -83,7 +84,7 @@ class Filter
         /*
          * Обработка всех строковых параметров запроса.
          * Если GET параметр существует, то задается
-         * значение id аттрибута, которое будет использовано
+         * значение этого параметра, которое будет использовано
          * как условие в запросе к БД.
          * Иначе, задается "любое значение".
          * (в SQL '%' означает "последовательность любых символов любой длины")

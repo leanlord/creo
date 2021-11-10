@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Area;
-use App\Models\City;
-use App\Models\Company;
-use App\Models\Flats;
 use App\Plugins\Filter;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MainPageController extends Controller
 {
@@ -45,42 +42,57 @@ class MainPageController extends Controller
          * Получение и обработка всех параметров
          * GET запроса для запроса в БД
          */
-        $allAttributes = Filter::getAllAttributes($request);
+        $allFilteringAttributes = Filter::getAllAttributes($request);
 
-        // Запрос в БД - фильтрация
-        $filteredFlats = Flats::where('company_id', 'like', $allAttributes['company_id'])
-            ->where('area_id', 'like', $allAttributes['area_id'])
-            ->where('city_id', 'like', $allAttributes['city_id'])
-            ->whereBetween('price', [$allAttributes['min_price'], $allAttributes['max_price']])
-            ->whereBetween('square', [$allAttributes['min_square'], $allAttributes['max_square']])
-            ->paginate(9);
+        // Все квартиры
+        $allFlats = DB::table('flats')
+            ->leftJoin('cities', 'flats.city_id', '=', 'cities.id')
+            ->leftJoin('companies', 'flats.company_id', '=', 'companies.id')
+            ->leftJoin('areas', 'flats.area_id', '=', 'areas.id')
+            ->get();
 
-        /*
-         * Заполнение происходит таким образом:
-         * выбираются только те значения столбцов,
-         * которые используются в связанной таблице.
-         * Если есть город, к которому не принадлежит
-         * ни одна квартира, то такой город выведен не будет
-         */
-        $data["allCities"] = Filter::getUniqueColumnValues('city');
-        $data["allCompanies"] = Filter::getUniqueColumnValues('company');
-        $data["allAreas"] = Filter::getUniqueColumnValues('area');
-        // "Отрезаем" лишние строковые атрибуты, которые не нужны на фронтенде
-        $data["allValues"] = array_slice($allAttributes, Filter::getCountOfStringAttributes());
-
-        // Заполняем массив всех квартир
-        foreach ($filteredFlats as $flat) {
-            $flatData = $flat->getAttributes();
+        // Фильтруем квартиры
+        $data = [];
+        foreach ($allFlats as $flat) {
+            // Если квартира удовлетворяет всем условиям выборки
+            if (
+                str_contains($flat->city, $allFilteringAttributes['city']) &&
+                str_contains($flat->company, $allFilteringAttributes['company']) &&
+                str_contains($flat->area, $allFilteringAttributes['area']) &&
+                $flat->price <= $allFilteringAttributes['max_price'] &&
+                $flat->price >= $allFilteringAttributes['min_price'] &&
+                $flat->square <= $allFilteringAttributes['max_square'] &&
+                $flat->square >= $allFilteringAttributes['min_square']
+            ) {
+                // Приведение объекта STDClass к массиву
+                $data["flats"][] = json_decode(json_encode($flat), true);
+            }
 
             /*
-             * Индекс городов в массиве $data["allCities"]
-             * численно равен cities.id - 1 этого города в базе данных
-            */
-            $flatData["city"] = $data["allCities"] [$flat["city_id"] - 1];
-            $flatData["company"] = $data["allCompanies"] [$flat["company_id"] - 1];
-            $flatData["area"] = $data["allAreas"] [$flat["area_id"] - 1];
+             * Заполнение происходит таким образом:
+             * выбираются только те значения столбцов,
+             * которые используются в связанной таблице.
+             * Если есть город, к которому не принадлежит
+             * ни одна квартира, то такой город выведен не будет
+             */
+            $data["attributes"]["prices"][] = $flat->price;
+            $data["attributes"]["squares"][] = $flat->square;
+            $data["attributes"]["cities"][] = $flat->city;
+            $data["attributes"]["areas"][] = $flat->area;
+            $data["attributes"]["companies"][] = $flat->company;
+        }
 
-            $data["allFlats"][] = $flatData;
+        // Вычисление максимальных\минимальных значений
+        $data["attributes"]["maxPrice"] = max($data["attributes"]["prices"]);
+        $data["attributes"]["minPrice"] = min($data["attributes"]["prices"]);
+        $data["attributes"]["maxSquare"] = max($data["attributes"]["squares"]);
+        $data["attributes"]["minSquare"] = min($data["attributes"]["squares"]);
+
+        // Делаем значения массивов уникальными
+        foreach ($data["attributes"] as $attributeName => $attributeValues) {
+            if (gettype($attributeValues) == 'array') {
+                $data["attributes"][$attributeName] = array_unique($attributeValues);
+            }
         }
 
         return $data;

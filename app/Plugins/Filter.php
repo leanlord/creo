@@ -88,20 +88,9 @@ class Filter
          * Иначе, задается "любое значение".
          * (в SQL '%' означает "последовательность любых символов любой длины")
          */
-        $request->get('city') !== null ?
-            $result["city_id"] = City::where('city', 'like', $request->get('city'))
-                    ->get()[0]->id
-            : $result["city_id"] = '%';
-
-        $request->get('company') !== null ?
-            $result["company_id"] = Company::where('name', 'like', $request->get('company'))
-                ->get()[0]->id
-            : $result["company_id"] = '%';
-
-        $request->get('area') !== null ?
-            $result["area_id"] = City::where('name', 'like', $request->get('area'))
-                ->get()[0]->id
-            : $result["area_id"] = '%';
+        foreach (self::$stringAttributes as $stringAttribute) {
+            $result[$stringAttribute] = $request->get($stringAttribute) ?? '';
+        }
 
         /*
          * Обработка всех числовых параметров запроса,

@@ -16,13 +16,12 @@ class Flats extends Migration
         Schema::create('flats', function (Blueprint $table) {
             $table->id();
             $table->string('address');
-            $table->string('city');
+            $table->integer('city_id');
             $table->float('square');
-            $table->string('company');
-            $table->string('area');
+            $table->integer('company_id');
+            $table->string('area_id');
             $table->boolean('is_rented');
             $table->integer('price');
-            $table->string('type');
             $table->timestamps();
         });
     }

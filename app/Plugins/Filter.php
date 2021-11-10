@@ -30,6 +30,7 @@ class Filter
 
     public static function getUniqueColumnValues(string $columnName): array
     {
+        $result = [];
         $columnValues = Flats::all($columnName);
         foreach ($columnValues as $value) {
             $result[] = $value->getAttribute($columnName);
@@ -40,6 +41,7 @@ class Filter
 
     public static function getAllAttributes($request): array
     {
+        $result = [];
         foreach (static::$stringAttributes as $strAttribute) {
             $result[$strAttribute] = $request->get($strAttribute) ?? '%';
         }

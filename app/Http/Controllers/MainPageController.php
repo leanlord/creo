@@ -42,7 +42,7 @@ class MainPageController extends Controller
             ->where('city', 'like', $allAttributes['city'])
             ->whereBetween('price', [$allAttributes['min_price'], $allAttributes['max_price']])
             ->whereBetween('square', [$allAttributes['min_square'], $allAttributes['max_square']])
-            ->get();
+            ->paginate(9);
 
         // Заполнение массива данных
         $data["allCities"] = Filter::getUniqueColumnValues('city');

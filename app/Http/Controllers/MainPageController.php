@@ -44,29 +44,36 @@ class MainPageController extends Controller
          */
         $allFilteringAttributes = Filter::getAllAttributes($request);
 
-        // Все квартиры
+        //dd($allFilteringAttributes);
+
+        // Выборка всех квартир с заданными условиями фильтрации
         $allFlats = DB::table('flats')
+
+            //Присоединение всех таблиц, относящихся к данной
             ->leftJoin('cities', 'flats.city_id', '=', 'cities.id')
             ->leftJoin('companies', 'flats.company_id', '=', 'companies.id')
             ->leftJoin('areas', 'flats.area_id', '=', 'areas.id')
+
+            // Условия выборки строковых значений
+            ->where('cities.city', 'like', $allFilteringAttributes['city'])
+            ->where('companies.company', 'like', $allFilteringAttributes['company'])
+            ->where('areas.area', 'like', $allFilteringAttributes['area'])
+
+            // Условия выборки числовых значений в диапазоне
+            ->whereBetween('flats.price', [
+                $allFilteringAttributes['min_price'],
+                $allFilteringAttributes['max_price']
+            ])
+            ->whereBetween('flats.square', [
+                $allFilteringAttributes['min_square'],
+                $allFilteringAttributes['max_square']
+            ])
             ->get();
 
-        // Фильтруем квартиры
         $data = [];
         foreach ($allFlats as $flat) {
-            // Если квартира удовлетворяет всем условиям выборки
-            if (
-                str_contains($flat->city, $allFilteringAttributes['city']) &&
-                str_contains($flat->company, $allFilteringAttributes['company']) &&
-                str_contains($flat->area, $allFilteringAttributes['area']) &&
-                $flat->price <= $allFilteringAttributes['max_price'] &&
-                $flat->price >= $allFilteringAttributes['min_price'] &&
-                $flat->square <= $allFilteringAttributes['max_square'] &&
-                $flat->square >= $allFilteringAttributes['min_square']
-            ) {
-                // Приведение объекта STDClass к массиву
-                $data["flats"][] = json_decode(json_encode($flat), true);
-            }
+            // Приведение объекта STDClass к массиву
+            $data["flats"][] = json_decode(json_encode($flat), true);
 
             /*
              * Заполнение происходит таким образом:

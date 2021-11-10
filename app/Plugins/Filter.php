@@ -89,7 +89,7 @@ class Filter
          * (в SQL '%' означает "последовательность любых символов любой длины")
          */
         foreach (self::$stringAttributes as $stringAttribute) {
-            $result[$stringAttribute] = $request->get($stringAttribute) ?? '';
+            $result[$stringAttribute] = $request->get($stringAttribute) ?? '%';
         }
 
         /*

@@ -1,1 +1,0 @@
-(self.webpackChunk=self.webpackChunk||[]).push([[773],{80:(e,l,n)=>{window.$=n(755),n(675)},675:()=>{$(".top__info").click((function(){alert("Hello Jquery")}))},241:()=>{}},e=>{var l=l=>e(e.s=l);e.O(0,[33,898],(()=>(l(80),l(241))));e.O()}]);

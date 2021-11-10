@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Requests extends Migration
+class Company extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class Requests extends Migration
      */
     public function up()
     {
-        Schema::create('requests', function (Blueprint $table) {
+        Schema::create('company', function (Blueprint $table) {
             $table->id();
-            $table->string('number');
-            $table->timestamps();
+            $table->string('company_name');
         });
     }
 

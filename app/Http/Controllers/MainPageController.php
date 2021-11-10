@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Area;
+use App\Models\City;
+use App\Models\Company;
 use App\Models\Flats;
 use App\Plugins\Filter;
 use Illuminate\Http\Request;
@@ -9,37 +12,45 @@ use Illuminate\Http\Request;
 class MainPageController extends Controller
 {
     /**
-     * Показывает главную страницу
+     * Shows main page
+     *
      * @param Request $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return \Illuminate\Contracts\View\View
      */
     public function index(Request $request)
     {
         return view('pages.home', ['data' => static::getAllFlats($request)]);
     }
 
+    /**
+     * Shows all flats (for AJAX)
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function showFlatsSection(Request $request)
     {
         return view('includes.flats', ['data' => static::getAllFlats($request)]);
     }
 
     /**
-     * Будет использоваться как для AJAX запроса, так и
-     * в функции index().
-     * Возвращает верстку только квартир, а не полную страницу
-     * Попробую сделать с пагинацией
+     * Returns all data about flats
+     *
      * @param Request $request
      * @return array
      */
     public static function getAllFlats(Request $request): array
     {
-        // Получение и обработка всех значений из запроса
+        /*
+         * Получение и обработка всех параметров
+         * GET запроса для запроса в БД
+         */
         $allAttributes = Filter::getAllAttributes($request);
 
-        // Запрос в базу - фильтрация
-        $filteredFlats = Flats::where('company', 'like', $allAttributes['company'])
-            ->where('area', 'like', $allAttributes['area'])
-            ->where('city', 'like', $allAttributes['city'])
+        // Запрос в БД - фильтрация
+        $filteredFlats = Flats::where('company_id', 'like', $allAttributes['company_id'])
+            ->where('area_id', 'like', $allAttributes['area_id'])
+            ->where('city_id', 'like', $allAttributes['city_id'])
             ->whereBetween('price', [$allAttributes['min_price'], $allAttributes['max_price']])
             ->whereBetween('square', [$allAttributes['min_square'], $allAttributes['max_square']])
             ->paginate(9);
@@ -53,9 +64,21 @@ class MainPageController extends Controller
 
         // Заполняем массив всех квартир
         foreach ($filteredFlats as $flat) {
-            $data['allFlats'][] = $flat->getAttributes();
+
+            $flatData = $flat->getAttributes();
+
+            /*
+             * Индекс городов в массиве $data["allCities"]
+             * численно равен cities.id - 1 этого города в базе данных
+            */
+            $flatData["city"] = $data["allCities"] [$flat["city_id"] - 1];
+            $flatData["company"] = $data["allCompanies"] [$flat["company_id"] - 1];
+            $flatData["area"] = $data["allAreas"] [$flat["area_id"] - 1];
+
+            $data["allFlats"][] = $flatData;
         }
 
+        dd($data);
         return $data;
     }
 }

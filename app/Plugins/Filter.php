@@ -2,10 +2,8 @@
 
 namespace App\Plugins;
 
-use App\Models\City;
-use App\Models\Company;
 use App\Models\Flats;
-use App\Models\Area;
+use Illuminate\Support\Facades\DB;
 
 class Filter
 {
@@ -18,6 +16,12 @@ class Filter
         'city',
         'company',
         'area',
+    ];
+
+    protected static $relatedTables = [
+        'cities',
+        'companies',
+        'areas'
     ];
 
     /**
@@ -44,37 +48,17 @@ class Filter
 
 
     /**
-     * Returns column data from all connected(related) tables
+     * Returns columns data from all connected(related) tables
      *
-     * @param string $columnName
      * @return array
      */
-    public static function getUniqueColumnValues(string $columnName): array
+    public static function getUniqueColumnsValues(): array
     {
-        $result = [];
-        /*
-         * Производится поиск всех значений id
-         * по заданному столбцу связи.
-         * Те значения, которые не имеют связи,
-         * не попадут в массив данных.
-         */
-        $allIDs = Flats::all($columnName . '_id');
+        foreach (self::$relatedTables as $table) {
+            $allValues[$table] = json_decode(json_encode(DB::table($table)->select()->get()), true);
+        }
 
-        /*
-         * Формируется массив значений из заданной таблицы
-         * TODO переделать под left join
-         */
-//        foreach ($allIDs as $id) {
-//            if ($columnName == 'city') {
-//                $result[] = City::find($id)[0]->city;
-//            } elseif ($columnName == 'company') {
-//                $result[] = Company::find($id)[0]->name;
-//            } elseif ($columnName == 'area') {
-//                $result[] = Area::find($id)[0]->name;
-//            }
-//        }
-
-        return array_unique($result);
+        return $allValues;
     }
 
     public static function getAllAttributes($request): array

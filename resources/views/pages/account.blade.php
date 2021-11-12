@@ -56,6 +56,9 @@
                 </form>
                 <input type="submit" value="Сохранить" form="profileForm" class="form-button profile__button">
             </div>
+            <div class="account__exit">
+                <a href="{{ route('logout') }}" class="form-button account__leave">Выйти из аккаунта</a>
+            </div>
         </div>
     </div>
 @stop

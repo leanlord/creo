@@ -1,0 +1,45 @@
+.login {
+    padding-top: 80px;
+    max-width: 483px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+
+    &__title {
+        margin-bottom: 20px;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 35px;
+        line-height: 24px;
+        text-align: center;
+        color: $black;
+    }
+
+    &__form {
+        align-self: stretch;
+        margin-bottom: 30px;
+    }
+
+    &__input {
+
+    }
+
+    &__button {
+        padding: 10px 64px;
+        margin-bottom: 35px;
+    }
+
+    &__span {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 24px;
+        color: $black;
+    }
+
+    &__link {
+        text-decoration-line: underline;
+        color: $lightblueform;
+    }
+}

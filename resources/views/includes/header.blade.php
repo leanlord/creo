@@ -15,7 +15,7 @@
             Звонок бесплатный
         </span>
         </div>
-        <a href="{{ url('account') }}" class="top__account">
+        <a href="{{ url('login') }}" class="top__account">
             <div class="top__link">Личный кабинет</div>
             <img src="{{ asset('img/top/account.svg') }}" alt="Иконка: личный кабинет" class="person">
         </a>

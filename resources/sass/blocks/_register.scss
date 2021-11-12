@@ -1,0 +1,31 @@
+.register {
+    max-width: 483px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 65px;
+    margin: 0 auto 80px;
+
+    &__title {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 35px;
+        line-height: 24px;
+        color: $black;
+        margin-bottom: 40px;
+    }
+
+    &__form {
+        align-self: stretch;
+        margin-bottom: 22px;
+    }
+
+    &__span {
+        align-self: stretch;
+        margin-bottom: 30px;
+    }
+
+    &__button {
+        padding: 10px 23px;
+    }
+}

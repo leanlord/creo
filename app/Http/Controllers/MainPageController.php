@@ -75,8 +75,7 @@ class MainPageController extends Controller
         $data = [];
         foreach ($allFlats as $flat) {
             // Приведение объекта STDClass к массиву
-            $data["flats"][] = json_decode(json_encode($flat), true);
-
+            $data["flats"][] = json_decode(json_encode($allFlats), true);
             /*
              * Заполнение происходит таким образом:
              * заносятся только те значения столбцов,

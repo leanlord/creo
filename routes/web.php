@@ -12,14 +12,16 @@ Route::get('/', [MainPageController::class, 'index']);
 Route::get('/flats', [MainPageController::class, 'showFlatsSection']);
 
 Route::middleware('auth')->group(function () {
-    Route::get('/account', [HomepageController::class, 'index']);
-    Route::post('/account', [HomepageController::class, 'update']);
+    Route::get('/account', [HomepageController::class, 'index'])->name('account');
+    Route::post('/account', [HomepageController::class, 'update'])->name('account');
 });
 
 // ->name('login') для middleware('auth')
 Route::match(['get', 'post'], '/login', [AuthController::class, 'login'])
     ->name('login');
 
-Route::get('/logout', [AuthController::class, 'logout']);
+Route::get('/logout', [AuthController::class, 'logout'])
+    ->name('logout');
 
-Route::match(['get', 'post'], '/register', [RegisterController::class, 'register']);
+Route::match(['get', 'post'], '/register', [RegisterController::class, 'register'])
+    ->name('register');

@@ -15,7 +15,7 @@ class AuthController extends Controller
 
         if ($request->method() == 'POST') {
             $formFields = $request->only(['email', 'password']);
-            if (Auth::attempt($formFields)) {
+            if (Auth::attempt($formFields, true)) {
                 return redirect('/account');
             }
         } else {

@@ -16,10 +16,11 @@ class RegisterController extends Controller
 
         if ($request->method() == 'POST') {
             $validateFields = $request->validate([
-                'first_name' => 'required',
-                'last_name' => 'required',
                 'email' => 'required|email',
-                'password' => 'required'
+                'password' => 'required|min:7',
+                'first_name' => '',
+                'last_name' => '',
+                'number' => ''
             ]);
 
             if (User::where('email', $validateFields['email'])->exists()) {
@@ -36,7 +37,7 @@ class RegisterController extends Controller
              */
             if ($user) {
                 auth()->login($user);
-                return redirect('/account');
+                return redirect(route('account'));
             }
             // иначе произошла ошибка
             return view('pages.register', ['registerError' => 'Не удалось зарегистрироваться']);

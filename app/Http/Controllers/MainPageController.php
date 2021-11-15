@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Message;
 use App\Plugins\Filter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -28,6 +29,22 @@ class MainPageController extends Controller
     public function showFlatsSection(Request $request)
     {
         return view('includes.flats', ['data' => static::getAllFlats($request)]);
+    }
+
+    public function send(Request $request)
+    {
+        $validatedFields = $request->validate([
+            'number' => 'required',
+            'name' => 'required'
+        ]);
+
+        $message = new Message();
+        $message->number = $validatedFields['number'];
+        $message->name = $validatedFields['name'];
+
+        $message->save();
+
+        return view('pages.home', ['succes' => true]);
     }
 
     /**

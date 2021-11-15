@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [MainPageController::class, 'index']);
 
+Route::post('/', [MainPageController::class, 'send']);
+
 // Для AJAX
 Route::get('/flats', [MainPageController::class, 'showFlatsSection']);
 

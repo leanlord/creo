@@ -129,12 +129,13 @@
                 БЕСПЛАТНО откроем ипотеку с пониженной процентной ставкой! <span class="submit__span">Для покупки в ипотеку доступно более 78 000 квартир!</span>
             </p>
             <form method="POST" class="submit__form">
+                @csrf
                 <div class="submit__top">
                     <label class="submit__placeholder">
-                        <input class="submit__input" type="text" required placeholder="Ваше Имя">
+                        <input name="name" class="submit__input" type="text" required placeholder="Ваше Имя">
                     </label>
                     <label class="submit__placeholder">
-                        <input class="submit__input" type="tel" required placeholder="Телефон">
+                        <input name="number" class="submit__input" type="tel" required placeholder="Телефон">
                     </label>
                     <label class="btn submit__button">
                         <input value="Отправить" type="submit">

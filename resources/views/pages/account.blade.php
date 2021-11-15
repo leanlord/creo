@@ -30,34 +30,34 @@
                 <a href="#" class="profile__image">
                     <img src="{{ asset('img/account/profile.svg') }}" alt="Изменить аватар" class="profile__pic">
                 </a>
-                <form action="{{ route('account') }}" id="profileForm" class="form profile__form"
+                <form action="" id="profileForm" class="form profile__form"
                       method="POST">
                     @csrf
                     <div class="form__first">
                         <label class="form__name">
                             <span>Имя</span>
                             <input name="first_name" id="name" type="text"
-                                   placeholder="{{ auth()->user()->first_name }}">
+                                   value="{{ auth()->user()->first_name }}">
                         </label>
                         <label class="form__name">
                             <span>Фамилия</span>
                             <input name="last_name" id="name" type="text"
-                                   placeholder="{{ auth()->user()->last_name }}">
+                                   value="{{ auth()->user()->last_name }}">
                         </label>
                     </div>
                     <label class="form__input">
                         <span>Электронная почта</span>
-                        <input name="email" type="email" required
-                               placeholder="{{ auth()->user()->email }}">
+                        <input name="email" type="email"
+                               value="{{ auth()->user()->email }}">
                     </label>
                     <label class="form__input">
                         <span>Номер телефона</span>
                         <input name="number" type="tel"
-                               placeholder="{{ auth()->user()->number }}">
+                               value="{{ auth()->user()->number }}">
                     </label>
                     <label class="form__input">
                         <span>Пароль (минимум 7 символов)</span>
-                        <input name="password" type="password" required minlength="7">
+                        <input name="password" type="password" minlength="7">
                     </label>
                 </form>
                 <input type="submit" value="Сохранить" form="profileForm" class="form-button profile__button">

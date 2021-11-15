@@ -8,53 +8,13 @@ use Illuminate\Support\Facades\DB;
 class Filter
 {
     /**
-     * String filtering attributes - like name, city or color
-     *
-     * @var string[]
-     */
-    protected static $stringAttributes = [
-        'city',
-        'company',
-        'area',
-    ];
-
-    protected static $relatedTables = [
-        'cities',
-        'companies',
-        'areas'
-    ];
-
-    /**
-     * Numeric attributes - like min_price, count or horse powers
-     *
-     * @var string[]
-     */
-    protected static $intAttributes = [
-        'min_price',
-        'max_price',
-        'min_square',
-        'max_square'
-    ];
-
-    public static function getCountOfStringAttributes(): int
-    {
-        return count(static::$stringAttributes);
-    }
-
-    public static function getCountOfNumericAttributes(): int
-    {
-        return count(static::$intAttributes);
-    }
-
-
-    /**
      * Returns columns data from all connected(related) tables
      *
      * @return array
      */
     public static function getUniqueColumnsValues(): array
     {
-        foreach (self::$relatedTables as $table) {
+        foreach (Settings::getRelatedTables() as $table) {
             $allValues[$table] = json_decode(json_encode(DB::table($table)->select()->get()), true);
         }
 
@@ -73,7 +33,7 @@ class Filter
          * Иначе, задается "любое значение".
          * (в SQL '%' означает "последовательность любых символов любой длины")
          */
-        foreach (self::$stringAttributes as $stringAttribute) {
+        foreach (Settings::getStringFilteringAttributes() as $stringAttribute) {
             $result[$stringAttribute] = $request->get($stringAttribute) ?? '%';
         }
 
@@ -86,7 +46,7 @@ class Filter
          * Так, например, запрос с названием max_price выполнит
          * вычисление функции MAX() по столбцу price.
          */
-        foreach (static::$intAttributes as $intAttribute) {
+        foreach (Settings::getIntFilteringAttributes() as $intAttribute) {
             if (str_contains($intAttribute, 'max')) {
                 $result[$intAttribute] = $request->get($intAttribute) ??
                     Flats::max(

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Plugins\Settings;
 use Illuminate\Http\Request;
 
 class HomepageController extends Controller
@@ -20,13 +21,25 @@ class HomepageController extends Controller
         $id = auth()->user()->getAuthIdentifier();
         $user = User::find($id);
 
+        $passwordParams = '';
+        if ($request->getPassword() !== null) {
+            $passwordParams = 'min:7';
+        }
+
         $validateFields = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|min:7',
+            'email' => 'email',
+            'password' => $passwordParams,
             'first_name' => '',
             'last_name' => '',
             'number' => ''
         ]);
+
+        // Заполнение каждого аттрибута пользователя для сохранения
+        foreach (Settings::getUserAttributes() as $attribute) {
+            if (isset($validateFields[$attribute])) {
+                $user->$attribute = $validateFields[$attribute];
+            }
+        }
 
         if (
             User::where('email', $validateFields['email'])
@@ -36,26 +49,6 @@ class HomepageController extends Controller
             return view('pages.account',
                 // и выводить ссылку на /login
                 ['thisUserAlreadyExists' => 'Этот адресс электронной почты уже занят другим пользователем!']);
-        }
-
-        if (isset($validateFields['first_name'])) {
-            $user->first_name = $validateFields['first_name'];
-        }
-
-        if (isset($validateFields['last_name'])) {
-            $user->last_name = $validateFields['last_name'];
-        }
-
-        if (isset($validateFields['email'])) {
-            $user->email = $validateFields['email'];
-        }
-
-        if (isset($validateFields['password'])) {
-            $user->password = $validateFields['password'];
-        }
-
-        if (isset($validateFields['number'])) {
-            $user->number = $validateFields['number'];
         }
 
         $user->save();

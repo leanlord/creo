@@ -5,6 +5,7 @@
         <div class="login">
             <h2 class="login__title">Войти</h2>
             <form action="{{ route('login') }}" method="POST" id="loginForm" class="form login__form">
+                @csrf
                 <label class="form__input login__input">
                     <span>Электронная почта</span>
                     <input name="email" type="email" required>

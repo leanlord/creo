@@ -30,24 +30,30 @@
                 <a href="#" class="profile__image">
                     <img src="{{ asset('img/account/profile.svg') }}" alt="Изменить аватар" class="profile__pic">
                 </a>
-                <form action="#" id="profileForm" class="form profile__form">
+                <form action="" id="profileForm" class="form profile__form"
+                      method="POST">
+                    @csrf
                     <div class="form__first">
                         <label class="form__name">
                             <span>Имя</span>
-                            <input name="first__name" id="name" type="text" value="Владимир">
+                            <input name="first_name" id="name" type="text"
+                                   value="{{ auth()->user()->first_name }}">
                         </label>
                         <label class="form__name">
                             <span>Фамилия</span>
-                            <input name="last__name" id="name" type="text" value="Дадыка">
+                            <input name="last_name" id="name" type="text"
+                                   value="{{ auth()->user()->last_name }}">
                         </label>
                     </div>
                     <label class="form__input">
                         <span>Электронная почта</span>
-                        <input name="email" type="email" required>
+                        <input name="email" type="email"
+                               value="{{ auth()->user()->email }}">
                     </label>
                     <label class="form__input">
                         <span>Номер телефона</span>
-                        <input name="number" type="tel">
+                        <input name="number" type="tel"
+                               value="{{ auth()->user()->number }}">
                     </label>
                     <label class="form__input">
                         <span>Пароль (минимум 7 символов)</span>

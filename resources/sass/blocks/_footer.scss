@@ -1,7 +1,7 @@
 .footer {
     padding-top: 120px;
-    padding-bottom: 283px;
-    background-color: $footer;;
+    padding-bottom: 140px;
+    background: $footer url("/img/footer/footer.png") no-repeat top center;
 
     &__wrapper {
         display: flex;

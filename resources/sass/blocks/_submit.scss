@@ -1,0 +1,115 @@
+.submit {
+    padding-top: 120px;
+    padding-bottom: 130px;
+    background: linear-gradient(180deg, rgba(40, 89, 163, 0) -41.19%, #2859A3 100%), url("/img/submit/bgSvg.svg") no-repeat center, $footer;
+    margin-bottom: 120px;
+
+    &__wrapper {
+        position: relative;
+        padding: 75px 0 75px 80px;
+        border-radius: 8px;
+        background: url("/img/submit/bg.jpg") no-repeat right, linear-gradient(90.55deg, #F8FAFD 0.53%, #EEF1F7 42.39%);
+    }
+
+    &__title {
+        margin-bottom: 25px;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 37px;
+        text-transform: uppercase;
+    }
+
+    &__text {
+        max-width: 591px;
+        margin-bottom: 30px;
+        font-style: normal;
+        font-weight: 300;
+        font-size: 16px;
+        line-height: 26px;
+        color: $form;
+    }
+
+    &__span {
+        font-weight: 600;
+    }
+
+    &__button {
+        padding: 20px 45px;
+        cursor: pointer;
+    }
+
+    &__top {
+        margin-bottom: 26px;
+    }
+
+    &__form {
+        margin-bottom: 27px;
+    }
+
+    &__input {
+        width: 226px;
+        padding-top: 18px;
+        padding-bottom: 18px;
+        margin-right: 40px;
+        border-style: none;
+        border-bottom: 1px solid #B2C4E1;
+        background: transparent;
+    }
+
+    &__aside {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 20px;
+        color: $aside;
+    }
+    &__checkbox {
+        padding-top: 4px;
+        position: relative;
+        font-style: normal;
+        padding-left: 33px;
+        font-weight: 300;
+        font-size: 12px;
+        line-height: 19px;
+        color: $black;
+        cursor: pointer;
+        user-select: none;
+
+        .checkmark:after {
+            top: 6px;
+            left: 5px;
+            width: 14px;
+            height: 9px;
+            background-image: url("/img/submit/checkmark.svg");
+            background-position: center center;
+            background-repeat: no-repeat;
+        }
+
+        input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+    }
+    &__placeholder {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 18px;
+        line-height: 18px;
+        color: #6E81A2;
+    }
+}
+
+.submit__checkbox input:checked ~ .checkmark {
+    background-color: $footer_red;
+}
+
+.submit__checkbox:hover .checkmark {
+    background-color: #ccc;
+}
+
+.submit__checkbox input:checked ~ .checkmark:after {
+    display: block;
+}
+

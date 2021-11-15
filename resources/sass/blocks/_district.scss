@@ -1,0 +1,51 @@
+.districts {
+    margin-bottom: 120px;
+
+    &__title {
+        margin-bottom: 60px;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 44px;
+        line-height: 60px;
+        text-align: center;
+        letter-spacing: 0.02em;
+        color: #112138;
+    }
+
+    &__list {
+        padding-left: 16px;
+        max-height: 206px;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        align-content: space-between;
+        margin-bottom: 120px;
+    }
+
+    &__item {
+        list-style-image: url("/img/districts/dot.svg");
+        padding-inline-start: 5px;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 40px;
+        color: $black;
+    }
+
+
+    &__paragraph {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 28px;
+        color: $black;
+    }
+
+    &__subtitle {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 14px;
+        line-height: 28px;
+        color: $black;
+    }
+}

@@ -11,11 +11,11 @@
                 <div class="form__first">
                     <label class="form__name">
                         <span>Имя</span>
-                        <input name="first__name" id="name" type="text" placeholder="Владимир">
+                        <input name="first__name" id="name" type="text">
                     </label>
                     <label class="form__name">
                         <span>Фамилия</span>
-                        <input name="last__name" id="name" type="text" placeholder="Дадыка">
+                        <input name="last__name" id="name" type="text">
                     </label>
                 </div>
                 <label class="form__input">

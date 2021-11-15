@@ -34,11 +34,11 @@
                     <div class="form__first">
                         <label class="form__name">
                             <span>Имя</span>
-                            <input name="first__name" id="name" type="text" placeholder="Владимир">
+                            <input name="first__name" id="name" type="text" value="Владимир">
                         </label>
                         <label class="form__name">
                             <span>Фамилия</span>
-                            <input name="last__name" id="name" type="text" placeholder="Дадыка">
+                            <input name="last__name" id="name" type="text" value="Дадыка">
                         </label>
                     </div>
                     <label class="form__input">
@@ -51,7 +51,7 @@
                     </label>
                     <label class="form__input">
                         <span>Пароль (минимум 7 символов)</span>
-                        <input name="password" type="password" required minlength="7">
+                        <input name="password" type="password" minlength="7">
                     </label>
                 </form>
                 <input type="submit" value="Сохранить" form="profileForm" class="form-button profile__button">

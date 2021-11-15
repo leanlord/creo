@@ -1,4 +1,6 @@
 .flats {
+    margin-bottom: 120px;
+
     &__container {
         display: flex;
     }
@@ -34,6 +36,7 @@
     }
 
     &__title {
+        margin-bottom: 50px;
         font-style: normal;
         font-weight: bold;
         font-size: 44px;
@@ -41,6 +44,10 @@
         text-align: center;
         letter-spacing: 0.02em;
         color: $darkblue;
+    }
+
+    &__text {
+
     }
 
     &__flat {
@@ -134,15 +141,6 @@
 
     &__details {
         padding: 13px 84px;
-        font-style: normal;
-        font-weight: bold;
-        font-size: 14px;
-        line-height: 18px;
-        text-decoration: none;
-        text-align: center;
-        background: #FF3324;
-        border-radius: 3px;
-        color: #fff;
     }
 
     &__price {

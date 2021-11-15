@@ -22,7 +22,7 @@
                      class="flatIcon">
                 <span class="flats__desc">1-комнатные, 2-х комнатные "СпецСтройКубань"</span>
             </div>
-            <a href="#" class="flats__details">Подробнее</a>
+            <a href="#" class="btn flats__details">Подробнее</a>
         </div>
     </div>
 @endfor

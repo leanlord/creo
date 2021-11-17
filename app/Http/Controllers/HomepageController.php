@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Plugins\Settings;
+use App\Plugins\Settings\UsersSettings;
 use Illuminate\Http\Request;
 
 class HomepageController extends Controller
@@ -35,7 +35,7 @@ class HomepageController extends Controller
         ]);
 
         // Заполнение каждого аттрибута пользователя для сохранения
-        foreach (Settings::getUserAttributes() as $attribute) {
+        foreach (UsersSettings::getUserAttributes() as $attribute) {
             if (isset($validateFields[$attribute])) {
                 $user->$attribute = $validateFields[$attribute];
             }

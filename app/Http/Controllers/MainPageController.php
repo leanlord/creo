@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Message;
 use App\Plugins\Filter;
+use App\Plugins\Settings\FlatsSettings;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -62,37 +63,54 @@ class MainPageController extends Controller
         $allFilteringAttributes = Filter::getAllAttributes($request);
 
         // Выборка всех квартир с заданными условиями фильтрации
-        $allFlats = DB::table('flats')
+        $query = DB::table('flats');
+        foreach (FlatsSettings::getRelatedTables() as $table => $communicationField) {
+            $query->leftJoin($table, 'flats.' . $communicationField, '=', $table . '.id');
+        }
 
-            //Присоединение всех таблиц, относящихся к данной
-            ->leftJoin('cities', 'flats.city_id', '=', 'cities.id')
-            ->leftJoin('companies', 'flats.company_id', '=', 'companies.id')
-            ->leftJoin('areas', 'flats.area_id', '=', 'areas.id')
+        foreach (FlatsSettings::getStringFilteringAttributes() as $table => $attribute) {
+            $query->where($table . '.' . $attribute, 'like', $allFilteringAttributes[$attribute]);
+        }
 
-            // Условия выборки строковых значений
-            ->where('cities.city', 'like', $allFilteringAttributes['city'])
-            ->where('companies.company', 'like', $allFilteringAttributes['company'])
-            ->where('areas.area', 'like', $allFilteringAttributes['area'])
+        foreach (FlatsSettings::getIntFilteringAttributes() as $attribute) {
+            $query->whereBetween('flats.' . $attribute, [
+                $allFilteringAttributes['min_' . $attribute],
+                $allFilteringAttributes['max_' . $attribute]
+            ]);
+        }
 
-            // Условия выборки числовых значений в диапазоне
-            ->whereBetween('flats.price', [
-                $allFilteringAttributes['min_price'],
-                $allFilteringAttributes['max_price']
-            ])
-            ->whereBetween('flats.square', [
-                $allFilteringAttributes['min_square'],
-                $allFilteringAttributes['max_square']
-            ])
-            ->paginate(9);
+        $allFlats = $query->paginate(9)->items();
 
-        if ($allFlats->isEmpty()) {
+
+
+//            //Присоединение всех таблиц, относящихся к данной
+//            ->leftJoin('cities', 'flats.city_id', '=', 'cities.id')
+//            ->leftJoin('companies', 'flats.company_id', '=', 'companies.id')
+//            ->leftJoin('areas', 'flats.area_id', '=', 'areas.id')
+//
+//            // Условия выборки строковых значений
+//            ->where('cities.city', 'like', $allFilteringAttributes['city'])
+//            ->where('companies.company', 'like', $allFilteringAttributes['company'])
+//            ->where('areas.area', 'like', $allFilteringAttributes['area'])
+//
+//            // Условия выборки числовых значений в диапазоне
+//            ->whereBetween('flats.price', [
+//                $allFilteringAttributes['min_price'],
+//                $allFilteringAttributes['max_price']
+//            ])
+//            ->whereBetween('flats.square', [
+//                $allFilteringAttributes['min_square'],
+//                $allFilteringAttributes['max_square']
+//            ])
+//            ->paginate(9);
+
+        if (empty($allFlats)) {
             return redirect('/');
         }
 
-        $data = [];
+        // Приведение объекта STDClass к массиву
+        $data["flats"] = json_decode(json_encode($allFlats), true);
         foreach ($allFlats as $flat) {
-            // Приведение объекта STDClass к массиву
-            $data["flats"][] = json_decode(json_encode($allFlats), true);
             /*
              * Заполнение происходит таким образом:
              * заносятся только те значения столбцов,

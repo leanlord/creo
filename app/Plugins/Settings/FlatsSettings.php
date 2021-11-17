@@ -1,49 +1,44 @@
 <?php
 
-namespace App\Plugins;
+namespace App\Plugins\Settings;
 
-class Settings
+class FlatsSettings
 {
     /**
-     * String filtering attributes - like name, city or color
-     *
      * @var string[]
      */
     protected static $stringFilteringAttributes = [
-        'city',
-        'company',
-        'area',
+        'cities' => 'city',
+        'companies' => 'company',
+        'areas' => 'area',
     ];
+
     /**
-     * List of all related tables
+     * List of all related tables, key is the name of
+     * table, value is the communication field
      *
      * @var string[]
      */
     protected static $relatedTables = [
-        'cities',
-        'companies',
-        'areas'
+        'cities' => 'city_id',
+        'companies' => 'company_id',
+        'areas' => 'area_id'
     ];
 
     /**
-     * Numeric filtering attributes - like min_price, count or horse powers
+     * Attributes, which can be counted
+     *
+     * @var array
+     */
+    protected static $countableAttributes = [];
+
+    /**
+     * Numeric filtering attributes for
+     * "between" queries
      *
      * @var string[]
      */
-    protected static $intFilteringAttributes = [
-        'min_price',
-        'max_price',
-        'min_square',
-        'max_square'
-    ];
-
-    protected static $userAttributes = [
-        'first_name',
-        'last_name',
-        'number',
-        'email',
-        'password',
-    ];
+    protected static $intFilteringAttributes = ['price', 'square'];
 
     /**
      * @return string[]
@@ -69,6 +64,9 @@ class Settings
         return self::$relatedTables;
     }
 
+    /**
+     * @return int
+     */
     public static function getCountOfStringAttributes(): int
     {
         return count(self::$stringFilteringAttributes);
@@ -77,13 +75,5 @@ class Settings
     public static function getCountOfNumericAttributes(): int
     {
         return count(static::$intFilteringAttributes);
-    }
-
-    /**
-     * @return string[]
-     */
-    public static function getUserAttributes(): array
-    {
-        return self::$userAttributes;
     }
 }

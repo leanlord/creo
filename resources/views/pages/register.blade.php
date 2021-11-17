@@ -4,19 +4,16 @@
     <div class="container">
         <div class="register">
             <h2 class="register__title">Регистрация</h2>
-            <a href="#" class="profile__image">
-                <img src="{{ asset('img/account/profile.svg') }}" alt="Изменить аватар" class="profile__pic">
-            </a>
             <form action="{{ route('register') }}" method="POST" id="registerForm" class="form register__form">
                 @csrf
                 <div class="form__first">
                     <label class="form__name">
                         <span>Имя</span>
-                        <input name="first_name" id="name" type="text" placeholder="Владимир">
+                        <input name="first_name" id="name" type="text">
                     </label>
                     <label class="form__name">
                         <span>Фамилия</span>
-                        <input name="last_name" id="name" type="text" placeholder="Дадыка">
+                        <input name="last_name" id="name" type="text">
                     </label>
                 </div>
                 <label class="form__input">

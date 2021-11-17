@@ -17,7 +17,7 @@
                     <div class="splitter"></div>
                 </label>
                 <label class="form__name">Название ЖК, ПК, шоссе...
-                    <input type="text">
+                    <input required type="text">
                     <div class="splitter"></div>
                 </label>
                 <label class="form__city">Район
@@ -36,8 +36,8 @@
 
                 </label>
             </form>
-            <label class="btn submit__button">
-                <input form="" value="Отправить" type="submit">
+            <label class="btn hero__button">
+                <input class="hero__submit input-submit" form="hero" value="Показать квартиры" type="submit">
             </label>
         </div>
     </div>
@@ -138,7 +138,7 @@
                         <input name="number" class="submit__input" type="tel" required placeholder="Телефон">
                     </label>
                     <label class="btn submit__button">
-                        <input value="Отправить" type="submit">
+                        <input class="submit__send input-submit" value="Отправить" type="submit">
                     </label>
                 </div>
                 <div class="submit__bottom">

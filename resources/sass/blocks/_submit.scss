@@ -34,7 +34,7 @@
     }
 
     &__button {
-        padding: 20px 45px;
+        padding: 20px 46px;
         cursor: pointer;
     }
 
@@ -62,6 +62,14 @@
         font-size: 20px;
         color: $aside;
     }
+
+    &__send {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 18px;
+        line-height: 18px;
+    }
+
     &__checkbox {
         padding-top: 4px;
         position: relative;
@@ -90,8 +98,25 @@
             cursor: pointer;
             height: 0;
             width: 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        input:checked ~ .checkmark {
+            background-color: $footer_red;
+        }
+
+        input:checked ~ .checkmark:after {
+            display: block;
+        }
+
+        &:hover {
+            .checkmark {
+                background-color: #ccc;
+            }
         }
     }
+
     &__placeholder {
         font-style: normal;
         font-weight: normal;
@@ -99,17 +124,5 @@
         line-height: 18px;
         color: #6E81A2;
     }
-}
-
-.submit__checkbox input:checked ~ .checkmark {
-    background-color: $footer_red;
-}
-
-.submit__checkbox:hover .checkmark {
-    background-color: #ccc;
-}
-
-.submit__checkbox input:checked ~ .checkmark:after {
-    display: block;
 }
 

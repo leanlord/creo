@@ -5,32 +5,15 @@ namespace App\Plugins\Settings;
 class FlatsSettings
 {
     /**
+     * Attributes to filter with 'like' operator
+     *
      * @var string[]
      */
     protected static $stringFilteringAttributes = [
-        'cities' => 'city',
-        'companies' => 'company',
-        'areas' => 'area',
+        'city',
+        'company',
+        'area'
     ];
-
-    /**
-     * List of all related tables, key is the name of
-     * table, value is the communication field
-     *
-     * @var string[]
-     */
-    protected static $relatedTables = [
-        'cities' => 'city_id',
-        'companies' => 'company_id',
-        'areas' => 'area_id'
-    ];
-
-    /**
-     * Attributes, which can be counted
-     *
-     * @var array
-     */
-    protected static $countableAttributes = [];
 
     /**
      * Numeric filtering attributes for
@@ -41,11 +24,51 @@ class FlatsSettings
     protected static $intFilteringAttributes = ['price', 'square'];
 
     /**
+     * List of all related tables, key is the name of
+     * table, value is the communication field
+     *
+     * @var string[]
+     */
+    protected static $relatedTables = [
+        'cities',
+        'companies',
+        'areas'
+    ];
+
+    protected static $communicationFields = [
+        'city_id',
+        'company_id',
+        'area_id'
+    ];
+
+    /**
+     * Attributes, which can be counted
+     *
+     * @var array
+     */
+    protected static $countableAttributes = [];
+
+    /**
+     * Attributes that will be returned to frontend
+     *
+     * @var string[]
+     */
+    protected static $flatsAttributes = [
+        'address',
+        'square',
+        'is_rented',
+        'price',
+        'city',
+        'company',
+        'area'
+    ];
+
+    /**
      * @return string[]
      */
     public static function getStringFilteringAttributes(): array
     {
-        return self::$stringFilteringAttributes;
+        return array_combine(self::$relatedTables, self::$stringFilteringAttributes);
     }
 
     /**
@@ -61,7 +84,7 @@ class FlatsSettings
      */
     public static function getRelatedTables(): array
     {
-        return self::$relatedTables;
+        return array_combine(self::$relatedTables, self::$communicationFields);
     }
 
     /**
@@ -75,5 +98,13 @@ class FlatsSettings
     public static function getCountOfNumericAttributes(): int
     {
         return count(static::$intFilteringAttributes);
+    }
+
+    /**
+     * @return string[]
+     */
+    public static function getFlatsAttributes(): array
+    {
+        return self::$flatsAttributes;
     }
 }

@@ -63,7 +63,9 @@ class MainPageController extends Controller
         $allFilteringAttributes = Filter::getAllAttributes($request);
 
         // Выборка всех квартир с заданными условиями фильтрации
-        $query = DB::table('flats');
+        $query = DB::table('flats')
+            ->select(FlatsSettings::getFlatsAttributes());
+
         foreach (FlatsSettings::getRelatedTables() as $table => $communicationField) {
             $query->leftJoin($table, 'flats.' . $communicationField, '=', $table . '.id');
         }
@@ -81,55 +83,33 @@ class MainPageController extends Controller
 
         $allFlats = $query->paginate(9)->items();
 
-
-
-//            //Присоединение всех таблиц, относящихся к данной
-//            ->leftJoin('cities', 'flats.city_id', '=', 'cities.id')
-//            ->leftJoin('companies', 'flats.company_id', '=', 'companies.id')
-//            ->leftJoin('areas', 'flats.area_id', '=', 'areas.id')
-//
-//            // Условия выборки строковых значений
-//            ->where('cities.city', 'like', $allFilteringAttributes['city'])
-//            ->where('companies.company', 'like', $allFilteringAttributes['company'])
-//            ->where('areas.area', 'like', $allFilteringAttributes['area'])
-//
-//            // Условия выборки числовых значений в диапазоне
-//            ->whereBetween('flats.price', [
-//                $allFilteringAttributes['min_price'],
-//                $allFilteringAttributes['max_price']
-//            ])
-//            ->whereBetween('flats.square', [
-//                $allFilteringAttributes['min_square'],
-//                $allFilteringAttributes['max_square']
-//            ])
-//            ->paginate(9);
-
         if (empty($allFlats)) {
-            return redirect('/');
+            redirect('/');
+            exit();
         }
 
-        // Приведение объекта STDClass к массиву
-        $data["flats"] = json_decode(json_encode($allFlats), true);
+        $data["flats"] = $allFlats;
+        $prices = $squares = $cities = $companies = [];
         foreach ($allFlats as $flat) {
-            /*
-             * Заполнение происходит таким образом:
-             * заносятся только те значения столбцов,
-             * которые используются в связанной таблице.
-             * Если есть город, к которому не принадлежит
-             * ни одна квартира, то такой город выведен не будет
-             */
-            $data["attributes"]["prices"][] = $flat->price;
-            $data["attributes"]["squares"][] = $flat->square;
-            $data["attributes"]["cities"][] = $flat->city;
-            $data["attributes"]["areas"][] = $flat->area;
-            $data["attributes"]["companies"][] = $flat->company;
+
+            // Приводим значения к массиву для удобного поиска
+            // максимального\минимального значения
+            $prices[] = $flat->price;
+            $squares[] = $flat->square;
+            $cities[] = $flat->city;
+            $areas[] = $flat->area;
+            $companies[] = $flat->company;
         }
 
         // Вычисление максимальных\минимальных значений
-        $data["attributes"]["maxPrice"] = max($data["attributes"]["prices"]);
-        $data["attributes"]["minPrice"] = min($data["attributes"]["prices"]);
-        $data["attributes"]["maxSquare"] = max($data["attributes"]["squares"]);
-        $data["attributes"]["minSquare"] = min($data["attributes"]["squares"]);
+        $data["attributes"]["maxPrice"] = max($prices);
+        $data["attributes"]["minPrice"] = min($prices);
+        $data["attributes"]["maxSquare"] = max($squares);
+        $data["attributes"]["minSquare"] = min($squares);
+
+        foreach (FlatsSettings::getStringFilteringAttributes() as $attribute => $value) {
+            $data['attributes'][$attribute] = $$attribute;
+        }
 
         // Делаем значения массивов уникальными
         foreach ($data["attributes"] as $attributeName => $attributeValues) {

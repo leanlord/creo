@@ -4,4 +4,17 @@
     margin-bottom: 120px;
     background: url("/img/hero/bg.png") no-repeat left center, linear-gradient(250.7deg, #EAF2FF 21.91%, #FFF6F5 106.15%);
     background-size: 100%;
+
+    &__button {
+        padding: 30px 113px;
+        color: $white;
+    }
+
+    &__submit {
+        margin: 0;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 20px;
+        line-height: 18px;
+    }
 }

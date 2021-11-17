@@ -101,6 +101,7 @@ h1, h2, h3, h4, h5, h6 {
     background: #FF3324;
     border-radius: 3px;
     color: #fff;
+    cursor: pointer;
 }
 
 .checkmark {
@@ -118,10 +119,8 @@ h1, h2, h3, h4, h5, h6 {
     display: none;
 }
 
-input[type=submit] {
+.input-submit {
     border: none;
-    font-size: 18px;
-    font-weight: bold;
     background: transparent;
     cursor: pointer;
     color: inherit;

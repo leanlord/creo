@@ -15,7 +15,9 @@
                     <input name="password" type="password" required minlength="7">
                 </label>
             </form>
-            <input type="submit" value="Войти" form="loginForm" class="form-button login__button">
+            <label class="login__button">
+                <input type="submit" value="Войти" form="loginForm" class="form-button login__send">
+            </label>
             <span class="login__span">Нет аккаунта? <a href="{{ url('register') }}" class="login__link">Зарегистрируйтесь</a></span>
         </div>
     </div>

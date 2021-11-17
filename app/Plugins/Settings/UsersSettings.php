@@ -7,7 +7,7 @@ class UsersSettings
     /**
      * @var string[]
      */
-    protected static $userAttributes = [
+    protected static $attributes = [
         'first_name',
         'last_name',
         'number',
@@ -18,8 +18,8 @@ class UsersSettings
     /**
      * @return string[]
      */
-    public static function getUserAttributes(): array
+    public static function getAttributes(): array
     {
-        return self::$userAttributes;
+        return self::$attributes;
     }
 }

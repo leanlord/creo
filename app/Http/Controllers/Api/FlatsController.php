@@ -10,8 +10,11 @@ class FlatsController extends Controller
 {
     /**
      * Display a listing of the resource.
+     * This method uses the same method in other controller
+     * and converts it's result to json format
      *
-     * @return false|\Illuminate\Http\Response|string
+     * @param Request $request
+     * @return \Illuminate\Support\Collection
      */
     public function index(Request $request)
     {

@@ -22,16 +22,11 @@ class MainPageController extends Controller
     }
 
     /**
-     * Shows all flats (for AJAX)
+     * Sends form data from main page
      *
      * @param Request $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return \Illuminate\Contracts\View\View
      */
-    public function showFlatsSection(Request $request)
-    {
-        return view('includes.flats', ['data' => static::getAllFlats($request)]);
-    }
-
     public function send(Request $request)
     {
         $validatedFields = $request->validate([
@@ -45,16 +40,16 @@ class MainPageController extends Controller
 
         $message->save();
 
-        return view('pages.home', ['succes' => true]);
+        return view('pages.home', ['success' => true]);
     }
 
     /**
      * Returns all data about flats
      *
      * @param Request $request
-     * @return array|\Illuminate\Routing\Redirector
+     * @return array
      */
-    public static function getAllFlats(Request $request)
+    public static function getAllFlats(Request $request): array
     {
         /*
          * Получение и обработка всех параметров
@@ -62,18 +57,21 @@ class MainPageController extends Controller
          */
         $allFilteringAttributes = Filter::getAllAttributes($request);
 
-        // Выборка всех квартир с заданными условиями фильтрации
+        // Выбираем только необходимые аттрибуты
         $query = DB::table('flats')
             ->select(FlatsSettings::getFlatsAttributes());
 
+        // Присоединение всех связанных таблиц
         foreach (FlatsSettings::getRelatedTables() as $table => $communicationField) {
             $query->leftJoin($table, 'flats.' . $communicationField, '=', $table . '.id');
         }
 
+        // Добавление условия на все строковые аттрибуты
         foreach (FlatsSettings::getStringFilteringAttributes() as $table => $attribute) {
             $query->where($table . '.' . $attribute, 'like', $allFilteringAttributes[$attribute]);
         }
 
+        // Добавление условия всех минимальных\максимальных значений
         foreach (FlatsSettings::getIntFilteringAttributes() as $attribute) {
             $query->whereBetween('flats.' . $attribute, [
                 $allFilteringAttributes['min_' . $attribute],
@@ -83,17 +81,11 @@ class MainPageController extends Controller
 
         $allFlats = $query->paginate(9)->items();
 
-        if (empty($allFlats)) {
-            redirect('/');
-            exit();
-        }
-
         $data["flats"] = $allFlats;
-        $prices = $squares = $cities = $companies = [];
-        foreach ($allFlats as $flat) {
 
-            // Приводим значения к массиву для удобного поиска
-            // максимального\минимального значения
+        $prices = $squares = $cities = $companies = $areas = [];
+        foreach ($allFlats as $flat) {
+            // Заполнение массивов для выборки максимального\минимального значения
             $prices[] = $flat->price;
             $squares[] = $flat->square;
             $cities[] = $flat->city;
@@ -101,20 +93,22 @@ class MainPageController extends Controller
             $companies[] = $flat->company;
         }
 
-        // Вычисление максимальных\минимальных значений
-        $data["attributes"]["maxPrice"] = max($prices);
-        $data["attributes"]["minPrice"] = min($prices);
-        $data["attributes"]["maxSquare"] = max($squares);
-        $data["attributes"]["minSquare"] = min($squares);
+        if (!empty($allFlats)) {
+            $data["attributes"]["maxPrice"] = max($prices);
+            $data["attributes"]["minPrice"] = min($prices);
+            $data["attributes"]["maxSquare"] = max($squares);
+            $data["attributes"]["minSquare"] = min($squares);
 
-        foreach (FlatsSettings::getStringFilteringAttributes() as $attribute => $value) {
-            $data['attributes'][$attribute] = $$attribute;
-        }
+            // Вставление данных из связанных таблиц
+            foreach (FlatsSettings::getRelatedTablesNames() as $table) {
+                $data['attributes'][$table] = $$table;
+            }
 
-        // Делаем значения массивов уникальными
-        foreach ($data["attributes"] as $attributeName => $attributeValues) {
-            if (gettype($attributeValues) == 'array') {
-                $data["attributes"][$attributeName] = array_unique($attributeValues);
+            // Делаем значения массивов уникальными
+            foreach ($data["attributes"] as $attributeName => $attributeValues) {
+                if (gettype($attributeValues) == 'array') {
+                    $data["attributes"][$attributeName] = array_unique($attributeValues);
+                }
             }
         }
 

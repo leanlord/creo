@@ -35,19 +35,16 @@ class HomepageController extends Controller
         ]);
 
         // Заполнение каждого аттрибута пользователя для сохранения
-        foreach (UsersSettings::getUserAttributes() as $attribute) {
+        foreach (UsersSettings::getAttributes() as $attribute) {
             if (isset($validateFields[$attribute])) {
                 $user->$attribute = $validateFields[$attribute];
             }
         }
 
-        if (
-            User::where('email', $validateFields['email'])
-            ->where('id', '<>', $id)
-            ->exists()
-        ) {
+        // Если такой емейл уже существует
+        $email = User::select('email')->where('email', '=', $request->input('email'))->first();
+        if ($email !== null) {
             return view('pages.account',
-                // и выводить ссылку на /login
                 ['thisUserAlreadyExists' => 'Этот адресс электронной почты уже занят другим пользователем!']);
         }
 

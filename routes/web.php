@@ -10,9 +10,6 @@ Route::get('/', [MainPageController::class, 'index']);
 
 Route::post('/', [MainPageController::class, 'send']);
 
-// Для AJAX
-Route::get('/flats', [MainPageController::class, 'showFlatsSection']);
-
 Route::middleware('auth')->group(function () {
     Route::get('/account', [HomepageController::class, 'index'])->name('account');
     Route::post('/account', [HomepageController::class, 'update'])->name('account');

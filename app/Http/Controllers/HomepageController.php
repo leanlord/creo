@@ -18,22 +18,15 @@ class HomepageController extends Controller
      */
     public function update(Request $request)
     {
-        $id = auth()->user()->getAuthIdentifier();
-        $user = User::find($id);
-
-        $passwordParams = '';
-        if ($request->getPassword() !== null) {
-            $passwordParams = 'min:7';
-        }
-
         $validateFields = $request->validate([
             'email' => 'email',
-            'password' => $passwordParams,
+            'password' => 'nullable|min:7',
             'first_name' => '',
             'last_name' => '',
             'number' => ''
         ]);
 
+        $user = new User;
         // Заполнение каждого аттрибута пользователя для сохранения
         foreach (UsersSettings::getAttributes() as $attribute) {
             if (isset($validateFields[$attribute])) {
@@ -42,15 +35,14 @@ class HomepageController extends Controller
         }
 
         // Если такой емейл уже существует
-        $email = User::select('email')->where('email', '=', $request->input('email'))->first();
+        $email = User::select('email')->where('email', $request->input('email'))->first();
         if ($email !== null) {
             return view('pages.account',
                 ['thisUserAlreadyExists' => 'Этот адресс электронной почты уже занят другим пользователем!']);
         }
 
         $user->save();
-
-        auth()->login($user);
+        auth()->login($user, true);
 
         return view('pages.account', ['success' => true]);
     }

@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Company;
+use App\Models\Flats;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,6 +15,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        Model::unguard();
+
+        $this->call(AreaTableSeeder::class);
+        $this->call(FlatsTableSeeder::class);
+        $this->call(CityTableSeeder::class);
+        $this->call(CompanyTableSeeder::class);
+
+        Model::reguard();
     }
 }

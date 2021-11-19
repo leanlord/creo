@@ -26,7 +26,6 @@ class MainPageController extends Controller
      * Sends form data from main page
      *
      * @param Request $request
-     * @return \Illuminate\Contracts\View\View
      */
     public function send(Request $request)
     {
@@ -41,7 +40,7 @@ class MainPageController extends Controller
 
         $message->save();
 
-        return view('pages.home', ['success' => true]);
+        return redirect('/');
     }
 
     /**

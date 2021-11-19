@@ -27,9 +27,6 @@
             <div class="splitter splitter-large"></div>
             <div class="profile account__profile">
                 <h2 class="profile__title">Редактировать профиль</h2>
-                <a href="#" class="profile__image">
-                    <img src="{{ asset('img/account/profile.svg') }}" alt="Изменить аватар" class="profile__pic">
-                </a>
                 <form action="" id="profileForm" class="form profile__form"
                       method="POST">
                     @csrf

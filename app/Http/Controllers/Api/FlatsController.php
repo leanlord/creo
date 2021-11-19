@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\MainPageController;
+use App\Models\Flats;
 use Illuminate\Http\Request;
 
 class FlatsController extends Controller
@@ -14,11 +15,11 @@ class FlatsController extends Controller
      * and converts it's result to json format
      *
      * @param Request $request
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request)
     {
-        return collect(MainPageController::getAllFlats($request));
+        return response()->json(['data' => MainPageController::getAllFlats($request)]);
     }
 
     /**
@@ -35,12 +36,10 @@ class FlatsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Flats $flat)
     {
-        //
+        return response()->json(['data' => $flat]);
     }
 
     /**

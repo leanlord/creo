@@ -7,6 +7,7 @@ use App\Plugins\Filter;
 use App\Plugins\Settings\FlatsSettings;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\Console\Input\Input;
 
 class MainPageController extends Controller
 {

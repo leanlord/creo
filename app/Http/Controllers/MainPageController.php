@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Message;
-use App\Plugins\Filter;
+use App\Plugins\Filters\BaseFilter;
+use App\Plugins\Filters\NumericFilter;
+use App\Plugins\Filters\StringFilter;
 use App\Plugins\Settings\FlatsSettings;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -51,12 +53,6 @@ class MainPageController extends Controller
      */
     public static function getAllFlats(Request $request): array
     {
-        /*
-         * Получение и обработка всех параметров
-         * GET запроса для запроса в БД
-         */
-        $allFilteringAttributes = Filter::getAllAttributes($request);
-
         // Выбираем только необходимые аттрибуты
         $query = DB::table('flats')
             ->select(FlatsSettings::getFlatsAttributes());
@@ -66,18 +62,10 @@ class MainPageController extends Controller
             $query->leftJoin($table, 'flats.' . $communicationField, '=', $table . '.id');
         }
 
-        // Добавление условия на все строковые аттрибуты
-        foreach (FlatsSettings::getStringFilteringAttributes() as $table => $attribute) {
-            $query->where($table . '.' . $attribute, 'like', $allFilteringAttributes[$attribute]);
-        }
-
-        // Добавление условия всех минимальных\максимальных значений
-        foreach (FlatsSettings::getIntFilteringAttributes() as $attribute) {
-            $query->whereBetween('flats.' . $attribute, [
-                $allFilteringAttributes['min_' . $attribute],
-                $allFilteringAttributes['max_' . $attribute]
-            ]);
-        }
+        $stringFilter = new StringFilter($request);
+        $stringFilter->filter($query);
+        $intFilter = new NumericFilter($request);
+        $intFilter->filter($query);
 
         $allFlats = $query->paginate(9)->items();
 
@@ -111,6 +99,8 @@ class MainPageController extends Controller
                 }
             }
         }
+
+        dd($data);
 
         return $data;
     }

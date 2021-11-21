@@ -5,25 +5,6 @@ namespace App\Plugins\Settings;
 class FlatsSettings
 {
     /**
-     * Attributes to filter with "like" operator
-     *
-     * @var string[]
-     */
-    protected static $stringFilteringAttributes = [
-        'city',
-        'company',
-        'area'
-    ];
-
-    /**
-     * Numeric filtering attributes for
-     * "between" operator
-     *
-     * @var string[]
-     */
-    protected static $intFilteringAttributes = ['price', 'square'];
-
-    /**
      * List of all related tables
      *
      * @var string[]
@@ -66,21 +47,6 @@ class FlatsSettings
         'company',
         'area'
     ];
-
-    /**
-     * Returns attributes and tables in which they are located
-     *
-     * @return string[]
-     */
-    public static function getStringFilteringAttributes(): array
-    {
-        return array_combine(self::$relatedTables, self::$stringFilteringAttributes);
-    }
-
-    public static function getIntFilteringAttributes(): array
-    {
-        return self::$intFilteringAttributes;
-    }
 
     /**
      * Returns related tables as keys

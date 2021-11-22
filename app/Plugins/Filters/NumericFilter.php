@@ -44,7 +44,7 @@ class NumericFilter extends BaseFilter
         return $result;
     }
 
-    public function filter($query)
+    public function filter($query): void
     {
         // Добавление условия всех минимальных\максимальных значений
         foreach (static::$filteringAttributes as $attribute) {

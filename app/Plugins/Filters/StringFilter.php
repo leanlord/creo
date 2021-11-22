@@ -48,7 +48,7 @@ class StringFilter extends BaseFilter
         return $result;
     }
 
-    public function filter($query)
+    public function filter($query): void
     {
         // Добавление условия на все строковые аттрибуты
         foreach (static::getFilteringColumns() as $table => $attribute) {

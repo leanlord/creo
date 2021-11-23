@@ -11,11 +11,10 @@ Route::get('/', [MainPageController::class, 'index']);
 Route::post('/', [MainPageController::class, 'send']);
 
 Route::middleware('auth')->group(function () {
-    Route::get('/account/', [HomepageController::class, 'index'])->name('account');
-    Route::post('/account/', [HomepageController::class, 'update'])->name('account');
+    Route::get('/account', [HomepageController::class, 'index'])->name('account');
+    Route::post('/account', [HomepageController::class, 'update'])->name('account');
 });
 
-// ->name('login') для middleware('auth')
 Route::match(['get', 'post'], '/login', [AuthController::class, 'login'])
     ->name('login');
 

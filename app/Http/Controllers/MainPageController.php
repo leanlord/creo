@@ -49,9 +49,10 @@ class MainPageController extends Controller
      * Returns all data about flats
      *
      * @param Request $request
-     * @return array
+     * @return array|\Illuminate\Http\JsonResponse
      */
-    public static function getAllFlats(Request $request): array
+    // TODO попробовать забиндить фильтры в service провайдере
+    public static function getAllFlats(Request $request)
     {
         // Выбираем только необходимые аттрибуты
         $query = DB::table('flats')
@@ -100,7 +101,9 @@ class MainPageController extends Controller
             }
         }
 
-        dd($data);
+        if ($request->ajax()) {
+            return response()->json($data);
+        }
 
         return $data;
     }

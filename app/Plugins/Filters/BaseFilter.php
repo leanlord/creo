@@ -10,7 +10,7 @@ abstract class BaseFilter
      * Concrete values which will be used for filtering
      * @var array
      */
-    protected $filteringValues;
+    public $filteringValues;
 
     public function __construct($request)
     {

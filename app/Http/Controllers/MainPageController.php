@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Plugins\Filter;
+use App\Models\Message;
+use App\Plugins\Filters\BaseFilter;
+use App\Plugins\Filters\NumericFilter;
+use App\Plugins\Filters\StringFilter;
+use App\Plugins\Settings\FlatsSettings;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\Console\Input\Input;
 
 class MainPageController extends Controller
 {
@@ -20,87 +25,85 @@ class MainPageController extends Controller
     }
 
     /**
-     * Shows all flats (for AJAX)
+     * Sends form data from main page
      *
      * @param Request $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function showFlatsSection(Request $request)
+    public function send(Request $request)
     {
-        return view('includes.flats', ['data' => static::getAllFlats($request)]);
+        $validatedFields = $request->validate([
+            'number' => 'required',
+            'name' => 'required'
+        ]);
+
+        $message = new Message();
+        $message->number = $validatedFields['number'];
+        $message->name = $validatedFields['name'];
+
+        $message->save();
+
+        return redirect('/');
     }
 
     /**
      * Returns all data about flats
      *
      * @param Request $request
-     * @return array|\Illuminate\Routing\Redirector
+     * @return array|\Illuminate\Http\JsonResponse
      */
+    // TODO попробовать забиндить фильтры в service провайдере
+    // TODO сделать фильтры под шаблон Decorator
     public static function getAllFlats(Request $request)
     {
-        /*
-         * Получение и обработка всех параметров
-         * GET запроса для запроса в БД
-         */
-        $allFilteringAttributes = Filter::getAllAttributes($request);
+        // Выбираем только необходимые аттрибуты
+        $query = DB::table('flats')
+            ->select(FlatsSettings::getFlatsAttributes());
 
-        // Выборка всех квартир с заданными условиями фильтрации
-        $allFlats = DB::table('flats')
-
-            //Присоединение всех таблиц, относящихся к данной
-            ->leftJoin('cities', 'flats.city_id', '=', 'cities.id')
-            ->leftJoin('companies', 'flats.company_id', '=', 'companies.id')
-            ->leftJoin('areas', 'flats.area_id', '=', 'areas.id')
-
-            // Условия выборки строковых значений
-            ->where('cities.city', 'like', $allFilteringAttributes['city'])
-            ->where('companies.company', 'like', $allFilteringAttributes['company'])
-            ->where('areas.area', 'like', $allFilteringAttributes['area'])
-
-            // Условия выборки числовых значений в диапазоне
-            ->whereBetween('flats.price', [
-                $allFilteringAttributes['min_price'],
-                $allFilteringAttributes['max_price']
-            ])
-            ->whereBetween('flats.square', [
-                $allFilteringAttributes['min_square'],
-                $allFilteringAttributes['max_square']
-            ])
-            ->paginate(9);
-
-        if ($allFlats->isEmpty()) {
-            return redirect('/');
+        // Присоединение всех связанных таблиц
+        foreach (FlatsSettings::getRelatedTables() as $table => $communicationField) {
+            $query->leftJoin($table, 'flats.' . $communicationField, '=', $table . '.id');
         }
 
-        $data = [];
+        $stringFilter = new StringFilter($request);
+        $stringFilter->filter($query);
+        $intFilter = new NumericFilter($request);
+        $intFilter->filter($query);
+
+        $allFlats = $query->paginate(9)->items();
+
+        $data["flats"] = $allFlats;
+
+        $prices = $squares = $cities = $companies = $areas = [];
         foreach ($allFlats as $flat) {
-            // Приведение объекта STDClass к массиву
-            $data["flats"][] = json_decode(json_encode($allFlats), true);
-            /*
-             * Заполнение происходит таким образом:
-             * заносятся только те значения столбцов,
-             * которые используются в связанной таблице.
-             * Если есть город, к которому не принадлежит
-             * ни одна квартира, то такой город выведен не будет
-             */
-            $data["attributes"]["prices"][] = $flat->price;
-            $data["attributes"]["squares"][] = $flat->square;
-            $data["attributes"]["cities"][] = $flat->city;
-            $data["attributes"]["areas"][] = $flat->area;
-            $data["attributes"]["companies"][] = $flat->company;
+            // Заполнение массивов для выборки максимального\минимального значения
+            $prices[] = $flat->price;
+            $squares[] = $flat->square;
+            $cities[] = $flat->city;
+            $areas[] = $flat->area;
+            $companies[] = $flat->company;
         }
 
-        // Вычисление максимальных\минимальных значений
-        $data["attributes"]["maxPrice"] = max($data["attributes"]["prices"]);
-        $data["attributes"]["minPrice"] = min($data["attributes"]["prices"]);
-        $data["attributes"]["maxSquare"] = max($data["attributes"]["squares"]);
-        $data["attributes"]["minSquare"] = min($data["attributes"]["squares"]);
+        if (!empty($allFlats)) {
+            $data["attributes"]["maxPrice"] = max($prices);
+            $data["attributes"]["minPrice"] = min($prices);
+            $data["attributes"]["maxSquare"] = max($squares);
+            $data["attributes"]["minSquare"] = min($squares);
 
-        // Делаем значения массивов уникальными
-        foreach ($data["attributes"] as $attributeName => $attributeValues) {
-            if (gettype($attributeValues) == 'array') {
-                $data["attributes"][$attributeName] = array_unique($attributeValues);
+            // Вставление данных из связанных таблиц
+            foreach (FlatsSettings::getRelatedTablesNames() as $table) {
+                $data['attributes'][$table] = $$table;
             }
+
+            // Делаем значения массивов уникальными
+            foreach ($data["attributes"] as $attributeName => $attributeValues) {
+                if (gettype($attributeValues) == 'array') {
+                    $data["attributes"][$attributeName] = array_unique($attributeValues);
+                }
+            }
+        }
+
+        if ($request->ajax()) {
+            return response()->json($data);
         }
 
         return $data;

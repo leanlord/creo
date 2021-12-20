@@ -36,7 +36,7 @@ class RegisterController extends Controller
              * и редиректим на профиль
              */
             if ($user) {
-                auth()->login($user);
+                auth()->login($user, true);
                 return redirect(route('account'));
             }
             // иначе произошла ошибка

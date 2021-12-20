@@ -6,35 +6,48 @@
         <div class="container">
             <h1 class="hero__title">Выбрать квартиру</h1>
             <p class="hero__desc">Найди своё среди 500 тыс. вариантов недвижимости</p>
-            <form method="GET" id="hero" action="#" class="form hero__form">
-                <label class="form__city">Выберите город *
-                    <select id="city">
+            <form method="post" action="#" class="form hero__form">
+                <div class="hero__city form__item">
+                    <label class="form__span">Выберите город *</label>
+                    <select class="form__input" id="city">
                         <option value="Любой">Любой</option>
                         <option value="Краснодар">Краснодар</option>
                         <option value="Волгоград">Волгоград</option>
                         <option value="Москва">Москва</option>
                     </select>
                     <div class="splitter"></div>
-                </label>
-                <label class="form__name">Название ЖК, ПК, шоссе...
-                    <input required type="text">
+                </div>
+                <div class="hero__name form__item">
+                    <label class="form__span">Название ЖК, ПК, шоссе...</label>
+                    <input class="form__input" required type="text">
                     <div class="splitter"></div>
-                </label>
-                <label class="form__city">Район
-                    <select id="city">
+                </div>
+                <div class="hero__district form__item">
+                    <label class="form__span">Район</label>
+                    <select class="form__input" id="city">
                         <option value="Любой">Любой район</option>
                         <option value="Краснодар">Центральный</option>
                         <option value="Волгоград">Табачная фабрика</option>
                         <option value="Москва">Губернский</option>
                     </select>
                     <div class="splitter"></div>
-                </label>
-                <label class="form__square">Площадь, м2
-
-                </label>
-                <label class="form__price">Стоимость, ₽
-
-                </label>
+                </div>
+                <div class="hero__square form__item">
+                    <label class="form__span">Площадь, м2</label>
+                    <div class="form__wrapper">
+                        <input type="text" class="form__input form__textbox hero__square-placeholder" placeholder="17">
+                        <span class="form__dash">—</span>
+                        <input type="text" class="form__input form__textbox hero__square-placeholder" placeholder="155">
+                    </div>
+                </div>
+                <div class="hero__price form__item">
+                    <label class="form__span">Стоимость, ₽</label>
+                    <div class="form__wrapper">
+                        <input type="text" class="form__input form__textbox hero__price-placeholder" placeholder="1 890 000">
+                        <span class="form__dash">—</span>
+                        <input type="text" class="form__input form__textbox hero__price-placeholder" placeholder="4 560 000">
+                    </div>
+                </div>
             </form>
             <label class="btn hero__button">
                 <input class="hero__submit input-submit" form="hero" value="Показать квартиры" type="submit">

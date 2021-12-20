@@ -4,13 +4,13 @@
     <div class="container">
         <div class="login">
             <h2 class="login__title">Войти</h2>
-            <form action="{{ route('login') }}" method="POST" id="loginForm" class="form login__form">
+            <form action="{{ route('login') }}" method="POST" id="loginForm" class="login__form auth__form">
                 @csrf
-                <label class="form__input login__input">
+                <label class="auth__input">
                     <span>Электронная почта</span>
                     <input name="email" type="email" required>
                 </label>
-                <label class="form__input login__input">
+                <label class="auth__input">
                     <span>Пароль</span>
                     <input name="password" type="password" required minlength="7">
                 </label>

@@ -21,26 +21,3 @@
         </a>
     </div>
 </div>
-<div class="container">
-    <div class="navbar">
-        <nav class="nav">
-            <ul class="nav__list">
-                <li class="nav__item">
-                    <a href="#" class="nav__link">Новостройки по городам</a>
-                </li>
-                <li class="nav__item">
-                    <a href="#" class="nav__link">Земельные участки</a>
-                </li>
-                <li class="nav__item">
-                    <a href="#" class="nav__link">Застройщики по городам</a>
-                </li>
-                <li class="nav__item">
-                    <a href="#" class="nav__link">События и мнения</a>
-                </li>
-                <li class="nav__item">
-                    <a href="#" class="nav__link">Поиск по карте</a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-</div>

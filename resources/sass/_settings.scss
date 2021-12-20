@@ -27,54 +27,60 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .splitter {
-    width: 332px;
+    width: 100%;
     height: 1px;
     background: #C4C4C4;
 }
 
 .form {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
 
-    input {
-        border: 1px solid #949494;
-        border-radius: 4px;
-        height: 35px;
-    }
-
-    label {
+    &__item {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
         font-style: normal;
         font-weight: normal;
-        font-size: 14px;
-        line-height: 17px;
-        color: #1A1A1A;
+        font-size: 20px;
+        line-height: 18px;
+        color: $black;
     }
 
-    span {
-        margin-bottom: 6px;
+    &__item:not(:nth-last-child(-n+2)) {
+        margin-bottom: 38px;
+        margin-right: auto;
     }
 
-    &__input:not(:last-child) {
-        margin-bottom: 11px;
+    &__item {
+        margin-right: 50px;
     }
 
     &__input {
-        display: flex;
-        flex-direction: column;
+        padding-top: 15px;
+        padding-bottom: 20px;
+        background: transparent;
+        border: none;
     }
 
-    &__first {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 25px;
+    &__span {
+        margin-bottom: 5px;
+        font-style: normal;
+        font-weight: 300;
+        font-size: 16px;
+        line-height: 18px;
+        color: $hero-gray;
     }
 
-    &__name {
-        width: 200px;
-        height: 58px;
-        display: flex;
-        flex-direction: column;
+    &__dash {
+        font-weight: 500;
+        font-size: 30px;
+    }
+
+    &__textbox {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border: 1px solid rgba(0, 0, 0, .15);
     }
 }
 
@@ -124,5 +130,55 @@ h1, h2, h3, h4, h5, h6 {
     background: transparent;
     cursor: pointer;
     color: inherit;
+}
+
+.auth {
+    &__form {
+        display: flex;
+        flex-direction: column;
+        align-self: stretch;
+        margin-bottom: 30px;
+
+        input {
+            border: 1px solid #949494;
+            border-radius: 4px;
+            height: 35px;
+        }
+
+        label {
+            font-style: normal;
+            font-weight: normal;
+            font-size: 14px;
+            line-height: 17px;
+            color: #1A1A1A;
+        }
+
+        span {
+            margin-bottom: 6px;
+        }
+    }
+
+    &__input {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__input:not(:last-child) {
+        margin-bottom: 11px;
+    }
+
+    &__first {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+    }
+
+    &__name {
+        width: 200px;
+        height: 58px;
+        display: flex;
+        flex-direction: column;
+    }
 }
 

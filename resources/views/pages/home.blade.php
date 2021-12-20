@@ -6,14 +6,14 @@
         <div class="container">
             <h1 class="hero__title">Выбрать квартиру</h1>
             <p class="hero__desc">Найди своё среди 500 тыс. вариантов недвижимости</p>
-            <form method="post" action="#" class="form hero__form">
+            <form method="get" action="/" class="form hero__form">
                 <div class="hero__city form__item">
                     <label class="form__span">Выберите город *</label>
                     <select class="form__input" id="city">
                         <option value="Любой">Любой</option>
-                        <option value="Краснодар">Краснодар</option>
-                        <option value="Волгоград">Волгоград</option>
-                        <option value="Москва">Москва</option>
+                        @foreach($data['attributes']['cities'] as $city)
+                            <option value="{{ $city }}">{{ $city }}</option>
+                        @endforeach
                     </select>
                     <div class="splitter"></div>
                 </div>
@@ -26,26 +26,30 @@
                     <label class="form__span">Район</label>
                     <select class="form__input" id="city">
                         <option value="Любой">Любой район</option>
-                        <option value="Краснодар">Центральный</option>
-                        <option value="Волгоград">Табачная фабрика</option>
-                        <option value="Москва">Губернский</option>
+                        @foreach($data['attributes']['areas'] as $area)
+                            <option value="{{ $area }}">{{ $area }}</option>
+                        @endforeach
                     </select>
                     <div class="splitter"></div>
                 </div>
                 <div class="hero__square form__item">
                     <label class="form__span">Площадь, м2</label>
                     <div class="form__wrapper">
-                        <input type="text" class="form__input form__textbox hero__square-placeholder" placeholder="17">
+                        <input type="text" class="form__input form__textbox hero__square-placeholder"
+                               placeholder="{{ $data['attributes']['minSquare'] }}">
                         <span class="form__dash">—</span>
-                        <input type="text" class="form__input form__textbox hero__square-placeholder" placeholder="155">
+                        <input type="text" class="form__input form__textbox hero__square-placeholder"
+                               placeholder="{{ $data['attributes']['maxSquare'] }}">
                     </div>
                 </div>
                 <div class="hero__price form__item">
                     <label class="form__span">Стоимость, ₽</label>
                     <div class="form__wrapper">
-                        <input type="text" class="form__input form__textbox hero__price-placeholder" placeholder="1 890 000">
+                        <input type="text" class="form__input form__textbox hero__price-placeholder"
+                               placeholder="{{ number_format($data['attributes']['minPrice'], 0, " ", " ") }}">
                         <span class="form__dash">—</span>
-                        <input type="text" class="form__input form__textbox hero__price-placeholder" placeholder="4 560 000">
+                        <input type="text" class="form__input form__textbox hero__price-placeholder"
+                               placeholder="{{ number_format($data['attributes']['maxPrice'], 0, " ", " ") }}">
                     </div>
                 </div>
             </form>
@@ -59,67 +63,15 @@
             <div class="menu flats__menu">
                 <div class="menu__heading">
                     <img src="{{ asset('img/flats/star.svg') }}" alt="Иконка: топ новостройки" class="menu__image">
-                    <span class="menu__title">Топ 12 новостроек</span>
+                    <span class="menu__title">Топ {{ count($data['attributes']['companies']) }} новостроек</span>
                 </div>
                 <div class="menu__links">
                     <ul class="menu__list">
-                        <li class="menu__item">
-                            <a href="#" class="menu__link">ЖК "Кубанская Марка"</a>
-                        </li>
-                        <li class="menu__item">
-                            <a href="#" class="menu__link">ЖК "Фестивальный"</a>
-                        </li>
-                        <li class="menu__item">
-                            <a href="#" class="menu__link">ЖК "Свобода"</a>
-                        </li>
-                        <li class="menu__item">
-                            <a href="#" class="menu__link">ЖК "Девелопмент-Плаза"</a>
-                        </li>
-                        <li class="menu__item">
-                            <a href="#" class="menu__link">ЖК "Образцова, 6"</a>
-                        </li>
-                        <li class="menu__item">
-                            <a href="#" class="menu__link">ЖК "Россинский парк"</a>
-                        </li>
-                        <li class="menu__item">
-                            <a href="#" class="menu__link">ЖК "Фруктовый квартал Абрикосово"</a>
-                        </li>
-                        <li class="menu__item">
-                            <a href="#" class="menu__link">ЖК "Дыхание"</a>
-                        </li>
-                        <li class="menu__item">
-                            <a href="#" class="menu__link">МКР "Кубанский"</a>
-                        </li>
-                        <li class="menu__item">
-                            <a href="#" class="menu__link">ЖК "Седьмой континент"</a>
-                        </li>
-                        <li class="menu__item">
-                            <a href="#" class="menu__link">ЖК "Восточно-Кругликовский"</a>
-                        </li>
-                        <li class="menu__item">
-                            <a href="#" class="menu__link">ЖК "Элегант"</a>
-                        </li>
-                        <li class="menu__item">
-                            <a href="#" class="menu__link">ЖК "Центральный"</a>
-                        </li>
-                        <li class="menu__item">
-                            <a href="#" class="menu__link">ЖК "Лиговский"</a>
-                        </li>
-                        <li class="menu__item">
-                            <a href="#" class="menu__link">ЖК "Восточно-Кругликовский" (ООО "Теплостройсервис")</a>
-                        </li>
-                        <li class="menu__item">
-                            <a href="#" class="menu__link">ЖК "Жилой квартал" по ул. 40 лет Победы</a>
-                        </li>
-                        <li class="menu__item">
-                            <a href="#" class="menu__link">ЖК "Lime" (ЖК Лайм)</a>
-                        </li>
-                        <li class="menu__item">
-                            <a href="#" class="menu__link">КП "Фестивальный"</a>
-                        </li>
-                        <li class="menu__item">
-                            <a href="#" class="menu__link">ЖК Ракурс</a>
-                        </li>
+                        @foreach($data['attributes']['companies'] as $company)
+                            <li class="menu__item">
+                                <a href="#" class="menu__link">{{ $company }}</a>
+                            </li>
+                        @endforeach
                     </ul>
                 </div>
             </div>

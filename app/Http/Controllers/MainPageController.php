@@ -21,6 +21,10 @@ class MainPageController extends Controller
      */
     public function index(Request $request)
     {
+        if ($request->ajax()) {
+            return view('includes.flats', ['data' => static::getAllFlats($request)]);
+        }
+
         return view('pages.home', ['data' => static::getAllFlats($request)]);
     }
 
@@ -100,10 +104,6 @@ class MainPageController extends Controller
                     $data["attributes"][$attributeName] = array_unique($attributeValues);
                 }
             }
-        }
-
-        if ($request->ajax()) {
-            return response()->json($data);
         }
 
         return $data;

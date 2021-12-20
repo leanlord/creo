@@ -23,10 +23,10 @@ class FlatsFactory extends Factory
     {
         return [
             'address' => $this->faker->address(),
-            'city_id' => $this->faker->numberBetween(1, 50),
+            'city_id' => $this->faker->numberBetween(1, 10),
             'square' => $this->faker->numberBetween(40, 150),
-            'company_id' => $this->faker->numberBetween(1, 50),
-            'area_id' => $this->faker->numberBetween(1, 50),
+            'company_id' => $this->faker->numberBetween(1, 10),
+            'area_id' => $this->faker->numberBetween(1, 10),
             'is_rented' => $this->faker->boolean,
             'price' => $this->faker->numberBetween(2500000, 10000000),
         ];

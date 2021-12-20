@@ -29,7 +29,7 @@ class StringFilter extends BaseFilter
         return array_combine(FlatsSettings::getRelatedTablesNames(), self::$filteringAttributes);
     }
 
-    public static function getFilteringValues(Request $request): array
+    public function setFilteringValues(Request $request): array
     {
         $result = [];
 

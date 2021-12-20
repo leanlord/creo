@@ -77,25 +77,22 @@ class MainPageController extends Controller
 
         $data["flats"] = $allFlats;
 
-        $prices = $squares = $cities = $companies = $areas = [];
+        $cities = $companies = $areas = [];
         foreach ($allFlats as $flat) {
-            // Заполнение массивов для выборки максимального\минимального значения
-            $prices[] = $flat->price;
-            $squares[] = $flat->square;
             $cities[] = $flat->city;
             $areas[] = $flat->area;
             $companies[] = $flat->company;
         }
 
         if (!empty($allFlats)) {
-            $data["attributes"]["maxPrice"] = $intFilter->filteringValues['max_price'];
-            $data["attributes"]["minPrice"] = $intFilter->filteringValues['min_price'];
-            $data["attributes"]["maxSquare"] = $intFilter->filteringValues['max_square'];
-            $data["attributes"]["minSquare"] = $intFilter->filteringValues['min_square'];
+            $data["attributes"]["maxPrice"] = $intFilter->getFilteringValues()['max_price'];
+            $data["attributes"]["minPrice"] = $intFilter->getFilteringValues()['min_price'];
+            $data["attributes"]["maxSquare"] = $intFilter->getFilteringValues()['max_square'];
+            $data["attributes"]["minSquare"] = $intFilter->getFilteringValues()['min_square'];
 
-            // Вставление данных из связанных таблиц
+            // Вставка данных из связанных таблиц
             foreach (FlatsSettings::getRelatedTablesNames() as $table) {
-                $data['attributes'][$table] = $$table;
+                $data['attributes'][$table] = $$table; // arrays - $companies, $squares etc.
             }
 
             // Делаем значения массивов уникальными

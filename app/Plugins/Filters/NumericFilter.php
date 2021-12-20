@@ -16,7 +16,7 @@ class NumericFilter extends BaseFilter
      */
     protected static $filteringAttributes = ['price', 'square'];
 
-    public static function getFilteringValues($request): array
+    public function setFilteringValues($request): array
     {
         $result = [];
 

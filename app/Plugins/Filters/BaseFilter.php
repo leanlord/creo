@@ -10,11 +10,11 @@ abstract class BaseFilter
      * Concrete values which will be used for filtering
      * @var array
      */
-    public $filteringValues;
+    protected $filteringValues;
 
     public function __construct($request)
     {
-        $this->filteringValues = static::getFilteringValues($request);
+        $this->filteringValues = $this->setFilteringValues($request);
     }
 
     /**
@@ -24,7 +24,7 @@ abstract class BaseFilter
      * @param Request $request
      * @return array
      */
-    abstract public static function getFilteringValues(Request $request): array;
+    abstract public function setFilteringValues(Request $request): array;
 
     /**
      * Adding conditions to filter set of values
@@ -33,4 +33,11 @@ abstract class BaseFilter
      * @return void
      */
     abstract public function filter($query): void;
+
+    /**
+     * @return array
+     */
+    public function getFilteringValues(): array {
+        return $this->filteringValues;
+    }
 }

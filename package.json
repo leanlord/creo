@@ -17,10 +17,10 @@
         "lodash": "^4.17.19",
         "resolve-url-loader": "^4.0.0",
         "sass": "^1.43.3",
-        "sass-loader": "^12.1.0"
+        "sass-loader": "^12.1.0",
+        "vue-loader": "^17.0.0"
     },
     "dependencies": {
-        "jquery": "^3.6.0",
-        "vue": "^2.6.14"
+        "vue": "^3.2.26"
     }
 }

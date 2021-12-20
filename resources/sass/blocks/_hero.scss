@@ -5,6 +5,24 @@
     background: url("/img/hero/bg.png") no-repeat left center, linear-gradient(250.7deg, #EAF2FF 21.91%, #FFF6F5 106.15%);
     background-size: 100%;
 
+    &__title {
+        margin-bottom: 38px;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 50px;
+        line-height: 74px;
+        color: $black;
+    }
+
+    &__desc {
+        margin: 0 0 70px;
+        font-style: normal;
+        font-weight: 300;
+        font-size: 20px;
+        line-height: 18px;
+        color: $black;
+    }
+
     &__button {
         padding: 30px 113px;
         color: $white;
@@ -16,5 +34,33 @@
         font-weight: bold;
         font-size: 20px;
         line-height: 18px;
+    }
+
+    &__form {
+        margin-bottom: 83px;
+    }
+
+    &__city {
+        min-width: 382px;
+    }
+
+    &__name {
+        min-width: 481px;
+    }
+
+    &__district {
+        min-width: 407px;
+    }
+
+    &__price {
+        &-placeholder {
+            max-width: 200px;
+        }
+    }
+
+    &__square {
+        &-placeholder {
+            max-width: 110px;
+        }
     }
 }

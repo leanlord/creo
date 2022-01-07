@@ -59,7 +59,7 @@
         </div>
     </div>
     <div class="flats">
-        <div class="container flats__container">
+        <div class="container flats__container" id="flats-container">
             <div class="menu flats__menu">
                 <div class="menu__heading">
                     <img src="{{ asset('img/flats/star.svg') }}" alt="Иконка: топ новостройки" class="menu__image">
@@ -80,10 +80,11 @@
                 <div class="flats__wrapper">
                     @include('includes.flats')
                 </div>
-                <a href="#" class="flats__button">
+                <a href="#" class="flats__button" id="flats-button">
                     <img src="{{ asset('img/flats/more.svg') }}" alt="Иконка: показать больше" class="flats__more">
                     <span class="flats__more">Показать ещё</span>
                 </a>
+                <div id="show-more" class="flats__wrapper"></div>
             </div>
         </div>
     </div>

@@ -55,7 +55,6 @@ class MainPageController extends Controller
      * @param Request $request
      * @return array|\Illuminate\Http\JsonResponse
      */
-    // TODO попробовать забиндить фильтры в service провайдере
     // TODO сделать фильтры под шаблон Decorator
     public static function getAllFlats(Request $request)
     {

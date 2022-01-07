@@ -34,7 +34,7 @@ class FlatsSettings
     protected static $countableAttributes = [];
 
     /**
-     * Attributes that will be returned to frontend
+     * Attributes that will be returned to view
      *
      * @var string[]
      */

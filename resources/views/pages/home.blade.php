@@ -6,7 +6,7 @@
         <div class="container">
             <h1 class="hero__title">Выбрать квартиру</h1>
             <p class="hero__desc">Найди своё среди 500 тыс. вариантов недвижимости</p>
-            <form method="get" action="/" class="form hero__form">
+            <form id="hero" method="get" action="/" class="form hero__form">
                 <div class="hero__city form__item">
                     <label class="form__span">Выберите город *</label>
                     <select class="form__input" id="city">
@@ -19,7 +19,7 @@
                 </div>
                 <div class="hero__name form__item">
                     <label class="form__span">Название ЖК, ПК, шоссе...</label>
-                    <input class="form__input" required type="text">
+                    <input class="form__input" type="text">
                     <div class="splitter"></div>
                 </div>
                 <div class="hero__district form__item">

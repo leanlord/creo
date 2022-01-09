@@ -14,12 +14,11 @@ class NumericFilter extends BaseFilter
      *
      * @var string[]
      */
-    protected static $filteringAttributes = ['price', 'square'];
+    protected array $filteringAttributes = ['price', 'square'];
+    protected array $minMaxValues = []; // TODO не знаю как по нормальному назвать массив
 
-    public function setFilteringValues($request): array
+    public function setFilteringValues($request): void
     {
-        $result = [];
-
         /*
          * Обработка всех числовых параметров запроса,
          * с использованием агрегатных функций SQL.
@@ -29,29 +28,37 @@ class NumericFilter extends BaseFilter
          * Так, например, запрос с названием max_price выполнит
          * вычисление функции MAX() по столбцу price.
          */
-        foreach (static::$filteringAttributes as $attribute) {
+        foreach ($this->filteringAttributes as $attribute) {
 
             foreach (['min', 'max'] as $agregateFunction) {
 
-                $userParam = $request->get($agregateFunction . '_' . $attribute);
+                $paramName = $agregateFunction . '_' . $attribute;
+                $this->minMaxValues[$paramName] = Flats::$agregateFunction($attribute);
+                $userParam = $request->get($paramName);
 
                 $userParam !== null ?
-                    $result[$agregateFunction . '_' . $attribute] = (int)$userParam :
-                    $result[$agregateFunction . '_' . $attribute] = Flats::$agregateFunction($attribute);
+                    $this->filteringValues[$paramName] = (int)$userParam :
+                    $this->filteringValues[$paramName] = $this->minMaxValues[$paramName];
             }
         }
-
-        return $result;
     }
 
     public function filter($query): void
     {
         // Добавление условия всех минимальных\максимальных значений
-        foreach (static::$filteringAttributes as $attribute) {
+        foreach ($this->filteringAttributes as $attribute) {
             $query->whereBetween('flats.' . $attribute, [
                 $this->filteringValues['min_' . $attribute],
                 $this->filteringValues['max_' . $attribute]
             ]);
         }
+    }
+
+    /**
+     * @param string $name
+     * @return int
+     */
+    public function getMinMaxValues(string $name): int {
+        return $this->minMaxValues[$name];
     }
 }

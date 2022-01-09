@@ -4,7 +4,6 @@ namespace App\Plugins\Filters;
 
 use App\Plugins\Settings\FlatsSettings;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class StringFilter extends BaseFilter
 {
@@ -13,7 +12,7 @@ class StringFilter extends BaseFilter
      *
      * @var string[]
      */
-    protected static $filteringAttributes = [
+    protected array $filteringAttributes = [
         'city',
         'company',
         'area'
@@ -24,15 +23,13 @@ class StringFilter extends BaseFilter
      *
      * @return string[]
      */
-    public static function getFilteringColumns(): array
+    public function getFilteringColumns(): array
     {
-        return array_combine(FlatsSettings::getRelatedTablesNames(), self::$filteringAttributes);
+        return array_combine(FlatsSettings::getRelatedTablesNames(), $this->filteringAttributes);
     }
 
-    public function setFilteringValues(Request $request): array
+    public function setFilteringValues(Request $request): void
     {
-        $result = [];
-
         /*
          * Обработка всех строковых параметров запроса.
          * Если GET параметр существует, то задается
@@ -41,11 +38,9 @@ class StringFilter extends BaseFilter
          * Иначе, задается "любое значение".
          * (в SQL '%' означает "последовательность любых символов любой длины")
          */
-        foreach (static::$filteringAttributes as $stringAttribute) {
-            $result[$stringAttribute] = $request->get($stringAttribute) ?? '%';
+        foreach ($this->filteringAttributes as $stringAttribute) {
+            $this->filteringValues[$stringAttribute] = $request->get($stringAttribute) ?? '%';
         }
-
-        return $result;
     }
 
     public function filter($query): void

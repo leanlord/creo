@@ -21,6 +21,11 @@
                      class="flatIcon">
                 <span class="flats__desc">{{ $flat->area }}</span>
             </div>
+            <div class="flats__type">
+                <img src="{{ asset('img/flats/carbon_area.svg') }}" alt="Иконка: площадь"
+                     class="flatIcon">
+                <span class="flats__desc">{{ $flat->square }} м2</span>
+            </div>
             <a href="#" class="btn flats__details">Подробнее</a>
         </div>
     </div>

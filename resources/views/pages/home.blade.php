@@ -8,8 +8,8 @@
             <p class="hero__desc">Найди своё среди 500 тыс. вариантов недвижимости</p>
             <form id="hero" method="get" action="/" class="form hero__form">
                 <div class="hero__city form__item">
-                    <label class="form__span">Выберите город *</label>
-                    <select class="form__input" id="city">
+                    <label for="city" class="form__span">Выберите город *</label>
+                    <select name="city" class="form__input" id="city">
                         <option value="Любой">Любой</option>
                         @foreach($data['attributes']['cities'] as $city)
                             <option value="{{ $city }}">{{ $city }}</option>
@@ -19,12 +19,12 @@
                 </div>
                 <div class="hero__name form__item">
                     <label class="form__span">Название ЖК, ПК, шоссе...</label>
-                    <input class="form__input" type="text">
+                    <input name="company" class="form__input" type="text">
                     <div class="splitter"></div>
                 </div>
                 <div class="hero__district form__item">
                     <label class="form__span">Район</label>
-                    <select class="form__input" id="city">
+                    <select name="area" class="form__input" id="city">
                         <option value="Любой">Любой район</option>
                         @foreach($data['attributes']['areas'] as $area)
                             <option value="{{ $area }}">{{ $area }}</option>
@@ -35,20 +35,20 @@
                 <div class="hero__square form__item">
                     <label class="form__span">Площадь, м2</label>
                     <div class="form__wrapper">
-                        <input type="text" class="form__input form__textbox hero__square-placeholder"
+                        <input name="min_square" type="text" class="form__input form__textbox hero__square-placeholder"
                                placeholder="{{ $data['attributes']['minSquare'] }}">
                         <span class="form__dash">—</span>
-                        <input type="text" class="form__input form__textbox hero__square-placeholder"
+                        <input name="max_square" type="text" class="form__input form__textbox hero__square-placeholder"
                                placeholder="{{ $data['attributes']['maxSquare'] }}">
                     </div>
                 </div>
                 <div class="hero__price form__item">
                     <label class="form__span">Стоимость, ₽</label>
                     <div class="form__wrapper">
-                        <input type="text" class="form__input form__textbox hero__price-placeholder"
+                        <input name="min_price" type="text" class="form__input form__textbox hero__price-placeholder"
                                placeholder="{{ number_format($data['attributes']['minPrice'], 0, " ", " ") }}">
                         <span class="form__dash">—</span>
-                        <input type="text" class="form__input form__textbox hero__price-placeholder"
+                        <input name="max_price" type="text" class="form__input form__textbox hero__price-placeholder"
                                placeholder="{{ number_format($data['attributes']['maxPrice'], 0, " ", " ") }}">
                     </div>
                 </div>
@@ -80,7 +80,7 @@
                 <div class="flats__wrapper">
                     @include('includes.flats')
                 </div>
-                <a href="#" class="flats__button" id="flats-button">
+                <a href="#" class="flats__button">
                     <img src="{{ asset('img/flats/more.svg') }}" alt="Иконка: показать больше" class="flats__more">
                     <span class="flats__more">Показать ещё</span>
                 </a>

@@ -36,10 +36,10 @@
                     <label class="form__span">Площадь, м2</label>
                     <div class="form__wrapper">
                         <input type="text" class="form__input form__textbox hero__square-placeholder"
-                               placeholder="{{ $data['attributes']['minSquare'] }}">
+                               placeholder="{{ $data['attributes']['minSquare'] ?? ''}}">
                         <span class="form__dash">—</span>
                         <input type="text" class="form__input form__textbox hero__square-placeholder"
-                               placeholder="{{ $data['attributes']['maxSquare'] }}">
+                               placeholder="{{ $data['attributes']['maxSquare'] ?? ''}}">
                     </div>
                 </div>
                 <div class="hero__price form__item">

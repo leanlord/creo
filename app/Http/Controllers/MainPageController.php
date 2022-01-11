@@ -49,11 +49,10 @@ class MainPageController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function send(Request $request)
-    {
+    public function send(Request $request) {
         $validatedFields = $request->validate([
             'number' => 'required',
-            'name' => 'required'
+            'name' => 'required',
         ]);
 
         $message = new Message();
@@ -72,8 +71,7 @@ class MainPageController extends Controller
      * @return array|\Illuminate\Http\JsonResponse
      */
     // TODO сделать фильтры под шаблон Composite
-    public function getAllFlats(Request $request)
-    {
+    public function getAllFlats(Request $request) {
         $this->joinAll();
 
         $this->stringFilter->filter($this->query);
@@ -82,18 +80,17 @@ class MainPageController extends Controller
         $data["flats"] = $this->query->paginate(9)->items();
         $data = $this->getAllRelatedData($data);
 
-        if (!empty($data["flats"])) {
-            $data = $this->getMaxValues($data);
-            $data = $this->getMinValues($data);
+        $data = $this->getMaxValues($data);
+        $data = $this->getMinValues($data);
 
-            // Делаем значения массивов уникальными
-            foreach ($data["attributes"] as $attributeName => $attributeValues) {
-                if (gettype($attributeValues) == 'array') {
-                    $data["attributes"][$attributeName] = array_unique($attributeValues);
-                }
+        // Делаем значения массивов уникальными
+        foreach ($data["attributes"] as $attributeName => $attributeValues) {
+            if (gettype($attributeValues) == 'array') {
+                $data["attributes"][$attributeName] = array_unique($attributeValues);
             }
         }
 
+       // dd($data);
         return $data;
     }
 

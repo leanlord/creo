@@ -36,20 +36,26 @@
                     <label class="form__span">Площадь, м2</label>
                     <div class="form__wrapper">
                         <input type="text" class="form__input form__textbox hero__square-placeholder"
-                               placeholder="{{ $data['attributes']['minSquare'] ?? ''}}">
+                               placeholder="{{ $data['attributes']['minSquare'] ?? '' }}">
                         <span class="form__dash">—</span>
                         <input type="text" class="form__input form__textbox hero__square-placeholder"
-                               placeholder="{{ $data['attributes']['maxSquare'] ?? ''}}">
+                               placeholder="{{ $data['attributes']['maxSquare'] ?? '' }}">
                     </div>
                 </div>
                 <div class="hero__price form__item">
                     <label class="form__span">Стоимость, ₽</label>
                     <div class="form__wrapper">
                         <input type="text" class="form__input form__textbox hero__price-placeholder"
-                               placeholder="{{ number_format($data['attributes']['minPrice'], 0, " ", " ") }}">
+                               placeholder="{{
+                                isset($data['attributes']['minPrice']) ?
+                                number_format($data['attributes']['minPrice'], 0, " ", " ")
+                                 : '' }}">
                         <span class="form__dash">—</span>
                         <input type="text" class="form__input form__textbox hero__price-placeholder"
-                               placeholder="{{ number_format($data['attributes']['maxPrice'], 0, " ", " ") }}">
+                               placeholder="{{
+                                isset($data['attributes']['maxPrice']) ?
+                                number_format($data['attributes']['maxPrice'], 0, " ", " ")
+                                 : '' }}">
                     </div>
                 </div>
             </form>
@@ -58,6 +64,9 @@
             </label>
         </div>
     </div>
+    @empty($data["flats"])
+        <div>Квартир не найдено.</div>
+    @endempty
     <div class="flats">
         <div class="container flats__container" id="flats-container">
             <div class="menu flats__menu">

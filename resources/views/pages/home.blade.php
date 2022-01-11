@@ -10,7 +10,6 @@
                 <div class="hero__city form__item">
                     <label for="city" class="form__span">Выберите город *</label>
                     <select name="city" class="form__input" id="city">
-                        <option value="Любой">Любой</option>
                         @foreach($data['attributes']['cities'] as $city)
                             <option value="{{ $city->city }}">{{ $city->city }}</option>
                         @endforeach
@@ -36,20 +35,20 @@
                     <label class="form__span">Площадь, м2</label>
                     <div class="form__wrapper">
                         <input name="min_square" type="text" class="form__input form__textbox hero__square-placeholder"
-                               placeholder="{{ $data['attributes']['minSquare'] }}">
+                               placeholder="40">
                         <span class="form__dash">—</span>
                         <input name="max_square" type="text" class="form__input form__textbox hero__square-placeholder"
-                               placeholder="{{ $data['attributes']['maxSquare'] }}">
+                               placeholder="150">
                     </div>
                 </div>
                 <div class="hero__price form__item">
                     <label class="form__span">Стоимость, ₽</label>
                     <div class="form__wrapper">
                         <input name="min_price" type="text" class="form__input form__textbox hero__price-placeholder"
-                               placeholder="{{ number_format($data['attributes']['minPrice'], 0, " ", " ") }}">
+                               placeholder="2 529 254">
                         <span class="form__dash">—</span>
                         <input name="max_price" type="text" class="form__input form__textbox hero__price-placeholder"
-                               placeholder="{{ number_format($data['attributes']['maxPrice'], 0, " ", " ") }}">
+                               placeholder="9 946 861">
                     </div>
                 </div>
             </form>

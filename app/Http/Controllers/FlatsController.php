@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Area;
 use App\Models\City;
 use App\Models\Company;
-use App\Models\Message;
 use App\Plugins\Filters\NumericFilter;
 use App\Plugins\Filters\StringFilter;
 use App\Plugins\Settings\FlatsSettings;
@@ -13,7 +12,7 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class MainPageController extends Controller
+class FlatsController extends Controller
 {
     protected StringFilter $stringFilter;
     protected NumericFilter $intFilter;
@@ -44,27 +43,6 @@ class MainPageController extends Controller
     }
 
     /**
-     * Sends form data from main page
-     *
-     * @param Request $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    public function send(Request $request) {
-        $validatedFields = $request->validate([
-            'number' => 'required',
-            'name' => 'required',
-        ]);
-
-        $message = new Message();
-        $message->number = $validatedFields['number'];
-        $message->name = $validatedFields['name'];
-
-        $message->save();
-
-        return redirect('/');
-    }
-
-    /**
      * Returns all data about flats
      *
      * @param Request $request
@@ -83,14 +61,6 @@ class MainPageController extends Controller
         $data = $this->getMaxValues($data);
         $data = $this->getMinValues($data);
 
-        // Делаем значения массивов уникальными
-        foreach ($data["attributes"] as $attributeName => $attributeValues) {
-            if (gettype($attributeValues) == 'array') {
-                $data["attributes"][$attributeName] = array_unique($attributeValues);
-            }
-        }
-
-       // dd($data);
         return $data;
     }
 

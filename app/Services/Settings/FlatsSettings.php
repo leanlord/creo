@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Plugins\Settings;
+namespace App\Services\Settings;
 
 class FlatsSettings
 {
@@ -9,7 +9,7 @@ class FlatsSettings
      *
      * @var string[]
      */
-    protected static $relatedTables = [
+    protected array $relatedTables = [
         'cities',
         'companies',
         'areas'
@@ -20,7 +20,7 @@ class FlatsSettings
      *
      * @var string[]
      */
-    protected static $communicationColumns = [
+    protected array $communicationColumns = [
         'city_id',
         'company_id',
         'area_id'
@@ -31,14 +31,14 @@ class FlatsSettings
      *
      * @var array
      */
-    protected static $countableAttributes = [];
+    protected array $countableAttributes = [];
 
     /**
      * Attributes that will be returned to view
      *
      * @var string[]
      */
-    protected static $flatsAttributes = [
+    protected array $flatsAttributes = [
         'address',
         'square',
         'is_rented',
@@ -54,18 +54,18 @@ class FlatsSettings
      *
      * @return string[]
      */
-    public static function getRelatedTables(): array
+    public function getRelatedTables(): array
     {
-        return array_combine(self::$relatedTables, self::$communicationColumns);
+        return array_combine($this->relatedTables, $this->communicationColumns);
     }
 
-    public static function getRelatedTablesNames(): array
+    public function getRelatedTablesNames(): array
     {
-        return self::$relatedTables;
+        return $this->relatedTables;
     }
 
-    public static function getFlatsAttributes(): array
+    public function getFlatsAttributes(): array
     {
-        return self::$flatsAttributes;
+        return $this->flatsAttributes;
     }
 }

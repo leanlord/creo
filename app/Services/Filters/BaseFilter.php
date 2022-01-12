@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Plugins\Filters;
+namespace App\Services\Filters;
 
+use App\Services\Settings\FlatsSettings;
 use Illuminate\Http\Request;
 
 abstract class BaseFilter
@@ -12,9 +13,12 @@ abstract class BaseFilter
      */
     protected array $filteringValues = [];
 
-    public function __construct($request)
+    protected FlatsSettings $settings;
+
+    public function __construct(Request $request)
     {
         $this->setFilteringValues($request);
+        $this->settings = new FlatsSettings();
     }
 
     /**

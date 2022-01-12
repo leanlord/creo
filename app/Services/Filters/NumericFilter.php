@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Plugins\Filters;
+namespace App\Services\Filters;
 
-use App\Plugins\Settings\FlatsSettings;
 use App\Models\Flats;
 use Illuminate\Http\Request;
 
@@ -17,7 +16,7 @@ class NumericFilter extends BaseFilter
     protected array $filteringAttributes = ['price', 'square'];
     protected array $minMaxValues = []; // TODO не знаю как по нормальному назвать массив
 
-    public function setFilteringValues($request): void
+    public function setFilteringValues(Request $request): void
     {
         /*
          * Обработка всех числовых параметров запроса,

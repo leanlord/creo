@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Plugins\Filters;
+namespace App\Services\Filters;
 
-use App\Plugins\Settings\FlatsSettings;
+use App\Services\Settings\FlatsSettings;
 use Illuminate\Http\Request;
 
 class StringFilter extends BaseFilter
@@ -25,7 +25,7 @@ class StringFilter extends BaseFilter
      */
     public function getFilteringColumns(): array
     {
-        return array_combine(FlatsSettings::getRelatedTablesNames(), $this->filteringAttributes);
+        return array_combine($this->settings->getRelatedTablesNames(), $this->filteringAttributes);
     }
 
     public function setFilteringValues(Request $request): void
@@ -46,7 +46,7 @@ class StringFilter extends BaseFilter
     public function filter($query): void
     {
         // Добавление условия на все строковые аттрибуты
-        foreach (static::getFilteringColumns() as $table => $attribute) {
+        foreach ($this->getFilteringColumns() as $table => $attribute) {
             $query->where($table . '.' . $attribute, 'like', $this->filteringValues[$attribute]);
         }
     }

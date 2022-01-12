@@ -64,9 +64,6 @@
             </label>
         </div>
     </div>
-    @empty($data["flats"])
-        <div>Квартир не найдено.</div>
-    @endempty
     <div class="flats">
         <div class="container flats__container" id="flats-container">
             <div class="menu flats__menu">

@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Area;
 use App\Models\City;
 use App\Models\Company;
-use App\Plugins\Filters\NumericFilter;
-use App\Plugins\Filters\StringFilter;
-use App\Plugins\Settings\FlatsSettings;
+use App\Services\Filters\NumericFilter;
+use App\Services\Filters\StringFilter;
+use App\Services\Settings\FlatsSettings;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -17,15 +17,17 @@ class FlatsController extends Controller
     protected StringFilter $stringFilter;
     protected NumericFilter $intFilter;
     protected Builder $query;
+    protected FlatsSettings $settings;
 
     public function __construct(Request $request) {
 
         $this->intFilter = new NumericFilter($request);
         $this->stringFilter = new StringFilter($request);
 
+        $this->settings = new FlatsSettings();
         // Выбираем только необходимые аттрибуты
         $this->query = DB::table('flats')
-            ->select(FlatsSettings::getFlatsAttributes());
+            ->select($this->settings->getFlatsAttributes());
     }
 
     /**
@@ -92,7 +94,7 @@ class FlatsController extends Controller
 
     protected function joinAll() {
         // Присоединение всех связанных таблиц
-        foreach (FlatsSettings::getRelatedTables() as $table => $communicationField) {
+        foreach ($this->settings->getRelatedTables() as $table => $communicationField) {
             $this->query->leftJoin(
                 $table,
                 'flats.' . $communicationField,

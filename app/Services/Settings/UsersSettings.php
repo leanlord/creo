@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Plugins\Settings;
+namespace App\Services\Settings;
 
 class UsersSettings
 {
     /**
      * @var string[]
      */
-    protected static $attributes = [
+    protected array $attributes = [
         'first_name',
         'last_name',
         'number',
@@ -18,8 +18,8 @@ class UsersSettings
     /**
      * @return string[]
      */
-    public static function getAttributes(): array
+    public function getAttributes(): array
     {
-        return self::$attributes;
+        return $this->attributes;
     }
 }

@@ -3,11 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Plugins\Settings\UsersSettings;
+use App\Services\Settings\UsersSettings;
 use Illuminate\Http\Request;
 
 class HomepageController extends Controller
 {
+    protected UsersSettings $settings;
+
+    public function __construct() {
+        $this->settings = new UsersSettings();
+    }
+
     public function index()
     {
         return view('pages.account');
@@ -28,7 +34,7 @@ class HomepageController extends Controller
 
         $user = new User;
         // Заполнение каждого аттрибута пользователя для сохранения
-        foreach (UsersSettings::getAttributes() as $attribute) {
+        foreach ($this->settings->getAttributes() as $attribute) {
             if (isset($validateFields[$attribute])) {
                 $user->$attribute = $validateFields[$attribute];
             }

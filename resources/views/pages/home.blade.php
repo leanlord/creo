@@ -56,6 +56,14 @@
                                  : '' }} ">
                     </div>
                 </div>
+                <div class="hero__price form__item">
+                    <label class="form__span">Статус</label>
+                    <select name="is_rented" class="form__input" id="is_rented">
+                        <option value="Сдан">Сдан</option>
+                        <option value="Не сдан">Не сдан</option>
+                    </select>
+                    <div class="splitter"></div>
+                </div>
             </form>
             <label class="btn hero__button">
                 <input class="hero__submit input-submit" form="hero" value="Показать квартиры" type="submit">

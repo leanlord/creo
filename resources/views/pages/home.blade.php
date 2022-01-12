@@ -24,7 +24,6 @@
                 <div class="hero__district form__item">
                     <label class="form__span">Район</label>
                     <select name="area" class="form__input" id="city">
-                        <option value="Любой">Любой район</option>
                         @foreach($data['attributes']['areas'] as $area)
                             <option value="{{ $area->area }}">{{ $area->area }}</option>
                         @endforeach

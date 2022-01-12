@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
 
 class RegisterController extends Controller
 {
@@ -20,7 +20,7 @@ class RegisterController extends Controller
                 'password' => 'required|min:7',
                 'first_name' => '',
                 'last_name' => '',
-                'number' => ''
+                'number' => '',
             ]);
 
             if (User::where('email', $validateFields['email'])->exists()) {

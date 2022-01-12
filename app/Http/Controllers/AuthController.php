@@ -7,8 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    public function login(Request $request)
-    {
+    public function login(Request $request) {
         if (Auth::check()) {
             return redirect('/account');
         }
@@ -22,12 +21,10 @@ class AuthController extends Controller
             return view('pages.login');
         }
 
-        // Если произошла какая то ошибка
         return view('pages.login', ['loginError' => 'Введен неверный логин или пароль.']);
     }
 
-    public function logout()
-    {
+    public function logout() {
         Auth::logout();
         return redirect('/account');
     }

@@ -14,11 +14,37 @@ use Illuminate\Support\Facades\DB;
 
 class FlatsController extends Controller
 {
+    /**
+     * Instance of string filter
+     *
+     * @var StringFilter
+     */
     protected StringFilter $stringFilter;
+
+    /**
+     * Instance of numeric filter
+     *
+     * @var NumericFilter
+     */
     protected NumericFilter $intFilter;
+
+    /**
+     * Query, that is used to generate SQL request
+     *
+     * @var Builder
+     */
     protected Builder $query;
+
+    /**
+     * Instance of data-object class
+     *
+     * @var FlatsSettings
+     */
     protected FlatsSettings $settings;
 
+    /**
+     * @param Request $request
+     */
     public function __construct(Request $request) {
 
         $this->intFilter = new NumericFilter($request);
@@ -66,6 +92,12 @@ class FlatsController extends Controller
         return $data;
     }
 
+    /**
+     * Adding all data from related tables to response
+     *
+     * @param array $data
+     * @return array
+     */
     protected static function getAllRelatedData(array $data): array {
         $data["attributes"]["cities"] = City::all();
         $data["attributes"]["areas"] = Area::all();
@@ -74,6 +106,12 @@ class FlatsController extends Controller
         return $data;
     }
 
+    /**
+     * Adding max values to response
+     *
+     * @param array $data
+     * @return array
+     */
     protected function getMaxValues(array $data): array {
         $data["attributes"]["maxPrice"] =
             $this->intFilter->getMinMaxValues("max_price");
@@ -83,6 +121,12 @@ class FlatsController extends Controller
         return $data;
     }
 
+    /**
+     * Adding min values to response
+     *
+     * @param array $data
+     * @return array
+     */
     protected function getMinValues(array $data): array {
         $data["attributes"]["minPrice"] =
             $this->intFilter->getMinMaxValues("min_price");
@@ -92,8 +136,10 @@ class FlatsController extends Controller
         return $data;
     }
 
+    /**
+     * Joining all tables
+     */
     protected function joinAll() {
-        // Присоединение всех связанных таблиц
         foreach ($this->settings->getRelatedTables() as $table => $communicationField) {
             $this->query->leftJoin(
                 $table,

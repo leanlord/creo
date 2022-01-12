@@ -14,19 +14,26 @@ class NumericFilter extends BaseFilter
      * @var string[]
      */
     protected array $filteringAttributes = ['price', 'square'];
+
+    /**
+     * Minimal and Maximal values of countable attributes
+     *
+     * @var array
+     */
     protected array $minMaxValues = []; // TODO не знаю как по нормальному назвать массив
 
-    public function setFilteringValues(Request $request): void
-    {
-        /*
-         * Обработка всех числовых параметров запроса,
-         * с использованием агрегатных функций SQL.
-         * Параметры должны начинаться с <агрегатная функция>_
-         * Затем, начало обрезается и происходит вычисление
-         * этой агрегатной функции по оставшейся строке.
-         * Так, например, запрос с названием max_price выполнит
-         * вычисление функции MAX() по столбцу price.
-         */
+    /**
+     * Обработка всех числовых параметров запроса,
+     * с использованием агрегатных функций SQL.
+     * Параметры должны начинаться с <агрегатная функция>_
+     * Затем, начало обрезается и происходит вычисление
+     * этой агрегатной функции по оставшейся строке.
+     * Так, например, запрос с названием max_price выполнит
+     * вычисление функции MAX() по столбцу price.
+     *
+     * @param Request $request
+     */
+    public function setFilteringValues(Request $request): void {
         foreach ($this->filteringAttributes as $attribute) {
 
             foreach (['min', 'max'] as $agregateFunction) {
@@ -42,13 +49,16 @@ class NumericFilter extends BaseFilter
         }
     }
 
-    public function filter($query): void
-    {
-        // Добавление условия всех минимальных\максимальных значений
+    /**
+     * Добавление условия всех минимальных\максимальных значений
+     *
+     * @param $query
+     */
+    public function filter($query): void {
         foreach ($this->filteringAttributes as $attribute) {
             $query->whereBetween('flats.' . $attribute, [
                 $this->filteringValues['min_' . $attribute],
-                $this->filteringValues['max_' . $attribute]
+                $this->filteringValues['max_' . $attribute],
             ]);
         }
     }

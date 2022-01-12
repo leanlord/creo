@@ -13,10 +13,14 @@ abstract class BaseFilter
      */
     protected array $filteringValues = [];
 
+    /**
+     * Instance of data-object class
+     *
+     * @var FlatsSettings
+     */
     protected FlatsSettings $settings;
 
-    public function __construct(Request $request)
-    {
+    public function __construct(Request $request) {
         $this->setFilteringValues($request);
         $this->settings = new FlatsSettings();
     }

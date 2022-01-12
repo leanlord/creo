@@ -2,7 +2,6 @@
 
 namespace App\Services\Filters;
 
-use App\Services\Settings\FlatsSettings;
 use Illuminate\Http\Request;
 
 class StringFilter extends BaseFilter
@@ -15,7 +14,7 @@ class StringFilter extends BaseFilter
     protected array $filteringAttributes = [
         'city',
         'company',
-        'area'
+        'area',
     ];
 
     /**
@@ -23,29 +22,32 @@ class StringFilter extends BaseFilter
      *
      * @return string[]
      */
-    public function getFilteringColumns(): array
-    {
+    public function getFilteringColumns(): array {
         return array_combine($this->settings->getRelatedTablesNames(), $this->filteringAttributes);
     }
 
-    public function setFilteringValues(Request $request): void
-    {
-        /*
-         * Обработка всех строковых параметров запроса.
-         * Если GET параметр существует, то задается
-         * значение этого параметра, которое будет использовано
-         * как условие в запросе к БД.
-         * Иначе, задается "любое значение".
-         * (в SQL '%' означает "последовательность любых символов любой длины")
-         */
+    /**
+     * Обработка всех строковых параметров запроса.
+     * Если GET параметр существует, то задается
+     * значение этого параметра, которое будет использовано
+     * как условие в запросе к БД.
+     * Иначе, задается "любое значение".
+     * (в SQL '%' означает "последовательность любых символов любой длины")
+     *
+     * @param Request $request
+     */
+    public function setFilteringValues(Request $request): void {
         foreach ($this->filteringAttributes as $stringAttribute) {
             $this->filteringValues[$stringAttribute] = $request->get($stringAttribute) ?? '%';
         }
     }
 
-    public function filter($query): void
-    {
-        // Добавление условия на все строковые аттрибуты
+    /**
+     * Добавление условия на все строковые аттрибуты
+     *
+     * @param $query
+     */
+    public function filter($query): void {
         foreach ($this->getFilteringColumns() as $table => $attribute) {
             $query->where($table . '.' . $attribute, 'like', $this->filteringValues[$attribute]);
         }

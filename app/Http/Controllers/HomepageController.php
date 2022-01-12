@@ -14,22 +14,20 @@ class HomepageController extends Controller
         $this->settings = new UsersSettings();
     }
 
-    public function index()
-    {
+    public function index() {
         return view('pages.account');
     }
 
     /*
      * Обновление личных данных пользователя
      */
-    public function update(Request $request)
-    {
+    public function update(Request $request) {
         $validateFields = $request->validate([
             'email' => 'email',
             'password' => 'nullable|min:7',
             'first_name' => '',
             'last_name' => '',
-            'number' => ''
+            'number' => '',
         ]);
 
         $user = new User;

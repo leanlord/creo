@@ -1,0 +1,78 @@
+// hero-form
+
+@media (max-width: 1454px) {
+    .form {
+        min-height: 300px;
+
+        &__item {
+            min-width: calc(30vw + 30px);
+        }
+    }
+
+    .hero {
+        &__price-placeholder {
+            max-width: calc(15vw - 5px);
+        }
+    }
+}
+
+@media (max-width: 1200px) {
+    .container {
+        max-width: 960px;
+    }
+
+    .top {
+        &__container {
+            justify-content: space-between;
+        }
+
+        &__logo,
+        &__info,
+        &__contact {
+            margin-right: 0;
+        }
+    }
+
+    .submit {
+        margin-bottom: 60px;
+    }
+
+    .districts {
+        margin-bottom: 70px;
+
+        &__item {
+            font-size: 16px;
+        }
+
+        &__list {
+            margin-bottom: 50px;
+        }
+
+        &__title {
+            margin-bottom: 35px;
+        }
+    }
+
+    .footer {
+        padding-top: 70px;
+    }
+}
+
+@media (max-width: 992px) {
+    .container {
+        max-width: 750px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        max-width: 576px;
+    }
+}
+
+@media (max-width: 576px) {
+    .container {
+        max-width: 576px;
+    }
+}
+

@@ -77,7 +77,8 @@
     &__info {
         display: flex;
         flex-direction: column;
-        padding: 25px 25px 40px 25px;
+        justify-content: space-around;
+        padding: 10px 25px 25px 25px;
         min-height: 300px;
     }
 
@@ -93,12 +94,10 @@
         font-weight: 600;
         font-size: 16px;
         line-height: 28px;
-        margin-bottom: 20px;
     }
 
     &__address {
         display: flex;
-        margin-bottom: 16px;
     }
 
     &__city {
@@ -129,7 +128,6 @@
 
     &__type {
         display: flex;
-        margin-bottom: auto;
     }
 
     &__desc {
@@ -147,7 +145,6 @@
 
     &__price {
         display: flex;
-        margin-bottom: 15px;
     }
 
     &__button {

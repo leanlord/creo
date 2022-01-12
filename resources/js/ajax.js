@@ -19,10 +19,9 @@
  */
 
 
-$(document).ready(function () {
-    $('#flats-button').click(function (event) {
-        event.preventDefault();
-        $('#show-more').load('?min_price=6000000');
-        console.log('success');
-    });
-});
+$('#hero').submit(function () {
+    let $form = $(this)
+    $form.find('.error').remove();
+})
+
+

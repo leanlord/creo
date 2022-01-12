@@ -8,7 +8,7 @@ body {
 
 .container {
     max-width: 1320px;
-    width: 90%;
+    width: 92%;
     margin: 0 auto;
 }
 
@@ -33,8 +33,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .form {
+    min-height: 200px;
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: space-between;
 
     &__item {
         display: flex;
@@ -47,14 +50,6 @@ h1, h2, h3, h4, h5, h6 {
         color: $black;
     }
 
-    &__item:not(:nth-last-child(-n+2)) {
-        margin-bottom: 38px;
-        margin-right: auto;
-    }
-
-    &__item {
-        margin-right: 50px;
-    }
 
     &__input {
         padding-top: 15px;

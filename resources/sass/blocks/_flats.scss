@@ -1,5 +1,5 @@
 .flats {
-    margin-bottom: 120px;
+    margin-bottom: 20px;
 
     &__container {
         display: flex;
@@ -8,16 +8,9 @@
     &__wrapper {
         display: flex;
         flex-wrap: wrap;
-        max-width: 941px;
+        justify-content: space-evenly;
+        max-width: 991px;
         margin-bottom: 50px;
-    }
-
-    &__flat:not(:nth-child(3n)) {
-        margin-right: 13px;
-    }
-
-    &__flat:last-child {
-        margin-right: auto;
     }
 
     &__flat {
@@ -169,7 +162,7 @@
 }
 
 .menu {
-    width: 340px;
+    min-width: 270px;
 
     &__heading {
         display: flex;

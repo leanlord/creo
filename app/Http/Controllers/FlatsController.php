@@ -83,7 +83,7 @@ class FlatsController extends Controller
         $this->stringFilter->filter($this->query);
         $this->intFilter->filter($this->query);
 
-        $data["flats"] = $this->query->paginate(9)->items();
+        $data["flats"] = $this->query->paginate(6)->items();
         $data = $this->getAllRelatedData($data);
 
         $data = $this->getMaxValues($data);

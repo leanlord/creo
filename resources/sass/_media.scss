@@ -18,7 +18,7 @@
 
 @media (max-width: 1200px) {
     .container {
-        max-width: 960px;
+        min-width: 960px;
     }
 
     .top {
@@ -35,6 +35,10 @@
 
     .submit {
         margin-bottom: 60px;
+
+        &__wrapper {
+            padding: 55px;
+        }
     }
 
     .districts {
@@ -60,13 +64,165 @@
 
 @media (max-width: 992px) {
     .container {
-        max-width: 750px;
+        min-width: 720px;
+    }
+
+    .hero {
+        padding-top: 50px;
+        margin-bottom: 80px;
+
+        &__form {
+            margin-bottom: 60px;
+        }
+
+        &__title {
+            margin-bottom: 15px;
+        }
+
+        &__button {
+            padding: 23px 70px;
+        }
+    }
+
+    .top {
+        &__info {
+            display: none;
+        }
+    }
+
+    .flats {
+        &__container {
+            flex-direction: column;
+        }
+
+        &__main {
+            order: 0;
+            margin-bottom: 20px;
+        }
+
+        &__menu {
+            order: 1;
+            margin-right: 0;
+        }
+
+        &__wrapper {
+            justify-content: space-around;
+            margin-bottom: 0;
+        }
+
+        &__flat {
+            margin-bottom: 40px;
+        }
+    }
+
+    .menu {
+        &__item:not(:last-child) {
+            margin-bottom: 20px;
+        }
+    }
+
+    .submit {
+        padding-top: 40px;
+        padding-bottom: 40px;
+        margin-bottom: 40px;
+
+        &__wrapper {
+            padding: 50px;
+            background-image: none;
+            background-color: #f1f2f7;
+        }
+
+        &__title {
+            margin-bottom: 15px;
+            font-size: 28px;
+        }
+
+        &__text {
+            margin: 0 0 10px;
+        }
+
+        &__top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        &__input {
+            max-width: 190px;
+        }
+
+        &__button {
+            padding: 16px 24px;
+            margin-left: auto;
+        }
+
+        &__checkbox {
+            padding-top: 2px;
+            padding-left: 28px;
+            font-size: 15px;
+        }
+
+
+    }
+
+    .checkmark {
+        background-color: #cbcbcb;
+    }
+
+    .districts {
+        margin-bottom: 40px;
+
+        &__list {
+            max-height: 250px;
+        }
+
+        &__title {
+            font-size: 38px;
+            margin-bottom: 25px;
+        }
+
+        &__paragraph,
+        &__subtitle {
+            font-size: 16px;
+        }
+    }
+
+    .footer {
+        padding-top: 50px;
+        padding-bottom: 70px;
+        background-size: cover;
+
+        &__wrapper {
+            flex-wrap: wrap;
+        }
+    }
+
+    .account {
+        flex-direction: column;
+
+        &__profile {
+            margin: 0 auto;
+        }
+
+        &__exit {
+            display: none;
+
+            &--profile {
+                display: block;
+            }
+        }
+    }
+
+    .profile {
+        &__button {
+            margin-bottom: 15px;
+        }
     }
 }
 
 @media (max-width: 768px) {
     .container {
-        max-width: 576px;
+        min-width: 576px;
     }
 }
 

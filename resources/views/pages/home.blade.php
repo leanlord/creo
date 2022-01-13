@@ -17,8 +17,8 @@
                     <div class="splitter"></div>
                 </div>
                 <div class="hero__name form__item">
-                    <label class="form__span">Название ЖК, ПК, шоссе...</label>
-                    <input name="company" class="form__input" type="text">
+                    <label for="company" class="form__span">Название ЖК</label>
+                    <input id="company" name="company" class="form__input" type="text">
                     <div class="splitter"></div>
                 </div>
                 <div class="hero__district form__item">
@@ -57,7 +57,7 @@
                     </div>
                 </div>
                 <div class="hero__price form__item">
-                    <label class="form__span">Статус</label>
+                    <label for="is_rented" class="form__span">Статус</label>
                     <select name="is_rented" class="form__input" id="is_rented">
                         <option value="Сдан">Сдан</option>
                         <option value="Не сдан">Не сдан</option>

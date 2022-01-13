@@ -5,9 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Area;
 use App\Models\City;
 use App\Models\Company;
-use App\Services\Filters\BoolFilter;
+use App\Services\Filters\FilterComposite;
 use App\Services\Filters\NumericFilter;
-use App\Services\Filters\StringFilter;
 use App\Services\Settings\FlatsSettings;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
@@ -15,21 +14,7 @@ use Illuminate\Support\Facades\DB;
 
 class FlatsController extends Controller
 {
-    /**
-     * Instance of string filter
-     *
-     * @var StringFilter
-     */
-    protected StringFilter $stringFilter;
-
-    /**
-     * Instance of numeric filter
-     *
-     * @var NumericFilter
-     */
-    protected NumericFilter $intFilter;
-
-    protected BoolFilter $boolFilter;
+    protected FilterComposite $filter;
 
     /**
      * Query, that is used to generate SQL request
@@ -46,13 +31,10 @@ class FlatsController extends Controller
     protected FlatsSettings $settings;
 
     /**
-     * @param Request $request
+     * @param FilterComposite $filter
      */
-    public function __construct(Request $request) {
-        $this->boolFilter = new BoolFilter($request);
-        $this->intFilter = new NumericFilter($request);
-        $this->stringFilter = new StringFilter($request);
-
+    public function __construct(FilterComposite $filter) {
+        $this->filter = $filter;
         $this->settings = new FlatsSettings();
         // Выбираем только необходимые аттрибуты
         $this->query = DB::table('flats')
@@ -83,15 +65,13 @@ class FlatsController extends Controller
     public function getAllFlats(Request $request) {
         $this->joinAll();
 
-        $this->stringFilter->filter($this->query);
-        $this->intFilter->filter($this->query);
-        $this->boolFilter->filter($this->query);
+        $data = $this->getMaxValues();
+        $data = $this->getMinValues($data);
+
+        $this->filter->filter($this->query);
 
         $data["flats"] = $this->query->paginate(6)->items();
         $data = $this->getAllRelatedData($data);
-
-        $data = $this->getMaxValues($data);
-        $data = $this->getMinValues($data);
 
         return $data;
     }
@@ -116,11 +96,11 @@ class FlatsController extends Controller
      * @param array $data
      * @return array
      */
-    protected function getMaxValues(array $data): array {
+    protected function getMaxValues(array $data = []): array {
         $data["attributes"]["maxPrice"] =
-            $this->intFilter->getMinMaxValues("max_price");
+            NumericFilter::getMinMaxValues("max_price");
         $data["attributes"]["maxSquare"] =
-            $this->intFilter->getMinMaxValues("max_square");
+            NumericFilter::getMinMaxValues("max_square");
 
         return $data;
     }
@@ -131,11 +111,11 @@ class FlatsController extends Controller
      * @param array $data
      * @return array
      */
-    protected function getMinValues(array $data): array {
+    protected function getMinValues(array $data = []): array {
         $data["attributes"]["minPrice"] =
-            $this->intFilter->getMinMaxValues("min_price");
+            NumericFilter::getMinMaxValues("min_price");
         $data["attributes"]["minSquare"] =
-            $this->intFilter->getMinMaxValues("min_square");
+            NumericFilter::getMinMaxValues("min_square");
 
         return $data;
     }

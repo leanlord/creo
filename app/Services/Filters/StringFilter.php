@@ -11,7 +11,7 @@ class StringFilter extends BaseFilter
      *
      * @var string[]
      */
-    protected array $filteringAttributes = [
+    protected static array $filteringAttributes = [
         'city',
         'company',
         'area',
@@ -25,7 +25,7 @@ class StringFilter extends BaseFilter
     public function getFilteringColumns(): array {
         return array_combine(
             $this->settings->getRelatedTablesNames(),
-            $this->filteringAttributes
+            static::$filteringAttributes
         );
     }
 
@@ -39,8 +39,8 @@ class StringFilter extends BaseFilter
      *
      */
     public function setFilteringValues(): void {
-        foreach ($this->filteringAttributes as $stringAttribute) {
-            if ($this->has($this->request, $stringAttribute)) {
+        foreach (static::$filteringAttributes as $stringAttribute) {
+            if ($this->has($stringAttribute)) {
                 $this->filteringValues[$stringAttribute] =
                     $this->request->get($stringAttribute);
             } else {
@@ -58,5 +58,12 @@ class StringFilter extends BaseFilter
         foreach ($this->getFilteringColumns() as $table => $attribute) {
             $query->where($table . '.' . $attribute, 'like', $this->filteringValues[$attribute]);
         }
+    }
+
+    /**
+     * @return string[]
+     */
+    public static function getFilteringAttributes(): array {
+        return self::$filteringAttributes;
     }
 }

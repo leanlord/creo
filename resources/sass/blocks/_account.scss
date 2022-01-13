@@ -1,7 +1,6 @@
 .account {
     display: flex;
-    padding-top: 40px;
-    padding-left: 40px;
+    margin-bottom: 50px;
 
     &__link {
         display: flex;
@@ -18,8 +17,6 @@
     }
 
     &__profile {
-        padding-top: 13px;
-        padding-left: 45px;
         margin-right: auto;
     }
 
@@ -27,24 +24,20 @@
         margin-right: auto;
     }
 
-    &__icon {
-        margin-right: 10px;
-    }
-
-    &__splitter {
-        width: 230px;
-    }
 
     &__leave {
         padding: 10px 20px;
         background: $red;
         text-decoration: none;
     }
-}
 
-.splitter-large {
-    width: 1px;
-    height: 754px;
+    &__exit {
+        justify-self: flex-end;
+
+        &--profile {
+            display: none;
+        }
+    }
 }
 
 .profile {
@@ -66,6 +59,5 @@
 
     &__button {
         padding: 10px 20px;
-        margin-bottom: 9rem;
     }
 }

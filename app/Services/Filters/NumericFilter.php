@@ -33,14 +33,14 @@ class NumericFilter extends BaseFilter
      *
      * @param Request $request
      */
-    public function setFilteringValues(Request $request): void {
+    public function setFilteringValues(): void {
         foreach ($this->filteringAttributes as $attribute) {
 
             foreach (['min', 'max'] as $agregateFunction) {
 
                 $paramName = $agregateFunction . '_' . $attribute;
                 $this->minMaxValues[$paramName] = Flats::$agregateFunction($attribute);
-                $userParam = $request->get($paramName);
+                $userParam = $this->request->get($paramName);
 
                 $userParam !== null ?
                     $this->filteringValues[$paramName] = (int)$userParam :

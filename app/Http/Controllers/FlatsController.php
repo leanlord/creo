@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Area;
 use App\Models\City;
 use App\Models\Company;
+use App\Services\Filters\BoolFilter;
 use App\Services\Filters\NumericFilter;
 use App\Services\Filters\StringFilter;
 use App\Services\Settings\FlatsSettings;
@@ -28,6 +29,8 @@ class FlatsController extends Controller
      */
     protected NumericFilter $intFilter;
 
+    protected BoolFilter $boolFilter;
+
     /**
      * Query, that is used to generate SQL request
      *
@@ -46,7 +49,7 @@ class FlatsController extends Controller
      * @param Request $request
      */
     public function __construct(Request $request) {
-
+        $this->boolFilter = new BoolFilter($request);
         $this->intFilter = new NumericFilter($request);
         $this->stringFilter = new StringFilter($request);
 
@@ -82,6 +85,7 @@ class FlatsController extends Controller
 
         $this->stringFilter->filter($this->query);
         $this->intFilter->filter($this->query);
+        $this->boolFilter->filter($this->query);
 
         $data["flats"] = $this->query->paginate(6)->items();
         $data = $this->getAllRelatedData($data);

@@ -23,7 +23,10 @@ class StringFilter extends BaseFilter
      * @return string[]
      */
     public function getFilteringColumns(): array {
-        return array_combine($this->settings->getRelatedTablesNames(), $this->filteringAttributes);
+        return array_combine(
+            $this->settings->getRelatedTablesNames(),
+            $this->filteringAttributes
+        );
     }
 
     /**
@@ -34,11 +37,15 @@ class StringFilter extends BaseFilter
      * Иначе, задается "любое значение".
      * (в SQL '%' означает "последовательность любых символов любой длины")
      *
-     * @param Request $request
      */
-    public function setFilteringValues(Request $request): void {
+    public function setFilteringValues(): void {
         foreach ($this->filteringAttributes as $stringAttribute) {
-            $this->filteringValues[$stringAttribute] = $request->get($stringAttribute) ?? '%';
+            if ($this->has($this->request, $stringAttribute)) {
+                $this->filteringValues[$stringAttribute] =
+                    $this->request->get($stringAttribute);
+            } else {
+                $this->filteringValues[$stringAttribute] = '%';
+            }
         }
     }
 

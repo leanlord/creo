@@ -11,7 +11,7 @@ abstract class BaseFilter
      * Concrete values which will be used for filtering
      * @var array
      */
-    protected array $filteringValues = [];
+    protected $filteringValues;
 
     /**
      * Instance of data-object class
@@ -20,8 +20,11 @@ abstract class BaseFilter
      */
     protected FlatsSettings $settings;
 
+    protected Request $request;
+
     public function __construct(Request $request) {
-        $this->setFilteringValues($request);
+        $this->request = $request;
+        $this->setFilteringValues();
         $this->settings = new FlatsSettings();
     }
 
@@ -31,7 +34,7 @@ abstract class BaseFilter
      *
      * @param Request $request
      */
-    abstract public function setFilteringValues(Request $request): void;
+    abstract public function setFilteringValues(): void;
 
     /**
      * Adding conditions to filter set of values
@@ -46,5 +49,10 @@ abstract class BaseFilter
      */
     public function getFilteringValues(): array {
         return $this->filteringValues;
+    }
+
+    public function has(string $attribute): bool {
+        return !($this->request->get($attribute) == null ||
+            $this->request->get($attribute) == 'Любой');
     }
 }

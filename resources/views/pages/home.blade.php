@@ -10,6 +10,7 @@
                 <div class="hero__city form__item">
                     <label for="city" class="form__span">Выберите город *</label>
                     <select name="city" class="form__input" id="city">
+                        <option value="Любой">Любой</option>
                         @foreach($data['attributes']['cities'] as $city)
                             <option value="{{ $city->city }}">{{ $city->city }}</option>
                         @endforeach
@@ -24,6 +25,7 @@
                 <div class="hero__district form__item">
                     <label class="form__span">Район</label>
                     <select name="area" class="form__input" id="city">
+                        <option value="Любой">Любой</option>
                         @foreach($data['attributes']['areas'] as $area)
                             <option value="{{ $area->area }}">{{ $area->area }}</option>
                         @endforeach
@@ -59,6 +61,7 @@
                 <div class="hero__price form__item">
                     <label for="is_rented" class="form__span">Статус</label>
                     <select name="is_rented" class="form__input" id="is_rented">
+                        <option value="Любой">Любой</option>
                         <option value="Сдан">Сдан</option>
                         <option value="Не сдан">Не сдан</option>
                     </select>

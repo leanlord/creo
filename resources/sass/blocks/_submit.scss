@@ -9,6 +9,7 @@
         padding: 75px 0 75px 80px;
         border-radius: 8px;
         background: url("/img/submit/bg.jpg") no-repeat right, linear-gradient(90.55deg, #F8FAFD 0.53%, #EEF1F7 42.39%);
+        background-size: contain;
     }
 
     &__title {
@@ -57,6 +58,7 @@
     }
 
     &__aside {
+        margin: 0;
         font-style: normal;
         font-weight: bold;
         font-size: 20px;
@@ -84,7 +86,7 @@
 
         .checkmark:after {
             top: 6px;
-            left: 5px;
+            left: 4px;
             width: 14px;
             height: 9px;
             background-image: url("/img/submit/checkmark.svg");

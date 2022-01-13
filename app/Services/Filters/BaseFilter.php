@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 abstract class BaseFilter
 {
+    use HasAttributes;
     /**
      * Concrete values which will be used for filtering
      * @var array
@@ -19,8 +20,6 @@ abstract class BaseFilter
      * @var FlatsSettings
      */
     protected FlatsSettings $settings;
-
-    protected Request $request;
 
     public function __construct(Request $request) {
         $this->request = $request;
@@ -49,10 +48,5 @@ abstract class BaseFilter
      */
     public function getFilteringValues(): array {
         return $this->filteringValues;
-    }
-
-    public function has(string $attribute): bool {
-        return !($this->request->get($attribute) == null ||
-            $this->request->get($attribute) == 'Любой');
     }
 }

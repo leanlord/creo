@@ -38,6 +38,10 @@
 
     &__form {
         margin-bottom: 83px;
+
+        select {
+            cursor: pointer;
+        }
     }
 
     &__city {

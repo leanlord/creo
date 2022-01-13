@@ -1,7 +1,29 @@
-const showMoreButton = $('.flats__button');
-showMoreButton.click((event) => {
-    event.preventDefault()
-    $('#show-more').load('?min_price=9000000');
-    $('.flats__main').append($('#flats-button'));
-    console.log('success');
-})
+$(document).ready(function () {
+    let noMore = false;
+    let page = 1;
+    let url = document.URL;
+
+    $('.flats__button').click(function (event) {
+        event.preventDefault();
+        page++;
+
+        if (url.includes("?")) {
+            url += "&page=";
+        } else {
+            url += "?page=";
+        }
+        url += page;
+
+        $.get(url, function (data) {
+            if (!data.includes('<div class="flats__flat">')) {
+                console.log("nomore");
+                if (!noMore) {
+                    $("#flats-wrapper").append(data);
+                    noMore = true;
+                }
+            } else {
+                $("#flats-wrapper").append(data);
+            }
+        });
+    });
+});

@@ -89,7 +89,7 @@
             </div>
             <div class="flats__main">
                 <h2 class="flats__title">Все новостройки Краснодара</h2>
-                <div class="flats__wrapper">
+                <div class="flats__wrapper" id="flats-wrapper">
                     @include('includes.flats')
                 </div>
                 <a href="#" class="flats__button">

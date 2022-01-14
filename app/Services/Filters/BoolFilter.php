@@ -20,9 +20,7 @@
         }
 
         public function filter($query): void {
-            if (!empty($this->filteringValues)) {
-                $query->where('is_rented', $this->filteringValues);
-            }
+            $query->where('is_rented', $this->filteringValues);
         }
 
         /**

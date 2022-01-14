@@ -11,9 +11,8 @@
 
         /**
          * Concrete values which will be used for filtering
-         * @var array
          */
-        protected $filteringValues;
+        protected $filteringValues = [];
 
         /**
          * Instance of data-object class

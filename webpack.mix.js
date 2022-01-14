@@ -14,8 +14,5 @@ const mix = require('laravel-mix');
 mix.js('resources/js/app.js', 'public/js')
     .extract()
     .sass('resources/sass/styles.scss', 'public/css')
-    .browserSync({
-            proxy: '192.168.56.10',
-            notify: false
-        })
+    .browserSync('192.168.56.10')
     .copy('resources/img', 'public/img');

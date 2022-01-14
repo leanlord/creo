@@ -113,12 +113,12 @@
                 @csrf
                 <div class="submit__top">
                     <label class="submit__placeholder">
-                        <input name="name" class="submit__input" type="text" required placeholder="Ваше Имя">
+                        <input id="form-name" name="name" class="submit__input" type="text" required placeholder="Ваше Имя">
                     </label>
                     <label class="submit__placeholder">
-                        <input name="number" class="submit__input" type="tel" required placeholder="Телефон">
+                        <input id="form-number" name="number" class="submit__input" type="tel" required placeholder="Телефон">
                     </label>
-                    <label class="btn submit__button">
+                    <label class="btn submit__button" id="form-submit">
                         <input class="submit__send input-submit" value="Отправить" type="submit">
                     </label>
                 </div>
@@ -126,7 +126,7 @@
                     <label class="submit__checkbox">
                         Отправляя заявку на обратный звонок я даю своё согласие с
                         <a href="#" class="submit__link">политикой обработки персональных данных</a>
-                        <input type="checkbox" required>
+                        <input id="form-checkbox" type="checkbox" required>
                         <span class="checkmark"></span>
                     </label>
                 </div>

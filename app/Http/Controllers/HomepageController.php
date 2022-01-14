@@ -2,6 +2,7 @@
 
     namespace App\Http\Controllers;
 
+    use App\Http\Requests\UserRequest;
     use App\Models\User;
     use App\Services\Settings\UsersSettings;
     use Illuminate\Http\Request;
@@ -21,32 +22,25 @@
         /*
          * Обновление личных данных пользователя
          */
-        public function update(Request $request) {
-            $validateFields = $request->validate([
-                'email' => 'email',
-                'password' => 'nullable|min:7',
-                'first_name' => 'nullable',
-                'last_name' => 'nullable',
-                'number' => 'nullable',
-            ]);
-
+        public function update(UserRequest $request) {
+            $validated = $request->validated();
             $user = auth()->user();
-            $user->password = $request->get('password') ??
+            $user->password = $validated['password'] ??
                 auth()->user()->getAuthPassword();
             // Заполнение каждого аттрибута пользователя для сохранения
             foreach ($this->settings->getAttributes() as $attribute) {
-                $user->$attribute = $validateFields[$attribute];
+                $user->$attribute = $validated[$attribute];
             }
 
             $email = null;
-            // Если такой емейл уже существует
-            if (auth()->user()->email != $request->input('email')) {
+            // Если такой емейл уже существует...
+            if (auth()->user()->email != $validated['email']) {
                 $email = User::select('email')
                     ->where('email',
                         $request->input('email')
                     )->first();
             }
-
+            // ...то сообщить об этом пользователю
             if ($email !== null) {
                 return view('pages.account', [
                     'errors' =>

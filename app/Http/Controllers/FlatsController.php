@@ -60,7 +60,6 @@ class FlatsController extends Controller
      *
      * @return array|\Illuminate\Http\JsonResponse
      */
-    // TODO сделать фильтры под шаблон Composite
     public function getAllFlats() {
         $this->joinAll();
 

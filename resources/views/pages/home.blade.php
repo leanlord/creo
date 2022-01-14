@@ -24,7 +24,7 @@
                 </div>
                 <div class="hero__district form__item">
                     <label class="form__span">Район</label>
-                    <select name="area" class="form__input" id="city">
+                    <select name="area" class="form__input" id="area">
                         <option value="Любой">Любой</option>
                         @foreach($data['attributes']['areas'] as $area)
                             <option value="{{ $area->name }}">{{ $area->name }}</option>
@@ -35,23 +35,23 @@
                 <div class="hero__square form__item">
                     <label class="form__span">Площадь, м2</label>
                     <div class="form__wrapper">
-                        <input name="min_square" type="text" class="form__input form__textbox hero__square-placeholder"
+                        <input id="min_square" name="min_square" type="text" class="form__input form__textbox hero__square-placeholder"
                                placeholder="{{ $data['attributes']['minSquare'] ?? '' }}">
                         <span class="form__dash">—</span>
-                        <input name="max_square" type="text" class="form__input form__textbox hero__square-placeholder"
+                        <input id="max_square" name="max_square" type="text" class="form__input form__textbox hero__square-placeholder"
                                placeholder="{{ $data['attributes']['maxSquare'] ?? '' }}">
                     </div>
                 </div>
                 <div class="hero__price form__item">
                     <label class="form__span">Стоимость, ₽</label>
                     <div class="form__wrapper">
-                        <input name="min_price" type="text" class="form__input form__textbox hero__price-placeholder"
+                        <input id="min_price" name="min_price" type="text" class="form__input form__textbox hero__price-placeholder"
                                placeholder="{{
                                 isset($data['attributes']['minPrice']) ?
                                 number_format($data['attributes']['minPrice'], 0, " ", " ")
                                  : '' }}">
                         <span class="form__dash">—</span>
-                        <input name="max_price" type="text" class="form__input form__textbox hero__price-placeholder"
+                        <input id="max_price" name="max_price" type="text" class="form__input form__textbox hero__price-placeholder"
                                placeholder="{{
                                 isset($data['attributes']['maxPrice']) ?
                                 number_format($data['attributes']['maxPrice'], 0, " ", " ")

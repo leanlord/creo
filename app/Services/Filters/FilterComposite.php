@@ -4,7 +4,7 @@
 
     use Illuminate\Http\Request;
 
-    class FilterComposite
+    class FilterComposite implements Filter
     {
         use HasAttributes;
 

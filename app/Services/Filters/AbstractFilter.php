@@ -5,7 +5,7 @@ namespace App\Services\Filters;
 use App\Services\Settings\FlatsSettings;
 use Illuminate\Http\Request;
 
-abstract class BaseFilter
+abstract class AbstractFilter implements Filter
 {
     use HasAttributes;
     /**
@@ -30,8 +30,6 @@ abstract class BaseFilter
     /**
      * Defines, how filtering values will be
      * converted from get request to concrete values
-     *
-     * @param Request $request
      */
     abstract public function setFilteringValues(): void;
 

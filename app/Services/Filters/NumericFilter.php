@@ -4,7 +4,7 @@
 
     use App\Models\Flats;
 
-    class NumericFilter extends BaseFilter
+    class NumericFilter extends AbstractFilter
     {
         /**
          * Numeric filtering attributes for

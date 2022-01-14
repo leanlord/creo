@@ -4,7 +4,7 @@ namespace App\Services\Filters;
 
 use Illuminate\Http\Request;
 
-class StringFilter extends BaseFilter
+class StringFilter extends AbstractFilter
 {
     /**
      * Attributes to filter with "like" operator

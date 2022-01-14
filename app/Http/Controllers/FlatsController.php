@@ -6,6 +6,7 @@ use App\Models\Area;
 use App\Models\City;
 use App\Models\Company;
 use App\Services\Filters\FilterComposite;
+use App\Services\Filters\Filter;
 use App\Services\Filters\NumericFilter;
 use App\Services\Settings\FlatsSettings;
 use Illuminate\Database\Query\Builder;
@@ -31,9 +32,9 @@ class FlatsController extends Controller
     protected FlatsSettings $settings;
 
     /**
-     * @param FilterComposite $filter
+     * @param Filter $filter
      */
-    public function __construct(FilterComposite $filter) {
+    public function __construct(Filter $filter) {
         $this->filter = $filter;
         $this->settings = new FlatsSettings();
         // Выбираем только необходимые аттрибуты

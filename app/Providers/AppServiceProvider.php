@@ -2,27 +2,13 @@
 
 namespace App\Providers;
 
+use App\Services\Filters\Filter;
+use App\Services\Filters\FilterComposite;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        //
-    }
-
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        //
-    }
+    public $bindings = [
+        Filter::class => FilterComposite::class
+    ];
 }

@@ -2,9 +2,7 @@
 
     namespace App\Services\Filters;
 
-    use Illuminate\Http\Request;
-
-    class BoolFilter extends BaseFilter
+    class BoolFilter extends AbstractFilter
     {
         /**
          * @var array|string[]

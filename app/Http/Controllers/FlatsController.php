@@ -5,31 +5,25 @@ namespace App\Http\Controllers;
 use App\Models\Area;
 use App\Models\City;
 use App\Models\Company;
-use App\Services\Filters\FilterComposite;
+use App\Models\Flat;
 use App\Services\Filters\Filter;
+use App\Services\Filters\HasJoins;
 use App\Services\Filters\NumericFilter;
 use App\Services\Settings\FlatsSettings;
-use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class FlatsController extends Controller
 {
-    protected FilterComposite $filter;
+    use HasJoins;
+
+    protected Filter $filter;
 
     /**
      * Query, that is used to generate SQL request
      *
-     * @var Builder
+     * @var
      */
-    protected Builder $query;
-
-    /**
-     * Instance of data-object class
-     *
-     * @var FlatsSettings
-     */
-    protected FlatsSettings $settings;
+    protected $query;
 
     /**
      * @param Filter $filter
@@ -37,9 +31,7 @@ class FlatsController extends Controller
     public function __construct(Filter $filter) {
         $this->filter = $filter;
         $this->settings = new FlatsSettings();
-        // Выбираем только необходимые аттрибуты
-        $this->query = DB::table('flats')
-            ->select($this->settings->getFlatsAttributes());
+        $this->query = Flat::query()->withAll();
     }
 
     /**
@@ -63,16 +55,14 @@ class FlatsController extends Controller
      */
     public function getAllFlats() {
         $this->joinAll();
-
         $data = $this->getMaxValues();
         $data = $this->getMinValues($data);
 
         $this->filter->filter($this->query);
 
         $data["flats"] = $this->query->paginate(6)->items();
-        $data = $this->getAllRelatedData($data);
 
-        return $data;
+         return $this->getAllRelatedData($data);
     }
 
     /**
@@ -117,19 +107,5 @@ class FlatsController extends Controller
             NumericFilter::getMinMaxValues("min_square");
 
         return $data;
-    }
-
-    /**
-     * Joining all tables
-     */
-    protected function joinAll() {
-        foreach ($this->settings->getRelatedTables() as $table => $communicationField) {
-            $this->query->leftJoin(
-                $table,
-                'flats.' . $communicationField,
-                '=',
-                $table . '.id'
-            );
-        }
     }
 }

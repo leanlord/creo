@@ -3,6 +3,7 @@
 namespace App\Services\Filters;
 
 use Illuminate\Http\Request;
+use PhpParser\Builder;
 
 class StringFilter extends AbstractFilter
 {
@@ -56,7 +57,8 @@ class StringFilter extends AbstractFilter
      */
     public function filter($query): void {
         foreach ($this->getFilteringColumns() as $table => $attribute) {
-            $query->where($table . '.' . $attribute, 'like', $this->filteringValues[$attribute]);
+            //$query->leftJoin($table, $table . '.id', '=', 'flats.' . $attribute . '_id');
+            $query->where($table . '.name', 'like', $this->filteringValues[$attribute]);
         }
     }
 

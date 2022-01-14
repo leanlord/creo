@@ -12,7 +12,7 @@
                     <select name="city" class="form__input" id="city">
                         <option value="Любой">Любой</option>
                         @foreach($data['attributes']['cities'] as $city)
-                            <option value="{{ $city->city }}">{{ $city->city }}</option>
+                            <option value="{{ $city->name }}">{{ $city->name }}</option>
                         @endforeach
                     </select>
                     <div class="splitter"></div>
@@ -27,7 +27,7 @@
                     <select name="area" class="form__input" id="city">
                         <option value="Любой">Любой</option>
                         @foreach($data['attributes']['areas'] as $area)
-                            <option value="{{ $area->area }}">{{ $area->area }}</option>
+                            <option value="{{ $area->name }}">{{ $area->name }}</option>
                         @endforeach
                     </select>
                     <div class="splitter"></div>
@@ -84,7 +84,7 @@
                     <ul class="menu__list">
                         @foreach($data['attributes']['companies'] as $company)
                             <li class="menu__item">
-                                <a href="#" class="menu__link">{{ $company->company }}</a>
+                                <a href="#" class="menu__link">{{ $company->name }}</a>
                             </li>
                         @endforeach
                     </ul>

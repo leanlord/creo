@@ -2,7 +2,7 @@
 
     namespace App\Services\Filters;
 
-    use App\Models\Flats;
+    use App\Models\Flat;
 
     class NumericFilter extends AbstractFilter
     {
@@ -55,7 +55,7 @@
         public static function setMinMaxValues() {
             foreach (static::$filteringAttributes as $attribute) {
                 $agregateFunction = stristr($attribute, '_', true);
-                static::$minMaxValues[$attribute] = Flats::$agregateFunction(
+                static::$minMaxValues[$attribute] = Flat::$agregateFunction(
                     static::attributeName($attribute)
                 );
             }

@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Flats;
+use App\Models\Flat;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class FlatsFactory extends Factory
+class FlatFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Flats::class;
+    protected $model = Flat::class;
 
     /**
      * Define the model's default state.

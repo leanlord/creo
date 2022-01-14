@@ -6,10 +6,10 @@
         </div>
         <img src="{{ asset('img/flats/flat.jpg') }}" alt="Картинка квартиры" class="flats__image">
         <div class="flats__info">
-            <div class="flats__name">{{ $flat->company }}</div>
+            <div class="flats__name">{{ $flat->company->name }}</div>
             <div class="flats__address">
                 <img class="map" src="{{ asset('img/flats/map.svg') }}" alt="Иконка: адрес">
-                <address class="flats__city">{{ $flat->city }}
+                <address class="flats__city">{{ $flat->city->name }}
                 </address>
             </div>
             <div class="flats__price">
@@ -19,7 +19,7 @@
             <div class="flats__type">
                 <img src="{{ asset('img/flats/flat.svg') }}" alt="Иконка: типы квартир"
                      class="flatIcon">
-                <span class="flats__desc">{{ $flat->area }}</span>
+                <span class="flats__desc">{{ $flat->area->name }}</span>
             </div>
             <div class="flats__type">
                 <img src="{{ asset('img/flats/carbon_area.svg') }}" alt="Иконка: площадь"

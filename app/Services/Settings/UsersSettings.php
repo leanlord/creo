@@ -12,7 +12,6 @@ class UsersSettings
         'last_name',
         'number',
         'email',
-        'password',
     ];
 
     /**

@@ -49,20 +49,19 @@ class FlatsController extends Controller
      */
     public function index(Request $request): \Illuminate\Contracts\View\View {
         if ($request->ajax()) {
-            return view('includes.flats', ['data' => $this->getAllFlats($request)]);
+            return view('includes.flats', ['data' => $this->getAllFlats()]);
         }
 
-        return view('pages.home', ['data' => $this->getAllFlats($request)]);
+        return view('pages.home', ['data' => $this->getAllFlats()]);
     }
 
     /**
      * Returns all data about flats
      *
-     * @param Request $request
      * @return array|\Illuminate\Http\JsonResponse
      */
     // TODO сделать фильтры под шаблон Composite
-    public function getAllFlats(Request $request) {
+    public function getAllFlats() {
         $this->joinAll();
 
         $data = $this->getMaxValues();

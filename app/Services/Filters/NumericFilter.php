@@ -34,13 +34,8 @@
         }
 
         /**
-         * Обработка всех числовых параметров запроса,
-         * с использованием агрегатных функций SQL.
-         * Параметры должны начинаться с <агрегатная функция>_
-         * Затем, начало обрезается и происходит вычисление
-         * этой агрегатной функции по оставшейся строке.
-         * Так, например, запрос с названием max_price выполнит
-         * вычисление функции MAX() по столбцу price.
+         * Setting of concrete values to filtering.
+         * Parameters must start with [function]_ (min_, max_, etc.)
          */
         public function setFilteringValues(): void {
             foreach (static::$filteringAttributes as $attribute) {
@@ -52,17 +47,21 @@
             }
         }
 
+        /**
+         * Setting of all min and max values
+         * with SQL agregate functions.
+         */
         public static function setMinMaxValues() {
             foreach (static::$filteringAttributes as $attribute) {
-                $agregateFunction = stristr($attribute, '_', true);
-                static::$minMaxValues[$attribute] = Flat::$agregateFunction(
+                $functionName = stristr($attribute, '_', true);
+                static::$minMaxValues[$attribute] = Flat::$functionName(
                     static::attributeName($attribute)
                 );
             }
         }
 
         /**
-         * Добавление условия всех минимальных\максимальных значений
+         * Adds the conditions to query
          *
          * @param $query
          */
@@ -76,7 +75,14 @@
             }
         }
 
-        public static function attributeName(string $attribute) {
+        /**
+         * Get the name of attribute from string
+         * like function_name (min_price)
+         *
+         * @param string $attribute
+         * @return false|string
+         */
+        protected static function attributeName(string $attribute) {
             return substr(strrchr($attribute, '_'), 1);
         }
 

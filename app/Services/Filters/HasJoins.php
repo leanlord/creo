@@ -4,6 +4,7 @@
 
     use App\Services\Settings\FlatsSettings;
 
+    // This trait is used, if entity has related tables
     trait HasJoins
     {
         /**
@@ -17,13 +18,23 @@
          * Joining all tables
          */
         protected function joinAll() {
-            foreach ($this->settings->getRelatedTables() as $table => $communicationField) {
-                $this->query->leftJoin(
-                    $table,
-                    'flats.' . $communicationField,
-                    '=',
-                    $table . '.id'
-                );
+            foreach ($this->settings->getRelatedTables() as $table => $field) {
+                $this->join($table, $field);
             }
+        }
+
+        /**
+         * Determines, how to join table
+         *
+         * @param string $table
+         * @param string $field
+         */
+        protected function join(string $table, string $field) {
+            $this->query->leftJoin(
+                $table,
+                'flats.' . $field,
+                '=',
+                $table . '.id'
+            );
         }
     }

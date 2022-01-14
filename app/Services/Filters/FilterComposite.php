@@ -4,6 +4,11 @@
 
     use Illuminate\Http\Request;
 
+    /**
+     * Used "Composite" design pattern.
+     * If user's request some parameters,
+     * concrete filter will be created.
+     */
     class FilterComposite implements Filter
     {
         use HasAttributes;
@@ -12,6 +17,9 @@
 
         public function __construct(Request $request) {
             $this->request = $request;
+
+            //This action is needed, because min and max values
+            //must always be calculated.
             NumericFilter::setMinMaxValues();
             if ($this->hasAny(NumericFilter::getFilteringAttributes())) {
                 $this->filters[] = new NumericFilter($request);
@@ -24,6 +32,9 @@
             }
         }
 
+        /*
+        * @param $query
+        */
         public function filter($query) {
             foreach ($this->filters as $filter) {
                 $filter->filter($query);

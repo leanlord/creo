@@ -5,6 +5,8 @@ namespace App\Services\Settings;
 class UsersSettings
 {
     /**
+     * Columns in users table
+     *
      * @var string[]
      */
     protected array $attributes = [

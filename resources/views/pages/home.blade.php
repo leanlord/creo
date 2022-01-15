@@ -10,8 +10,9 @@
                 <div class="hero__city form__item">
                     <label for="city" class="form__span">Выберите город *</label>
                     <select name="city" class="form__input" id="city">
+                        <option value="Любой">Любой</option>
                         @foreach($data['attributes']['cities'] as $city)
-                            <option value="{{ $city->city }}">{{ $city->city }}</option>
+                            <option value="{{ $city->name }}">{{ $city->name }}</option>
                         @endforeach
                     </select>
                     <div class="splitter"></div>
@@ -23,9 +24,10 @@
                 </div>
                 <div class="hero__district form__item">
                     <label class="form__span">Район</label>
-                    <select name="area" class="form__input" id="city">
+                    <select name="area" class="form__input" id="area">
+                        <option value="Любой">Любой</option>
                         @foreach($data['attributes']['areas'] as $area)
-                            <option value="{{ $area->area }}">{{ $area->area }}</option>
+                            <option value="{{ $area->name }}">{{ $area->name }}</option>
                         @endforeach
                     </select>
                     <div class="splitter"></div>
@@ -33,23 +35,23 @@
                 <div class="hero__square form__item">
                     <label class="form__span">Площадь, м2</label>
                     <div class="form__wrapper">
-                        <input name="min_square" type="text" class="form__input form__textbox hero__square-placeholder"
+                        <input id="min_square" name="min_square" type="text" class="form__input form__textbox hero__square-placeholder"
                                placeholder="{{ $data['attributes']['minSquare'] ?? '' }}">
                         <span class="form__dash">—</span>
-                        <input name="max_square" type="text" class="form__input form__textbox hero__square-placeholder"
+                        <input id="max_square" name="max_square" type="text" class="form__input form__textbox hero__square-placeholder"
                                placeholder="{{ $data['attributes']['maxSquare'] ?? '' }}">
                     </div>
                 </div>
                 <div class="hero__price form__item">
                     <label class="form__span">Стоимость, ₽</label>
                     <div class="form__wrapper">
-                        <input name="min_price" type="text" class="form__input form__textbox hero__price-placeholder"
+                        <input id="min_price" name="min_price" type="text" class="form__input form__textbox hero__price-placeholder"
                                placeholder="{{
                                 isset($data['attributes']['minPrice']) ?
                                 number_format($data['attributes']['minPrice'], 0, " ", " ")
                                  : '' }}">
                         <span class="form__dash">—</span>
-                        <input name="max_price" type="text" class="form__input form__textbox hero__price-placeholder"
+                        <input id="max_price" name="max_price" type="text" class="form__input form__textbox hero__price-placeholder"
                                placeholder="{{
                                 isset($data['attributes']['maxPrice']) ?
                                 number_format($data['attributes']['maxPrice'], 0, " ", " ")
@@ -59,6 +61,7 @@
                 <div class="hero__price form__item">
                     <label for="is_rented" class="form__span">Статус</label>
                     <select name="is_rented" class="form__input" id="is_rented">
+                        <option value="Любой">Любой</option>
                         <option value="Сдан">Сдан</option>
                         <option value="Не сдан">Не сдан</option>
                     </select>
@@ -81,7 +84,7 @@
                     <ul class="menu__list">
                         @foreach($data['attributes']['companies'] as $company)
                             <li class="menu__item">
-                                <a href="#" class="menu__link">{{ $company->company }}</a>
+                                <a href="#" class="menu__link">{{ $company->name }}</a>
                             </li>
                         @endforeach
                     </ul>
@@ -89,7 +92,7 @@
             </div>
             <div class="flats__main">
                 <h2 class="flats__title">Все новостройки Краснодара</h2>
-                <div class="flats__wrapper">
+                <div class="flats__wrapper" id="flats-wrapper">
                     @include('includes.flats')
                 </div>
                 <a href="#" class="flats__button">
@@ -110,12 +113,12 @@
                 @csrf
                 <div class="submit__top">
                     <label class="submit__placeholder">
-                        <input name="name" class="submit__input" type="text" required placeholder="Ваше Имя">
+                        <input id="form-name" name="name" class="submit__input" type="text" required placeholder="Ваше Имя">
                     </label>
                     <label class="submit__placeholder">
-                        <input name="number" class="submit__input" type="tel" required placeholder="Телефон">
+                        <input id="form-number" name="number" class="submit__input" type="tel" required placeholder="Телефон">
                     </label>
-                    <label class="btn submit__button">
+                    <label class="btn submit__button" id="form-submit">
                         <input class="submit__send input-submit" value="Отправить" type="submit">
                     </label>
                 </div>
@@ -123,7 +126,7 @@
                     <label class="submit__checkbox">
                         Отправляя заявку на обратный звонок я даю своё согласие с
                         <a href="#" class="submit__link">политикой обработки персональных данных</a>
-                        <input type="checkbox" required>
+                        <input id="form-checkbox" type="checkbox" required>
                         <span class="checkmark"></span>
                     </label>
                 </div>

@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Company;
-use App\Models\Flats;
+use App\Models\Flat;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,13 +15,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Model::unguard();
-
-        $this->call(AreaTableSeeder::class);
-        $this->call(FlatsTableSeeder::class);
-        $this->call(CityTableSeeder::class);
-        $this->call(CompanyTableSeeder::class);
-
-        Model::reguard();
+//        Model::unguard();
+//
+//        Model::reguard();
     }
 }

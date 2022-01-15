@@ -1,73 +1,96 @@
 <?php
 
-namespace App\Services\Filters;
+    namespace App\Services\Filters;
 
-use App\Models\Flats;
-use Illuminate\Http\Request;
+    use App\Models\Flat;
 
-class NumericFilter extends BaseFilter
-{
-    /**
-     * Numeric filtering attributes for
-     * "between" operator
-     *
-     * @var string[]
-     */
-    protected array $filteringAttributes = ['price', 'square'];
+    class NumericFilter extends AbstractFilter
+    {
+        /**
+         * Numeric filtering attributes for
+         * "between" operator
+         *
+         * @var string[]
+         */
+        protected static array $filteringAttributes = [
+            'min_price',
+            'max_price',
+            'max_square',
+            'min_square',
+        ];
 
-    /**
-     * Minimal and Maximal values of countable attributes
-     *
-     * @var array
-     */
-    protected array $minMaxValues = []; // TODO не знаю как по нормальному назвать массив
+        /**
+         * Minimal and Maximal values of countable attributes
+         *
+         * @var array
+         */
+        protected static array $minMaxValues = []; // TODO не знаю как по нормальному назвать массив
 
-    /**
-     * Обработка всех числовых параметров запроса,
-     * с использованием агрегатных функций SQL.
-     * Параметры должны начинаться с <агрегатная функция>_
-     * Затем, начало обрезается и происходит вычисление
-     * этой агрегатной функции по оставшейся строке.
-     * Так, например, запрос с названием max_price выполнит
-     * вычисление функции MAX() по столбцу price.
-     *
-     * @param Request $request
-     */
-    public function setFilteringValues(Request $request): void {
-        foreach ($this->filteringAttributes as $attribute) {
+        /**
+         * @return string[]
+         */
+        public static function getFilteringAttributes(): array {
+            return self::$filteringAttributes;
+        }
 
-            foreach (['min', 'max'] as $agregateFunction) {
-
-                $paramName = $agregateFunction . '_' . $attribute;
-                $this->minMaxValues[$paramName] = Flats::$agregateFunction($attribute);
-                $userParam = $request->get($paramName);
+        /**
+         * Setting of concrete values to filtering.
+         * Parameters must start with [function]_ (min_, max_, etc.)
+         */
+        public function setFilteringValues(): void {
+            foreach (static::$filteringAttributes as $attribute) {
+                $userParam = $this->request->get($attribute);
 
                 $userParam !== null ?
-                    $this->filteringValues[$paramName] = (int)$userParam :
-                    $this->filteringValues[$paramName] = $this->minMaxValues[$paramName];
+                    $this->filteringValues[$attribute] = (int)$userParam :
+                    $this->filteringValues[$attribute] = static::$minMaxValues[$attribute];
             }
         }
-    }
 
-    /**
-     * Добавление условия всех минимальных\максимальных значений
-     *
-     * @param $query
-     */
-    public function filter($query): void {
-        foreach ($this->filteringAttributes as $attribute) {
-            $query->whereBetween('flats.' . $attribute, [
-                $this->filteringValues['min_' . $attribute],
-                $this->filteringValues['max_' . $attribute],
-            ]);
+        /**
+         * Setting of all min and max values
+         * with SQL agregate functions.
+         */
+        public static function setMinMaxValues() {
+            foreach (static::$filteringAttributes as $attribute) {
+                $functionName = stristr($attribute, '_', true);
+                static::$minMaxValues[$attribute] = Flat::$functionName(
+                    static::attributeName($attribute)
+                );
+            }
+        }
+
+        /**
+         * Adds the conditions to query
+         *
+         * @param $query
+         */
+        public function filter($query): void {
+            foreach (static::$filteringAttributes as $attribute) {
+                $name = static::attributeName($attribute);
+                $query->whereBetween('flats.' . $name, [
+                    $this->filteringValues['min_' . $name],
+                    $this->filteringValues['max_' . $name],
+                ]);
+            }
+        }
+
+        /**
+         * Get the name of attribute from string
+         * like function_name (min_price)
+         *
+         * @param string $attribute
+         * @return false|string
+         */
+        protected static function attributeName(string $attribute) {
+            return substr(strrchr($attribute, '_'), 1);
+        }
+
+        /**
+         * @param string $name
+         * @return int
+         */
+        public static function getMinMaxValues(string $name): int {
+            return static::$minMaxValues[$name];
         }
     }
-
-    /**
-     * @param string $name
-     * @return int
-     */
-    public function getMinMaxValues(string $name): int {
-        return $this->minMaxValues[$name];
-    }
-}

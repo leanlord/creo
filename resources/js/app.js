@@ -1,6 +1,5 @@
 window.$ = require('jquery');
 
-
-
-require('./ajax');
+require('./heroSection');
+require('./form');
 require('./showMore');

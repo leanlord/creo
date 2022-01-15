@@ -9,10 +9,16 @@ class FlatsSettings
      *
      * @var string[]
      */
-    protected array $relatedTables = [
+    protected array $relatedTablesNames = [
         'cities',
         'companies',
-        'areas'
+        'areas',
+    ];
+
+    protected array $relations = [
+      'city',
+      'company',
+      'area',
     ];
 
     /**
@@ -56,16 +62,23 @@ class FlatsSettings
      */
     public function getRelatedTables(): array
     {
-        return array_combine($this->relatedTables, $this->communicationColumns);
+        return array_combine($this->relatedTablesNames, $this->communicationColumns);
     }
 
     public function getRelatedTablesNames(): array
     {
-        return $this->relatedTables;
+        return $this->relatedTablesNames;
     }
 
     public function getFlatsAttributes(): array
     {
         return $this->flatsAttributes;
+    }
+
+    /**
+     * @return array|string[]
+     */
+    public function getRelations(): array {
+        return $this->relations;
     }
 }

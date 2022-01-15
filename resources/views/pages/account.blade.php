@@ -8,6 +8,7 @@
                 <a href="#" class="profile__image">
                     <img src="{{ asset('img/account/profile.svg') }}" alt="Изменить аватар" class="profile__pic">
                 </a>
+                @include('includes.errors')
                 <form action="" id="profileForm" class="profile__form auth__form"
                       method="POST">
                     @csrf

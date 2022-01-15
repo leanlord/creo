@@ -1,53 +1,62 @@
 <?php
 
-namespace App\Http\Controllers;
+    namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Services\Settings\UsersSettings;
-use Illuminate\Http\Request;
+    use App\Http\Requests\UserRequest;
+    use App\Models\User;
+    use App\Services\Settings\UsersSettings;
+    use Illuminate\Http\Request;
 
-class HomepageController extends Controller
-{
-    protected UsersSettings $settings;
+    class HomepageController extends Controller
+    {
+        protected UsersSettings $settings;
+        protected $user;
 
-    public function __construct() {
-        $this->settings = new UsersSettings();
-    }
+        public function __construct() {
+            $this->settings = new UsersSettings();
+        }
 
-    public function index() {
-        return view('pages.account');
-    }
+        public function index() {
+            return view('pages.account');
+        }
 
-    /*
-     * Обновление личных данных пользователя
-     */
-    public function update(Request $request) {
-        $validateFields = $request->validate([
-            'email' => 'email',
-            'password' => 'nullable|min:7',
-            'first_name' => '',
-            'last_name' => '',
-            'number' => '',
-        ]);
+        /*
+         * Обновление личных данных пользователя
+         */
+        public function update(UserRequest $request) {
+            $this->user = auth()->user(); // it equals null in the constructor for some reasons
+            $validated = $request->validated();
+            $this->user->password = $validated['password'] ??
+                auth()->user()->getAuthPassword();
 
-        $user = new User;
-        // Заполнение каждого аттрибута пользователя для сохранения
-        foreach ($this->settings->getAttributes() as $attribute) {
-            if (isset($validateFields[$attribute])) {
-                $user->$attribute = $validateFields[$attribute];
+            if ($this->emailExists($validated['email'])) {
+                return view('pages.account')->withErrors([
+                    'emailExists' => 'Этот адрес электронной почты занят.'
+                ]);
+            }
+
+            $this->fillAll($validated);
+            $this->user->save();
+            auth()->login($this->user, true);
+
+            return view('pages.account');
+        }
+
+        protected function emailExists(string $newEmail): bool {
+            $email = null;
+            // Если такой емейл уже существует...
+            if ($this->user->email != $newEmail) {
+                $email = User::query()
+                    ->where('email', $newEmail)
+                    ->get();
+            }
+            return $email !== null;
+        }
+
+        protected function fillAll(array $validated) {
+            // Заполнение каждого аттрибута пользователя для сохранения
+            foreach ($this->settings->getAttributes() as $attribute) {
+                $this->user->$attribute = $validated[$attribute];
             }
         }
-
-        // Если такой емейл уже существует
-        $email = User::select('email')->where('email', $request->input('email'))->first();
-        if ($email !== null) {
-            return view('pages.account',
-                ['thisUserAlreadyExists' => 'Этот адресс электронной почты уже занят другим пользователем!']);
-        }
-
-        $user->save();
-        auth()->login($user, true);
-
-        return view('pages.account', ['success' => true]);
     }
-}

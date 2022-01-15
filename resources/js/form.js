@@ -19,8 +19,8 @@ $.ajaxSetup({
 });
 
 function userFilledFields(data) {
-    return data.name !== undefined &&
-        data.number !== undefined &&
+    return data.name !== '' &&
+        data.number !== '' &&
         document.getElementById('form-checkbox').checked;
 }
 

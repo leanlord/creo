@@ -90,7 +90,7 @@
          * @param string $name
          * @return int
          */
-        public static function getMinMaxValues(string $name): int {
+        public static function getMinMaxValues(string $name) {
             return static::$minMaxValues[$name];
         }
     }

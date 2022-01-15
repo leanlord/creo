@@ -18,9 +18,9 @@ class RegisterController extends Controller
             $validated = $request->validated();
 
             if (User::where('email', $validated['email'])->exists()) {
-                return view('pages.register',
-                    // и выводить ссылку на /login
-                    ['error' => 'Такой пользователь уже зарегистрирован! Не желаете войти?']);
+                return view('pages.register')->withErrors([
+                    'email' => 'Данный адрес электронной почты занят.'
+                ]);
             }
 
             $user = User::create($validated);
@@ -29,7 +29,9 @@ class RegisterController extends Controller
                 return redirect(route('account'));
             }
 
-            return view('pages.register', ['registerError' => 'Не удалось зарегистрироваться']);
+            return view('pages.register')->withErrors([
+                'register' => 'Не удалось зарегистрироваться. Пожалуйста, повторите попытку позже.'
+            ]);
         } elseif ($request->method() == 'GET') {
             return view('pages.register');
         }

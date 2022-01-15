@@ -10,6 +10,7 @@
     class HomepageController extends Controller
     {
         protected UsersSettings $settings;
+        protected $user;
 
         public function __construct() {
             $this->settings = new UsersSettings();
@@ -23,35 +24,39 @@
          * Обновление личных данных пользователя
          */
         public function update(UserRequest $request) {
+            $this->user = auth()->user(); // it equals null in the constructor for some reasons
             $validated = $request->validated();
-            $user = auth()->user();
-            $user->password = $validated['password'] ??
+            $this->user->password = $validated['password'] ??
                 auth()->user()->getAuthPassword();
-            // Заполнение каждого аттрибута пользователя для сохранения
-            foreach ($this->settings->getAttributes() as $attribute) {
-                $user->$attribute = $validated[$attribute];
+
+            if ($this->emailExists($validated['email'])) {
+                return view('pages.account')->withErrors([
+                    'emailExists' => 'Этот адрес электронной почты занят.'
+                ]);
             }
 
+            $this->fillAll($validated);
+            $this->user->save();
+            auth()->login($this->user, true);
+
+            return view('pages.account');
+        }
+
+        protected function emailExists(string $newEmail): bool {
             $email = null;
             // Если такой емейл уже существует...
-            if (auth()->user()->email != $validated['email']) {
-                $email = User::select('email')
-                    ->where('email',
-                        $request->input('email')
-                    )->first();
+            if ($this->user->email != $newEmail) {
+                $email = User::query()
+                    ->where('email', $newEmail)
+                    ->get();
             }
-            // ...то сообщить об этом пользователю
-            if ($email !== null) {
-                return view('pages.account', [
-                    'errors' =>
-                        'Этот адресс электронной почты уже занят другим пользователем!'
-                    ]
-                );
+            return $email !== null;
+        }
+
+        protected function fillAll(array $validated) {
+            // Заполнение каждого аттрибута пользователя для сохранения
+            foreach ($this->settings->getAttributes() as $attribute) {
+                $this->user->$attribute = $validated[$attribute];
             }
-
-            $user->save();
-            auth()->login($user, true);
-
-            return view('pages.account', ['success' => true]);
         }
     }

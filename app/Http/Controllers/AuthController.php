@@ -23,7 +23,9 @@ class AuthController extends Controller
             return view('pages.login');
         }
 
-        return view('pages.login', ['error' => 'Введен неверный логин или пароль.']);
+        return view('pages.login')->withErrors([
+            'auth' => 'Введен неверный логин или пароль.'
+        ]);
     }
 
     public function logout() {

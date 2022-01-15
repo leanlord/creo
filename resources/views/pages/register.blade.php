@@ -4,6 +4,7 @@
     <div class="container">
         <div class="register">
             <h2 class="register__title">Регистрация</h2>
+            @include('includes.errors')
             <form action="{{ route('register') }}" method="POST" id="registerForm" class="register__form auth__form">
                 @csrf
                 <div class="auth__first">

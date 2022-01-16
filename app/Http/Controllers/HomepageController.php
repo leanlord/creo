@@ -2,7 +2,7 @@
 
     namespace App\Http\Controllers;
 
-    use App\Http\Requests\UserRequest;
+    use App\Http\Requests\UpdateAccountRequest;
     use App\Models\User;
     use App\Services\Settings\UsersSettings;
     use Illuminate\Http\Request;
@@ -23,7 +23,7 @@
         /*
          * Обновление личных данных пользователя
          */
-        public function update(UserRequest $request) {
+        public function update(UpdateAccountRequest $request) {
             $this->user = auth()->user(); // it equals null in the constructor for some reasons
             $validated = $request->validated();
             $this->user->password = $validated['password'] ??

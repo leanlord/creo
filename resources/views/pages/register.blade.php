@@ -3,8 +3,8 @@
 @section('content')
     <div class="container">
         <div class="register">
-            <h2 class="register__title">Регистрация</h2>
             @include('includes.errors')
+            <h2 class="register__title">Регистрация</h2>
             <form action="{{ route('register') }}" method="POST" id="registerForm" class="register__form auth__form">
                 @csrf
                 <div class="auth__first">
@@ -28,6 +28,10 @@
                 <label class="auth__input">
                     <span>Пароль (минимум 7 символов)*</span>
                     <input name="password" type="password" required minlength="7">
+                </label>
+                <label class="auth__input">
+                    <span>Подтвердите пароль*</span>
+                    <input name="password_confirmation" type="password" required minlength="7">
                 </label>
             </form>
             <span class="register__span">* - поля, обязательные для заполнения</span>

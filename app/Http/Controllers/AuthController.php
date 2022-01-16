@@ -2,29 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserRequest;
+use App\Http\Requests\AuthRequest;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    public function login(UserRequest $request) {
-        $validated = $request->validated();
-        if (Auth::check()) {
+    public function index() {
+        return view('pages.login');
+    }
+
+    public function login(AuthRequest $request) {
+        if (Auth::attempt($request->validated(), true)) {
             return redirect('/account');
         }
 
-        if ($request->method() == 'POST') {
-            $formFields['email'] = $validated['email'];
-            $formFields['password'] = $validated['password'];
-            if (Auth::attempt($formFields, true)) {
-                return redirect('/account');
-            }
-        } else {
-            return view('pages.login');
-        }
-
         return view('pages.login')->withErrors([
-            'auth' => 'Введен неверный логин или пароль.'
+            'auth' => 'Введен неверный логин или пароль.',
         ]);
     }
 

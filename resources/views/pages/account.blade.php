@@ -38,6 +38,10 @@
                         <span>Пароль (минимум 7 символов)</span>
                         <input name="password" type="password" minlength="7">
                     </label>
+                    <label class="auth__input">
+                        <span>Подтвердите пароль</span>
+                        <input name="password_confirmation" type="password" required minlength="7">
+                    </label>
                 </form>
                 <input type="submit" value="Сохранить" form="profileForm" class="form-button profile__button">
                 <div class="account__exit--profile">

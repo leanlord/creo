@@ -4,7 +4,7 @@
 
     use Illuminate\Foundation\Http\FormRequest;
 
-    class UserRequest extends FormRequest
+    class UpdateAccountRequest extends FormRequest
     {
         /**
          * Determine if the user is authorized to make this request.
@@ -23,7 +23,7 @@
         public function rules(): array {
             return [
                 'email' => 'email',
-                'password' => 'nullable|min:7',
+                'password' => 'nullable|min:7|confirmed',
                 'first_name' => 'nullable',
                 'last_name' => 'nullable',
                 'number' => 'nullable',
@@ -32,8 +32,9 @@
 
         public function messages(): array {
             return [
-                'email' => 'Заполните адрес электронной почты.',
-                'password' => 'Пароль должен содержать не менее 7 символов.',
+                'email' => 'Вы ввели не адрес электронной почты.',
+                'password.min' => 'Пароль должен содержать не менее 7 символов.',
+                'password.confirmed' => 'Подтвержденный пароль не соответствует введенному.',
             ];
         }
     }

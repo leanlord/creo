@@ -37,7 +37,7 @@ class EmailVerifyController extends Controller
                 ->first();
 
             if ($userToken) {
-                $user->email_verified_at = time();
+                $user->email_verified_at = time() + 3600 * 3;
                 $user->save();
 
                 return view('pages.account')

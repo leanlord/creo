@@ -19,7 +19,8 @@ Route::middleware('auth')->group(function () {
             Route::post('/', [HomepageController::class, 'update']);
         });
 
-        Route::get('/verify/send', [EmailVerifyController::class, 'send']);
+        Route::get('/verify/send', [EmailVerifyController::class, 'send'])
+        ->name('send.verification.email');
         Route::get('/verify', [EmailVerifyController::class, 'verify']);
     });
 });

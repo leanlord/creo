@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Services\Mailers\Mailer;
 use Illuminate\Http\Request;
 
@@ -10,21 +11,22 @@ class EmailVerifyController extends Controller
     protected Mailer $mailer;
     protected Request $request;
 
-    public function __construct(Mailer $mailer, Request $request) {
-        $this->mailer = $mailer;
+    public function __construct(Request $request) {
         $this->request = $request;
     }
 
-    public function send() {
+    public static function send(Mailer $mailer, User $user) {
         $token = \Hash::make(\Str::random(10));
         \DB::table('verify_tokens')
             ->insert([
                 'token' => $token,
-                'user_id' => auth()->user()->getAuthIdentifier(),
+                'user_id' => $user->getAuthIdentifier(),
             ]);
 
-        $this->mailer->send(auth()->user(), $token);
+        $mailer->send($user, $token);
 
+        // TODO сделать сообщение flash о том что на адрес электронной почты отправлено письмо с верифаем и вывести
+        // его на странице аккаунта
         return 'На Ваш адресс электронной почты отправлено письмо.';
     }
 

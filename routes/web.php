@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EmailVerifyController;
 use App\Http\Controllers\FlatsController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\MessageController;
@@ -12,9 +13,14 @@ Route::get('/', [FlatsController::class, 'index']);
 Route::post('/', [MessageController::class, 'send']);
 
 Route::middleware('auth')->group(function () {
-    Route::name('account')->group(function () {
-        Route::get('/account', [HomepageController::class, 'index']);
-        Route::post('/account', [HomepageController::class, 'update']);
+    Route::prefix('/account')->group(function () {
+        Route::name('account')->group(function () {
+            Route::get('/', [HomepageController::class, 'index']);
+            Route::post('/', [HomepageController::class, 'update']);
+        });
+
+        Route::get('/verify/send', [EmailVerifyController::class, 'send']);
+        Route::get('/verify', [EmailVerifyController::class, 'verify']);
     });
 });
 

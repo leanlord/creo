@@ -4,6 +4,7 @@
 
     use App\Http\Requests\UpdateAccountRequest;
     use App\Models\User;
+    use App\Services\Mailers\Mailer;
     use App\Services\Settings\UsersSettings;
     use Illuminate\Http\Request;
 

@@ -8,6 +8,16 @@ FilePond.setOptions({
         url: '/account/upload-avatar',
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        process: {
+            onload: (response) => {
+                let img = $('#profile-img');
+                img.attr(
+                    'src', 'http://www.creo.test/avatars/' + response + '.jpg'
+                );
+            }
         }
     }
 });
+
+

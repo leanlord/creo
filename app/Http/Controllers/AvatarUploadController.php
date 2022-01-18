@@ -10,9 +10,12 @@ class AvatarUploadController extends Controller
         if ($request->hasFile('avatar')) {
             $file = $request->file('avatar');
             $fileName = auth()->user()->getAuthIdentifier() . '.' .  $file->extension();
-            $file->storeAs('avatars/', $fileName);
 
-            return response(null, 204);
+            \Storage::disk('avatars')->put('/' . $fileName, file_get_contents($file));
+
+            return response()->json(
+                auth()->user()->getAuthIdentifier()
+            );
         }
 
         return response('Error!');

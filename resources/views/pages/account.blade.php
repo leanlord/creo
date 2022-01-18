@@ -6,7 +6,10 @@
             <div class="profile account__profile">
                 <h2 class="profile__title">Редактировать профиль</h2>
                 <a href="#" class="profile__image">
-                    <img src="{{ asset('img/account/profile.svg') }}" alt="Изменить аватар" class="profile__pic">
+                    <img id="profile-img"
+                         src="{{ asset('img/account/profile.svg') }}"
+                         alt="Изменить аватар"
+                         class="profile__pic">
                 </a>
                 @include('includes.demo-input')
                 @include('includes.errors')

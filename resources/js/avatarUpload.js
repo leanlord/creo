@@ -11,9 +11,11 @@ FilePond.setOptions({
         },
         process: {
             onload: (response) => {
+                console.log(response.substr(1, response.length - 2));
                 let img = $('#profile-img');
                 img.attr(
-                    'src', 'http://www.creo.test/avatars/' + response + '.jpg'
+                    'src', 'http://www.creo.test/avatars/' +
+                    response.substr(1, response.length - 2)
                 );
             }
         }

@@ -7,7 +7,9 @@
                 <h2 class="profile__title">Редактировать профиль</h2>
                 <a href="#" class="profile__image">
                     <img id="profile-img"
-                         src="{{ asset('img/account/profile.svg') }}"
+                         src="{{ auth()->user()->avatar !== null ?
+                            asset('avatars/' . auth()->user()->avatar) :
+                            asset('img/account/profile.svg') }}"
                          alt="Изменить аватар"
                          class="profile__pic">
                 </a>

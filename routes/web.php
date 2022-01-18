@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AvatarUploadController;
 use App\Http\Controllers\EmailVerifyController;
 use App\Http\Controllers\FlatsController;
 use App\Http\Controllers\HomepageController;
@@ -18,6 +19,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [HomepageController::class, 'index']);
             Route::post('/', [HomepageController::class, 'update']);
         });
+
+        Route::post('/upload-avatar', [AvatarUploadController::class, 'upload']);
 
         Route::get('/verify/send', [EmailVerifyController::class, 'send'])
         ->name('send.verification.email');

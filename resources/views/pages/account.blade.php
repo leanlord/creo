@@ -8,6 +8,7 @@
                 <a href="#" class="profile__image">
                     <img src="{{ asset('img/account/profile.svg') }}" alt="Изменить аватар" class="profile__pic">
                 </a>
+                @include('includes.demo-input')
                 @include('includes.errors')
                 <form action="" id="profileForm" class="profile__form auth__form"
                       method="POST">
@@ -40,7 +41,7 @@
                     </label>
                     <label class="auth__input">
                         <span>Подтвердите пароль</span>
-                        <input name="password_confirmation" type="password" required minlength="7">
+                        <input name="password_confirmation" type="password" minlength="7">
                     </label>
                 </form>
                 <input type="submit" value="Сохранить" form="profileForm" class="form-button profile__button">

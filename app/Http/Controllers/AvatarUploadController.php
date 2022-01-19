@@ -41,12 +41,11 @@ class AvatarUploadController extends Controller
             $this->deleteExistingAvatar();
         }
         \Storage::disk('avatars')->move('/tmp/' . auth()->user()->avatar, auth()->user()->avatar);
-        $this->deleteExistingAvatar(auth()->user(), 'tmp/');
 
         return response()->json('Avatar has been saved');
     }
 
-    public function deleteExistingAvatar($user = null, string $prefix = '') {
+    protected function deleteExistingAvatar($user = null, string $prefix = '') {
         if ($user) {
             if ($user->avatar) {
                 \Storage::disk('avatars')->delete("/$prefix$user->avatar");
@@ -56,11 +55,11 @@ class AvatarUploadController extends Controller
         }
     }
 
-    public function hasOldAvatar(): bool {
+    protected function hasOldAvatar(): bool {
         return $this->request->session()->has('oldAvatar');
     }
 
-    public function getOldAvatar() {
+    protected function getOldAvatar() {
         return $this->request->session()->pull('oldAvatar');
     }
 }

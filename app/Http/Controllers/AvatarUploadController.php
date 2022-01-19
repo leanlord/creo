@@ -2,22 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UploadAvatarRequest;
 use App\Services\Uploaders\Uploader;
-use Illuminate\Http\Request;
 
 class AvatarUploadController extends Controller
 {
-    protected Request $request;
     protected Uploader $uploader;
     protected string $tmpPrefix = 'tmp/';
 
-    public function __construct(Request $request, Uploader $uploader) {
-        $this->request = $request;
+    public function __construct(Uploader $uploader) {
         $this->uploader = $uploader;
     }
 
-    public function upload() {
-        if ($this->request->hasFile('avatar')) {
+    public function upload(UploadAvatarRequest $request) {
+        if ($request->hasFile('avatar')) {
             $this->uploader->load(); // loading new temporary file
             $this->uploader->deleteFor(auth()->user(), $this->tmpPrefix); // deleting old temporary file
             session(['oldAvatar' => auth()->user()->avatar]);

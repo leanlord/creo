@@ -6,14 +6,12 @@ use Illuminate\Http\Request;
 
 class PublicUploader implements Uploader
 {
-    protected Request $request;
     protected string $disk = 'avatars';
     protected $file;
     protected string $filename = '';
 
     public function __construct(Request $request) {
-        $this->file = \request()->file('avatar');
-        $this->request = $request;
+        $this->file = $request->file('avatar');
     }
 
     public function load() {

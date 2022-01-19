@@ -6,15 +6,13 @@ interface Uploader
 {
     public function load();
 
-    public function save();
+    public function save(string $prefix);
 
-    public function delete();
+    public function deleteFor($user, string $prefix = '');
 
     public function hasOld(): bool;
 
     public function getOld();
-
-    public function makeFilename();
 
     public function getFilename(): string;
 }

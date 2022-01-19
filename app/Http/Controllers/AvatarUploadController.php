@@ -17,12 +17,9 @@ class AvatarUploadController extends Controller
     }
 
     public function upload() {
-        $this->uploader->setUser(auth()->user());
-        $this->uploader->makeFilename();
-
         if ($this->request->hasFile('avatar')) {
             $this->uploader->load(); // loading new temporary file
-            $this->uploader->delete($this->tmpPrefix); // deleting old temporary file
+            $this->uploader->deleteFor(auth()->user(), $this->tmpPrefix); // deleting old temporary file
             session(['oldAvatar' => auth()->user()->avatar]);
 
             session(['tmp_avatar' => $this->uploader->getFilename()]);
@@ -35,8 +32,6 @@ class AvatarUploadController extends Controller
     }
 
     public function save() {
-        $this->uploader->setUser(auth()->user());
-
         if ($this->uploader->hasOld()) {
             $this->uploader->deleteOld();
         }
@@ -44,7 +39,7 @@ class AvatarUploadController extends Controller
         auth()->user()->avatar = session()->get('tmp_avatar');
         auth()->user()->save();
 
-        $this->uploader->moveFile($this->tmpPrefix);
+        $this->uploader->save($this->tmpPrefix);
 
         return response()->json('Avatar has been saved');
     }

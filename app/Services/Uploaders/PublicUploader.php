@@ -7,10 +7,9 @@ use Illuminate\Http\Request;
 class PublicUploader implements Uploader
 {
     protected Request $request;
-    protected $user;
     protected string $disk = 'avatars';
     protected $file;
-    protected string $filename;
+    protected string $filename = '';
 
     public function __construct(Request $request) {
         $this->file = \request()->file('avatar');
@@ -18,6 +17,7 @@ class PublicUploader implements Uploader
     }
 
     public function load() {
+        $this->setFilenameFor(auth()->user());
         \Storage::disk($this->disk)
             ->put(
                 '/tmp/' . $this->filename,
@@ -25,16 +25,16 @@ class PublicUploader implements Uploader
             );
     }
 
-    public function save() {
+    public function save(string $prefix) {
         if ($this->hasOld()) {
             $this->deleteOld();
         }
-        \Storage::disk($this->disk)->move('/tmp/' . $this->user->avatar, $this->user->avatar);
+        $this->moveFileFor(auth()->user(), $prefix);
     }
 
-    public function delete(string $prefix = '') {
-        if ($this->user->avatar && \Storage::disk('avatars')->exists("/$prefix$this->user->avatar")) {
-            \Storage::disk($this->disk)->delete("/$prefix$this->user->avatar");
+    public function deleteFor($user, string $prefix = '') {
+        if ($user->avatar && \Storage::disk('avatars')->exists("/$prefix$user->avatar")) {
+            \Storage::disk($this->disk)->delete("/$prefix$user->avatar");
         }
     }
 
@@ -56,21 +56,15 @@ class PublicUploader implements Uploader
         return $this->filename;
     }
 
-    public function makeFilename() {
-        $this->filename = $this->user->getAuthIdentifier() .
-            time() .
-            '.' . $this->file->extension();
+    protected function setFilenameFor($user) {
+        if($this->filename == '') {
+            $this->filename = $user->getAuthIdentifier() .
+                time() .
+                '.' . $this->file->extension();
+        }
     }
 
-    public function moveFile(string $prefix = '') {
-            \Storage::disk($this->disk)->move("/$prefix" . $this->user->avatar, $this->user->avatar);
-
-    }
-
-    /**
-     * @param mixed $user
-     */
-    public function setUser($user): void {
-        $this->user = $user;
+    public function moveFileFor($user, string $prefix = '') {
+        \Storage::disk($this->disk)->move("/$prefix" . $user->avatar, $user->avatar);
     }
 }

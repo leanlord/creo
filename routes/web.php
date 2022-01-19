@@ -22,6 +22,8 @@ Route::middleware('auth')->group(function () {
 
         Route::post('/upload-avatar', [AvatarUploadController::class, 'upload']);
 
+        Route::post('/save', [AvatarUploadController::class, 'save']);
+
         Route::get('/verify/send', [EmailVerifyController::class, 'send'])
         ->name('send.verification.email');
         Route::get('/verify', [EmailVerifyController::class, 'verify']);

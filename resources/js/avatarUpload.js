@@ -14,7 +14,7 @@ FilePond.setOptions({
                 console.log(response.substr(1, response.length - 2));
                 let img = $('#profile-img');
                 img.attr(
-                    'src', 'http://www.creo.test/avatars/' +
+                    'src', 'http://www.creo.test/avatars/tmp/' +
                     response.substr(1, response.length - 2)
                 );
             }

@@ -2,26 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
 
 class AvatarUploadController extends Controller
 {
-    public function upload(Request $request) {
-        if ($request->hasFile('avatar')) {
-            $file = $request->file('avatar');
+    private Request $request;
+
+    public function __construct(Request $request) {
+        $this->request = $request;
+    }
+
+    public function upload() {
+        if ($this->request->hasFile('avatar')) {
+            $file = $this->request->file('avatar');
             $fileName = auth()->user()->getAuthIdentifier() .
                 time() .
                 '.' .  $file->extension();
 
             \Storage::disk('avatars')->put('/tmp/' . $fileName, file_get_contents($file));
 
+            $this->deleteExistingAvatar(auth()->user(), 'tmp/');
             $user = auth()->user();
-            if ($user->avatar) {
-                \Storage::disk('avatars')->delete('/tmp/' . $user->avatar);
-            }
+            $this->request->session()->flash('oldAvatar', $user->avatar);
 
-            $request->session()->flash('oldAvatar', $user->avatar);
             $user->avatar = $fileName;
             $user->save();
 
@@ -33,13 +36,31 @@ class AvatarUploadController extends Controller
         return response('Error!');
     }
 
-    public function save(Request $request) {
-        if ($request->session()->has('oldAvatar')) {
-            \Storage::disk('avatars')->delete('/' . $request->session()->pull('oldAvatar'));
+    public function save() {
+        if ($this->hasOldAvatar()) {
+            $this->deleteExistingAvatar();
         }
         \Storage::disk('avatars')->move('/tmp/' . auth()->user()->avatar, auth()->user()->avatar);
-        \Storage::disk('avatars')->delete('/tmp/' . auth()->user()->avatar);
+        $this->deleteExistingAvatar(auth()->user(), 'tmp/');
 
         return response()->json('Avatar has been saved');
+    }
+
+    public function deleteExistingAvatar($user = null, string $prefix = '') {
+        if ($user) {
+            if ($user->avatar) {
+                \Storage::disk('avatars')->delete("/$prefix$user->avatar");
+            }
+        } elseif ($this->hasOldAvatar()) {
+            \Storage::disk('avatars')->delete('/' . $this->getOldAvatar());
+        }
+    }
+
+    public function hasOldAvatar(): bool {
+        return $this->request->session()->has('oldAvatar');
+    }
+
+    public function getOldAvatar() {
+        return $this->request->session()->pull('oldAvatar');
     }
 }

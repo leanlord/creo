@@ -1,2 +1,2 @@
-<h1>Hello, {{ $data['user']->email }} ! </h1>
-<a href="{{ url('/account/verify?token=' . $data['token']) }}">Нажмите</a>
+<h1>Hello, {{ $user->email }} ! </h1>
+<a href="{{ url('/account/verify?token=' . $verifyToken) }}">Подтвердить</a>

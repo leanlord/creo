@@ -25,7 +25,10 @@ class AuthRequest extends FormRequest
     {
         return [
             'email' => 'email',
-            'password' => 'min:7'
+            'password' => 'min:7',
+            'first_name' => 'nullable',
+            'last_name' => 'nullable',
+            'number' => 'nullable',
         ];
     }
 

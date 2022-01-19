@@ -8,6 +8,6 @@ class VerifyMailer implements Mailer
 {
     public function send($user, $data = []) {
         \Mail::to($user->email)
-        ->send(new VerifyEmail($user, $data));
+            ->send(new VerifyEmail($user, $data));
     }
 }

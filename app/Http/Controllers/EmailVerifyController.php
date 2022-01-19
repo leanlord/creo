@@ -25,33 +25,38 @@ class EmailVerifyController extends Controller
 
         $mailer->send($user, $token);
 
-        // TODO сделать сообщение flash о том что на адрес электронной почты отправлено письмо с верифаем и вывести
-        // его на странице аккаунта
+        // TODO сделать сообщение flash о том что на адрес электронной почты отправлено письмо с верифаем
         return 'На Ваш адресс электронной почты отправлено письмо.';
     }
 
     public function verify() {
         $user = auth()->user();
         if ($this->request->has('token')) {
-            $userToken = \DB::table('verify_tokens')
-                ->where('token', $this->request->get('token'))
-                ->where('user_id', $user->id)
-                ->first();
+            $userToken = $this->getVerifyToken($user);
 
             if ($userToken) {
-                $user->email_verified_at = time() + 3600 * 3;
-                $user->save();
+                $this->setVerified($user);
 
-                return view('pages.account')
-                    ->with([
-                        'verify' => 'Почта успешно подтверждена.'
-                    ]);
+                return view('pages.account')->with([
+                    'verify' => 'Почта успешно подтверждена.',
+                ]);
             }
         }
 
-        return view('pages.account')
-            ->withErrors([
-               'verify' => 'Неверный токен!'
-            ]);
+        return view('pages.account')->withErrors([
+            'verify' => 'Неверный токен!',
+        ]);
+    }
+
+    protected function getVerifyToken($user) {
+        return \DB::table('verify_tokens')
+            ->where('token', $this->request->get('token'))
+            ->where('user_id', $user->id)
+            ->first();
+    }
+
+    protected function setVerified($user) {
+        $user->email_verified_at = time() + 3600 * 3;
+        $user->save();
     }
 }

@@ -10,9 +10,9 @@ class VerifyEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $user;
+    public $user;
 
-    protected $verifyToken = '';
+    public $verifyToken = '';
 
     /**
      * Create a new message instance.
@@ -31,12 +31,6 @@ class VerifyEmail extends Mailable
      */
     public function build() {
         return $this->from('www.creo.com@gmail.com')
-            ->view('mail.verify')
-            ->with([
-                'data' => [
-                    'user' => $this->user,
-                    'token' => $this->verifyToken,
-                ]
-            ]);
+            ->view('mail.verify');
     }
 }

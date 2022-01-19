@@ -12,6 +12,7 @@ class AuthController extends Controller
     }
 
     public function login(AuthRequest $request) {
+//        dd($request->validated());
         if (Auth::attempt($request->validated(), true)) {
             return redirect('/account');
         }

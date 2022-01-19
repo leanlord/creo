@@ -6,12 +6,22 @@
             <div class="profile account__profile">
                 <h2 class="profile__title">Редактировать профиль</h2>
                 <a href="#" class="profile__image">
+                    @if (Storage::disk('avatars')->exists(auth()->user()->avatar))
                     <img id="profile-img"
-                         src="{{ Storage::disk('avatars')->exists(auth()->user()->avatar) ?
-                            asset('avatars/' . auth()->user()->avatar) :
-                            asset('img/account/profile.svg') }}"
+                         src="{{ asset('avatars/' . auth()->user()->avatar) }}"
                          alt="Изменить аватар"
                          class="profile__pic">
+                    @elseif(Storage::disk('avatars')->exists(session()->get('oldAvatar')))
+                        <img id="profile-img"
+                             src="{{ asset('avatars/' . session()->get('oldAvatar')) }}"
+                                 alt="Изменить аватар"
+                        class="profile__pic">
+                    @else
+                        <img id="profile-img"
+                             src="{{ asset('img/account/profile.svg') }}"
+                                 alt="Изменить аватар"
+                        class="profile__pic">
+                    @endif
                 </a>
                 @include('includes.demo-input')
                 @include('includes.errors')

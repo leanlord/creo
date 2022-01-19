@@ -18,7 +18,6 @@ class HomepageController extends Controller
     }
 
     public function index() {
-        $this->deleteAvatar();
         return view('pages.account');
     }
 
@@ -60,12 +59,6 @@ class HomepageController extends Controller
         }
         if (isset($validated['password'])) {
             $this->user->password = $validated['password'];
-        }
-    }
-
-    protected function deleteAvatar() {
-        if (\Storage::disk('avatars')->exists('tmp/' . auth()->user()->avatar)) {
-            \Storage::disk('avatars')->delete('tmp/' . auth()->user()->avatar);
         }
     }
 }

@@ -2,34 +2,32 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\Uploaders\Uploader;
 use Illuminate\Http\Request;
 
 class AvatarUploadController extends Controller
 {
-    private Request $request;
+    protected Request $request;
+    protected Uploader $uploader;
+    protected string $tmpPrefix = 'tmp/';
 
-    public function __construct(Request $request) {
+    public function __construct(Request $request, Uploader $uploader) {
         $this->request = $request;
+        $this->uploader = $uploader;
     }
 
     public function upload() {
+        $this->uploader->setUser(auth()->user());
+        $this->uploader->makeFilename();
+
         if ($this->request->hasFile('avatar')) {
-            $file = $this->request->file('avatar');
-            $fileName = auth()->user()->getAuthIdentifier() .
-                time() .
-                '.' .  $file->extension();
+            $this->uploader->load(); // loading new temporary file
+            $this->uploader->delete($this->tmpPrefix); // deleting old temporary file
+            session(['oldAvatar' => auth()->user()->avatar]);
 
-            \Storage::disk('avatars')->put('/tmp/' . $fileName, file_get_contents($file));
-
-            $this->deleteExistingAvatar(auth()->user(), 'tmp/');
-            $user = auth()->user();
-            $this->request->session()->flash('oldAvatar', $user->avatar);
-
-            $user->avatar = $fileName;
-            $user->save();
-
+            session(['tmp_avatar' => $this->uploader->getFilename()]);
             return response()->json(
-                $fileName
+                $this->uploader->getFilename()
             );
         }
 
@@ -37,29 +35,17 @@ class AvatarUploadController extends Controller
     }
 
     public function save() {
-        if ($this->hasOldAvatar()) {
-            $this->deleteExistingAvatar();
+        $this->uploader->setUser(auth()->user());
+
+        if ($this->uploader->hasOld()) {
+            $this->uploader->deleteOld();
         }
-        \Storage::disk('avatars')->move('/tmp/' . auth()->user()->avatar, auth()->user()->avatar);
+
+        auth()->user()->avatar = session()->get('tmp_avatar');
+        auth()->user()->save();
+
+        $this->uploader->moveFile($this->tmpPrefix);
 
         return response()->json('Avatar has been saved');
-    }
-
-    protected function deleteExistingAvatar($user = null, string $prefix = '') {
-        if ($user) {
-            if ($user->avatar) {
-                \Storage::disk('avatars')->delete("/$prefix$user->avatar");
-            }
-        } elseif ($this->hasOldAvatar()) {
-            \Storage::disk('avatars')->delete('/' . $this->getOldAvatar());
-        }
-    }
-
-    protected function hasOldAvatar(): bool {
-        return $this->request->session()->has('oldAvatar');
-    }
-
-    protected function getOldAvatar() {
-        return $this->request->session()->pull('oldAvatar');
     }
 }

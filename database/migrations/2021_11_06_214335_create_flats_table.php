@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Flat extends Migration
+class Flats extends Migration
 {
     /**
      * Run the migrations.

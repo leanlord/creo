@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Requests extends Migration
+class CreateRequestsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,6 +15,7 @@ class Requests extends Migration
     {
         Schema::create('requests', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
             $table->string('number');
             $table->timestamps();
         });

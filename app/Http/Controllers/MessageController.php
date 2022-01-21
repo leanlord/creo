@@ -25,6 +25,6 @@ class MessageController extends Controller
 
         $message->save();
 
-        return redirect('/');
+        return response('success', 200);
     }
 }

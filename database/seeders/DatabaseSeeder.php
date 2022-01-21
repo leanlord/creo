@@ -15,8 +15,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-//        Model::unguard();
-//
-//        Model::reguard();
+        $this->call([
+           AreaSeeder::class,
+           CompanySeeder::class,
+           CitySeeder::class,
+           FlatSeeder::class,
+        ]);
     }
 }

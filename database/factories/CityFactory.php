@@ -22,7 +22,9 @@ class CityFactory extends Factory
     public function definition()
     {
         return [
-            'city' => $this->faker->city
+            'name' => $this->faker->city(),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

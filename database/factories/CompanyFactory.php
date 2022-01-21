@@ -22,7 +22,9 @@ class CompanyFactory extends Factory
     public function definition()
     {
         return [
-            'company' => $this->faker->company
+            'name' => $this->faker->company(),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

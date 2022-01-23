@@ -19,6 +19,8 @@
         "sass-loader": "^12.1.0"
     },
     "dependencies": {
+        "filepond": "^4.30.3",
+        "filepond-plugin-image-preview": "^4.6.10",
         "jquery": "^3.6.0",
         "sweetalert": "^2.1.2"
     }

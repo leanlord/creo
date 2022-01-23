@@ -1,6 +1,5 @@
-// hero-form
+@media (max-width: 1199px) {
 
-@media (max-width: 1454px) {
     .form {
         min-height: 300px;
 
@@ -13,12 +12,6 @@
         &__price-placeholder {
             max-width: calc(15vw - 5px);
         }
-    }
-}
-
-@media (max-width: 1200px) {
-    .container {
-        min-width: 960px;
     }
 
     .top {
@@ -64,12 +57,20 @@
 
 @media (max-width: 992px) {
     .container {
-        min-width: 720px;
+        padding: 0 30px;
     }
 
     .hero {
         padding-top: 50px;
         margin-bottom: 80px;
+
+        &__title {
+            font-size: 40px;
+        }
+
+        &__desc {
+            font-size: 17px;
+        }
 
         &__form {
             margin-bottom: 60px;
@@ -81,6 +82,24 @@
 
         &__button {
             padding: 23px 70px;
+        }
+
+        &__submit {
+            font-size: 18px;
+        }
+    }
+
+    .form {
+        &__item {
+            font-size: 16px;
+        }
+
+        &__input {
+            padding-bottom: 15px;
+        }
+
+        &__dash {
+            font-size: 20px;
         }
     }
 
@@ -148,7 +167,7 @@
         }
 
         &__input {
-            max-width: 190px;
+            max-width: 20vw;
         }
 
         &__button {
@@ -174,6 +193,10 @@
 
         &__list {
             max-height: 250px;
+        }
+
+        &__item {
+            font-size: 15px;
         }
 
         &__title {
@@ -221,14 +244,309 @@
 }
 
 @media (max-width: 768px) {
-    .container {
-        min-width: 576px;
+
+    .top {
+        padding-top: 30px;
+        padding-bottom: 30px;
+
+        &__link {
+            display: none;
+        }
+    }
+    .person {
+        width: 40px;
+        height: 40px;
+    }
+
+    .hero {
+        padding-top: 20px;
+        margin-bottom: 30px;
+
+        &__title {
+            font-size: 36px;
+            margin-bottom: 5px;
+        }
+
+        &__square-placeholder {
+            max-width: 85px;
+        }
+    }
+
+    .form {
+
+    }
+
+    .flats {
+        &__title {
+            font-size: 35px;
+            margin-bottom: 35px;
+        }
+    }
+
+    .submit {
+        margin-bottom: 30px;
+    }
+
+    .districts {
+        &__title {
+            font-size: 30px;
+        }
+
+        &__list {
+            min-height: 320px;
+        }
+    }
+}
+
+@media (max-width: 715px) {
+    .flats {
+        &__flat {
+            width: 70%;
+        }
+
+        &__image {
+            width: 100%;
+            height: auto;
+        }
+
+        &__info {
+            max-width: none;
+        }
+    }
+    .submit {
+        &__top {
+            min-height: 200px;
+            flex-direction: column;
+            align-items: normal;
+        }
+
+        &__button {
+            margin-left: 0;
+        }
+
+        &__input {
+            width: 100%;
+            max-width: none;
+            margin-right: 0;
+        }
+
+        &__checkbox {
+            line-height: 24px;
+        }
+    }
+}
+
+@media (max-width: 615px) {
+    .districts {
+        &__list {
+            min-height: 480px;
+        }
+    }
+}
+
+@media (max-width: 599px) {
+    .flats {
+        &__info {
+            min-height: 350px;
+        }
+
+        &__flat {
+            width: 100%;
+        }
+
+        &__status {
+            font-size: 16px;
+        }
+
+        &__name {
+            font-size: 20px;
+        }
+
+        &__city,
+        &__cost,
+        &__desc {
+            font-size: 16px;
+        }
     }
 }
 
 @media (max-width: 576px) {
-    .container {
-        max-width: 576px;
+    .top {
+        padding-top: 20px;
+        padding-bottom: 20px;
     }
+    .hero {
+        padding-top: 40px;
+
+        &__desc {
+            margin-bottom: 40px;
+        }
+
+        &__title {
+            font-size: 30px;
+            line-height: 30px;
+            margin-bottom: 15px;
+        }
+
+        &__form {
+            min-height: 540px;
+            flex-direction: column;
+        }
+
+        &__square,
+        &__price {
+            &-placeholder {
+                max-width: 90px;
+            }
+        }
+    }
+    .menu {
+        &__title {
+            font-size: 14px;
+        }
+
+        &__item {
+            font-size: 12px;
+        }
+
+        &__item:not(:last-child) {
+            margin-bottom: 12px;
+        }
+    }
+    .flats {
+        &__title {
+            font-size: 28px;
+            line-height: 30px;
+        }
+
+        &__status {
+            font-size: 14px;
+        }
+
+        &__name {
+            font-size: 16px;
+        }
+
+        &__city,
+        &__cost,
+        &__desc {
+            font-size: 14px;
+        }
+
+        &__more {
+            font-size: 16px;
+        }
+    }
+    .submit {
+        &__wrapper {
+            padding: 35px;
+        }
+
+        &__title {
+            font-size: 18px;
+        }
+
+        &__text {
+            font-size: 12px;
+        }
+
+        &__placeholder {
+            font-size: 14px;
+        }
+
+        &__send {
+            font-size: 16px;
+        }
+
+        &__checkbox {
+            font-size: 12px;
+            line-height: 20px;
+        }
+
+        &__aside {
+            font-size: 14px;
+        }
+    }
+    .form {
+        &__item {
+            min-width: 100%;
+        }
+    }
+    .contact {
+        display: none;
+    }
+    .districts {
+        &__title {
+            font-size: 28px;
+            line-height: 30px;
+        }
+
+        &__list {
+            margin-bottom: 30px;
+        }
+
+        &__paragraph {
+            font-size: 14px;
+        }
+    }
+
+    .profile {
+        width: 100%;
+
+        &__title {
+            font-size: 20px;
+        }
+
+        &__image {
+            margin-bottom: 15px;
+        }
+    }
+
+    .login {
+        padding-top: 50px;
+
+        &__title {
+            margin-bottom: 20px;
+        }
+    }
+
+    .auth {
+        &__first {
+            flex-direction: column;
+            margin-bottom: 0;
+        }
+
+        &__name {
+            width: 100%;
+            margin-bottom: 11px;
+        }
+    }
+
+    .footer {
+        &__title {
+            font-size: 16px;
+        }
+
+        &__info {
+            width: 100%;
+        }
+    }
+}
+
+@media (max-width: 443px) {
+    .hero {
+        &__button {
+            padding: 23px 35px;
+        }
+    }
+    .districts {
+        &__item {
+            font-size: 12px;
+        }
+    }
+}
+
+@media (max-width: 320px) {
+
 }
 

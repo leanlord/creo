@@ -1,9 +1,8 @@
 .hero {
-    padding-top: 113px;
+    padding-top: 100px;
     padding-bottom: 68px;
     margin-bottom: 120px;
     background: linear-gradient(250.7deg, #EAF2FF 21.91%, #FFF6F5 106.15%);
-    background-size: 100%;
 
     &__title {
         margin-bottom: 38px;
@@ -45,15 +44,15 @@
     }
 
     &__city {
-        min-width: 382px;
+        min-width: 330px;
     }
 
     &__name {
-        min-width: 481px;
+        min-width: 430px;
     }
 
     &__district {
-        min-width: 407px;
+        min-width: 380px;
     }
 
     &__price {

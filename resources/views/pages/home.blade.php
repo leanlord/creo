@@ -104,36 +104,38 @@
         </div>
     </div>
     <div class="submit">
-        <div class="container submit__wrapper">
-            <h2 class="submit__title">Снимайте тапочки, а не квартиру!</h2>
-            <p class="submit__text">
-                БЕСПЛАТНО откроем ипотеку с пониженной процентной ставкой! <span class="submit__span">Для покупки в ипотеку доступно более 78 000 квартир!</span>
-            </p>
-            <form method="POST" class="submit__form">
-                @csrf
-                <div class="submit__top">
-                    <label class="submit__placeholder">
-                        <input id="form-name" name="name" class="submit__input" type="text" required placeholder="Ваше Имя">
-                    </label>
-                    <label class="submit__placeholder">
-                        <input id="form-number" name="number" class="submit__input" type="tel" required placeholder="Телефон">
-                    </label>
-                    <label class="btn submit__button" id="form-submit">
-                        <input class="submit__send input-submit" value="Отправить" type="submit">
-                    </label>
-                </div>
-                <div class="submit__bottom">
-                    <label class="submit__checkbox">
-                        Отправляя заявку на обратный звонок я даю своё согласие с
-                        <a href="#" class="submit__link">политикой обработки персональных данных</a>
-                        <input id="form-checkbox" type="checkbox" required>
-                        <span class="checkmark"></span>
-                    </label>
-                </div>
-            </form>
-            <p class="submit__aside">
-                Ваши соседи уже делают ремонт! Хватит думать, пора покупать!
-            </p>
+        <div class="container">
+            <div class="submit__wrapper">
+                <h2 class="submit__title">Снимайте тапочки, а не квартиру!</h2>
+                <p class="submit__text">
+                    БЕСПЛАТНО откроем ипотеку с пониженной процентной ставкой! <span class="submit__span">Для покупки в ипотеку доступно более 78 000 квартир!</span>
+                </p>
+                <form method="POST" class="submit__form">
+                    @csrf
+                    <div class="submit__top">
+                        <label class="submit__placeholder">
+                            <input id="form-name" name="name" class="submit__input" type="text" required placeholder="Ваше Имя">
+                        </label>
+                        <label class="submit__placeholder">
+                            <input id="form-number" name="number" class="submit__input" type="tel" required placeholder="Телефон">
+                        </label>
+                        <label class="btn submit__button" id="form-submit">
+                            <input class="submit__send input-submit" value="Отправить" type="submit">
+                        </label>
+                    </div>
+                    <div class="submit__bottom">
+                        <label class="submit__checkbox">
+                            Отправляя заявку на обратный звонок я даю своё согласие с
+                            <a href="#" class="submit__link">политикой обработки персональных данных</a>
+                            <input id="form-checkbox" type="checkbox" required>
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                </form>
+                <p class="submit__aside">
+                    Ваши соседи уже делают ремонт! Хватит думать, пора покупать!
+                </p>
+            </div>
         </div>
     </div>
     <div class="districts">
@@ -163,7 +165,6 @@
                 <li class="districts__item">Витаминкомбинат</li>
                 <li class="districts__item">Школьный</li>
                 <li class="districts__item">Микрохирургия глаза</li>
-                <li class="districts__item">Восточно-Кругликовский</li>
             </ul>
             <h2 class="districts__title">Новостройки в Краснодаре</h2>
             <p class="districts__paragraph">Доступное жилье – воплощение мечты большинства людей, которые сегодня ютятся

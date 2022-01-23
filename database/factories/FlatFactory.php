@@ -23,7 +23,7 @@ class FlatFactory extends Factory
     {
         return [
             'address' => $this->faker->address(),
-            'city_id' => $this->faker->numberBetween(1, 10),
+            'city_id' => 1,
             'square' => $this->faker->numberBetween(40, 150),
             'company_id' => $this->faker->numberBetween(1, 10),
             'area_id' => $this->faker->numberBetween(1, 10),
